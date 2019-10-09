@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>新增题目类别</title>
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <script src="../js/jquery.min.js"></script>
+</head>
+<body>
+<form class="layui-form" action="" style="margin-top: 60px">
+    <div class="layui-form-item">
+        <label class="layui-form-label">类别名称</label>
+        <div class="layui-input-inline" style="width: 220px">
+            <label for="title"></label><input type="text" id="title" name="title" lay-verify="title"
+                                              autocomplete="off" placeholder="请输入标题" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-top: 20px;">
+        <div class="layui-input-block" style="padding-left: 75px">
+            <button type="button" onclick="addCampus()" class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script src="../layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    $(function () {
+        init();
+    });
+
+    function init() {
+        layui.use(['form', 'layedit'], function () {
+            var form = layui.form,
+                layer = layui.layer,
+                layedit = layui.layedit;
+            form.render(); //渲染
+        });
+    }
+
+    function addCampus() {
+        var params = {"typeName": $("#title").val()};
+        $.ajax({
+            url: "/addexamtype",
+            data: params,
+            dataType: "text",
+            type: "POST",
+            success: function (obj) {
+                if (obj === "success") {
+                    alert("添加成功");
+                    doCancel();
+                } else {
+                    alert("添加失败")
+                }
+            },
+            error: function (obj) {
+                alert("服务器链接错误:" + obj.toString());
+            }
+        });
+    }
+
+    //点击取消关闭窗口
+    function doCancel() {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);//关闭子窗体
+        parent.location.reload();//刷新父窗体
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>后台用户管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="../js/jquery.min.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+    <style>
+        body {
+            background-color: #e6e6e6;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .body_style {
+            margin: 15px;
+            padding: 5px 15px;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="body_style">
+    <div class="layui-card-header">后台用户管理</div>
+    <form class="layui-form" action="">
+        <!--表格-->
+        <table class="layui-hide" id="test" lay-filter="test"></table>
+        <script type="text/html" id="toolbarDemo">
+            <!--查询条件-->
+            <div class="layui-input-inline">
+                <select id="campusid" name="campusid" lay-filter="campusSelect">
+
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <select id="postid" name="postid" >
+
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" id="name" name="name"  autocomplete="off"
+                       placeholder="请输入姓名"
+                       class="layui-input">
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" id="phone" name="phone" lay-verify="title" autocomplete="off"
+                       placeholder="请输入手机号"
+                       class="layui-input">
+            </div>
+            <button class="layui-btn layui-btn-normal layui-btn-sm" title="查询" onclick="initTable()">
+                <i class="layui-icon layui-icon-search" style="font-size: 30px; color: white;"></i>
+            </button>
+            <button class="layui-btn layui-btn-normal layui-btn-sm" title="添加" style="margin-left: 1px"
+                    type="button" id="newAdd" onclick="addPage()">
+                <i class="layui-icon layui-icon-add-1" style="font-size: 30px; color: white;"></i>
+            </button>
+
+        </script>
+
+        <script type="text/html" id="barDemo">
+            <a class="layui-btn layui-btn-xs" lay-event="edit" title="编辑">
+                <i class="layui-icon layui-icon-edit" style="font-size: 30px; color: white;"></i>
+            </a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" title="删除">
+                <i class="layui-icon layui-icon-delete" style="font-size: 30px; color: white;"></i>
+            </a>
+        </script>
+
+    </form>
+</div>
+</body>
+<script src="../layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    var campusid=-1;
+    var name="";
+    var phone="";
+    var postid=-1;
+    //原生js实现
+    window.onload = function () {
+        campusid=-1;
+        postid=-1;
+        init();
+        initTable();
+    }
+    function init() {
+        layui.use(['form','laydate'], function () {
+            var form = layui.form;
+            var laydate = layui.laydate;
+            //执行一个laydate实例
+            laydate.render({
+                elem: '#classtime' //指定元素
+            });
+            form.render(); //渲染
+            form.on('select(campusSelect)', function(data){
+
+                getPostSelectList(data.value);
+            });
+        });
+    }
+
+    function getCampusSelectList() {
+        var params = {};
+        $.ajax({
+            url: "/getAllCampusmanage",
+            data: params,
+            dataType: "JSON",
+            type: "POST",
+            success: function (obj) {
+                $("#campusid").append("<option value='-1'>" + "请选择校区" + "</option>");
+                if (obj != "undefined") {
+                    //动态添加校区下拉列表值
+                    $.each(obj, function (index, data) {
+                        //console.log(data)
+                        $("#campusid").append("<option value='" + data.id + "'>" + data.name + "</option>");
+                    });
+                }
+                init();
+                $("#campusid").val(campusid);
+            },
+            error: function (obj) {
+                alert("服务器链接错误:" + obj.toString());
+            }
+        });
+    }
+    function getPostSelectList(id) {
+        $("#postid option[index!='-1']").remove();
+        var params = {"campusid": id};
+        $.ajax({
+            url: "/getPostListById",
+            data: params,
+            dataType: "JSON",
+            type: "POST",
+            success: function (obj) {
+                if (obj != "undefined") {
+                    //动态添加校区下拉列表值
+                    $("#postid").append("<option value='-1'>请选择岗位</option>");
+                    $.each(obj, function (index, data) {
+                        //console.log(data)
+                        $("#postid").append("<option value='" + data.id + "'>" + data.postname + "</option>");
+                    });
+                }
+
+                init();
+                $("#postid").val(postid);
+            },
+            error: function (obj) {
+                alert("服务器链接错误:" + obj.toString());
+            }
+        });
+    }
+
+    function addPage() {
+        layer.open({
+            type: 2, //表示打开一个网页
+            title: '新增班级信息',
+            shadeClose: false, //点击窗体其他位置关闭
+            shade: 0.3, //遮罩 透明度0.3
+            maxmin: false, //开启最大化最小化按钮
+            area: ['58%', '70%'],
+            content: 'addInfo.html' //目标网页
+        });
+    }
+
+    //编辑
+    function editPage(id) {
+        data = {
+            id: id
+        };
+        layer.open({
+            type: 2, //表示打开一个网页
+            title: '修改班级信息',
+            shadeClose: false, //点击窗体其他位置关闭
+            shade: 0.3, //遮罩 透明度0.3
+            maxmin: false, //开启最大化最小化按钮
+            area: ['58%', '70%'],
+            content: 'updateInfo.html' //目标网页
+        });
+    }
+
+    function initTable() {
+        //解决初次加载时下拉列表未赋值时 是undefined的情况
+        campusid = $("#campusid").val()==undefined?-1:$("#campusid").val();
+        name=$('#name').val()==undefined?"":$('#name').val();
+        phone=$('#phone').val==undefined?"":$('#phone').val();
+        postid=$('#postid').val()==undefined?-1:$("#postid").val();
+
+        layui.use('table', function () {
+            var table = layui.table;
+            table.render({
+                elem: '#test',
+                url: '/getSysuserList',
+                where: {
+                    name: name,
+                    postid: postid,
+                    campusid:campusid,
+                    phone:phone
+                },
+                even: true, //开启隔行背景
+                method: 'post',
+                toolbar: '#toolbarDemo',
+                defaultToolbar: ['filter', 'print', 'exports'],
+                title: '后台用户列表',
+                cols: [
+                    [{
+                        fixed: 'left',
+                        field: 'campusname',
+                        title: '校区名称',
+                        minWidth: 150,
+                        align: 'center',
+                        unresize: true
+                    }, {
+                        fixed: 'left',
+                        field: 'postname',
+                        title: '岗位名称',
+                        minWidth: 150,
+                        align: 'center',
+                        unresize: true
+                    }, {
+                        fixed: 'left',
+                        field: 'name',
+                        title: '姓名',
+                        minWidth: 150,
+                        align: 'center',
+                        unresize: true
+                    }, {
+                        field: 'sex',
+                        title: '性别',
+                        minWidth: 80,
+                        align: 'center',
+                        unresize: true,
+                        templet: function(res){
+                            return res.sex==1?"男":"女";
+                        }
+                    }, {
+                        field: 'phone',
+                        title: '电话',
+                        minWidth: 150,
+                        align: 'center',
+                        unresize: true
+                    }, {
+                        field: 'login',
+                        title: '账号',
+                        minWidth: 150,
+                        align: 'center',
+                        unresize: true
+                    }, {
+                        fixed: 'right',
+                        title: '操作',
+                        align: 'center',
+                        toolbar: '#barDemo',
+                        width: 180
+                    }]
+                ],
+                page: true,
+                limit: 10,
+                limits: [10, 20, 30, 50]
+            });
+            getCampusSelectList();
+            getPostSelectList(campusid);
+            //添加默认值
+            $("#postid").val(postid);
+            $('#name').val(name);
+            $('#phone').val(phone);
+            $('#campusid').val(campusid);
+            init();
+            //监听行工具事件
+            table.on('tool(test)', function (obj) {
+                var data = obj.data;
+                if (obj.event === 'del') {
+                    layer.confirm("请问是否确定删除，删除后不可恢复？", {
+                        btn: ["确定", "取消"] //按钮
+                    }, function (index) {
+                        delInfo(data.id);
+                        layer.close(index);
+                    }, function () {
+
+                    });
+                } else if (obj.event === 'edit') {
+                    editPage(data.id);
+                } else if (obj.event === 'select') {
+                    //alert(data.id)
+                    selectPage(data.id);
+                }
+            });
+        });
+    }
+    function fmtDate(obj){
+        var date =  new Date(obj);
+        var y = 1900+date.getYear();
+        var m = "0"+(date.getMonth()+1);
+        var d = "0"+date.getDate();
+        return y+"-"+m.substring(m.length-2,m.length)+"-"+d.substring(d.length-2,d.length);
+    }
+    function delInfo(id) {
+        var params = {"id": id};
+        $.ajax({
+            url: "/delSysuser",
+            data: params,
+            dataType: "text",
+            type: "POST",
+            success: function (obj) {
+                if (obj == "success") {
+                    alert("删除成功");
+                    initTable();//重新加载数据
+                } else {
+                    alert("删除失败")
+                }
+            },
+            error: function (obj) {
+                alert("服务器链接错误:" + obj.toString());
+            }
+        });
+    }
+</script>
+</html>

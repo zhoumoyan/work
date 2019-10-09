@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>修改题目类别信息</title>
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <script src="../js/jquery.min.js"></script>
+</head>
+<body>
+<form class="layui-form" action="" style="margin-top: 60px">
+    <div class="layui-form-item">
+        <label class="layui-form-label">类别名称</label>
+        <div class="layui-input-inline" style="width: 220px">
+            <input type="hidden" id="id" value="">
+            <label for="title"></label><input type="text" id="title" name="title" lay-verify="title"
+                                              autocomplete="off" placeholder="请输入标题" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-top: 20px;">
+        <div class="layui-input-block" style="padding-left: 75px">
+            <button type="button" onclick="updateCampus()" class="layui-btn" lay-submit=""  lay-filter="demo1">保存</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script src="../layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    $(function() {
+        init();
+    });
+
+    function init() {
+        layui.use(['form', 'layedit'], function() {
+            var form = layui.form,
+                layer = layui.layer,
+                layedit = layui.layedit;
+            form.render(); //渲染
+        });
+        //获取父页面传递过来的数据
+        $("#id").val(parent.data.id);
+
+        getInfoById(parent.data.id)
+    }
+    function getInfoById(id) {
+        var params={"id":id};
+        $.ajax({
+            url: "/getExamtypeInfoById",
+            data:params,
+            dataType:"JSON",
+            type:"POST",
+            success: function(obj){
+                if(obj!=="undefined"){
+                    $("#title").val(obj.name);
+                }
+            },
+            error: function(obj){
+                alert("服务器链接错误:"+obj.toString());
+            }
+        });
+    }
+
+    function updateCampus() {
+        var params={"id":$("#id").val(),"typeName":$("#title").val()};
+        $.ajax({
+            url: "/updateexamtype",
+            data:params,
+            dataType:"text",
+            type:"POST",
+            success: function(obj){
+                if(obj==="success"){
+                    alert("修改成功");
+                    doCancel();
+                }else{
+                    alert("修改失败")
+                }
+            },
+            error: function(obj){
+                alert("服务器链接错误:"+obj.toString());
+            }
+        });
+    }
+    //点击取消关闭窗口
+    function doCancel() {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);//关闭子窗体
+        parent.location.reload();//刷新父窗体
+    }
+</script>
+</body>
+</html>

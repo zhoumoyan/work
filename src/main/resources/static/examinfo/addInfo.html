@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>新增题目信息</title>
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <script src="../js/jquery.min.js"></script>
+</head>
+<body>
+<form class="layui-form" action="" style="margin-top: 30px">
+    <div class="layui-form-item">
+        <label class="layui-form-label">类别ID</label>
+        <div class="layui-input-block" style="width: 75%">
+            <label for="examtypeid"></label><select id="examtypeid" name="examtypeid" lay-verify="examtypeid">
+
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">题目</label>
+        <div class="layui-input-block">
+            <label for="name"></label><textarea placeholder="请输入题目" lay-verify="name" style="width: 90%" class="layui-textarea" id="name" name="name"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">选项</label>
+        <div class="layui-input-block">
+            <div class="layui-input-inline" style="width:15%;">
+                <input type="checkbox" name="a"  lay-skin="primary" title="选项A" lay-verify="da" >
+            </div>
+            <div class="layui-input-block" style="margin-left:10px">
+                <label for="a_content"></label><input type="text" id="a_content" lay-verify="a" style="width: 75%" name="a_content"
+                                                      autocomplete="off" placeholder="选项A" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-input-block">
+            <div class="layui-input-inline" style="width:15%;">
+                <input type="checkbox" name="b" lay-skin="primary" title="选项B" lay-verify="da">
+            </div>
+            <div class="layui-input-block" style="margin-left:10px">
+                <input type="text" id="b_content" lay-verify="b" style="width: 75%" name="a_content"
+                       autocomplete="off" placeholder="选项B" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-input-block">
+            <div class="layui-input-inline" style="width:15%;">
+                <input type="checkbox" name="c" lay-skin="primary" title="选项C" lay-verify="da">
+            </div>
+            <div class="layui-input-block" style="margin-left:10px">
+                <input type="text" id="c_content" lay-verify="c" style="width: 75%" name="a_content"
+                       autocomplete="off" placeholder="选项C" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-input-block">
+            <div class="layui-input-inline" style="width:15%;">
+                <input type="checkbox" name="d"  lay-skin="primary" title="选项D" lay-verify="da">
+            </div>
+            <div class="layui-input-block" style="margin-left:10px">
+                <input type="text" id="d_content" lay-verify="d" style="width: 75%" name="a_content"
+                       autocomplete="off" placeholder="选项D" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">解释</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入解释" lay-verify="explaininfo" style="width: 90%" class="layui-textarea" id="explaininfo" name="explaininfo"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-top: 20px;">
+        <div class="layui-input-block" style="text-align: right;margin-right: 60px">
+            <button class="layui-btn" lay-filter="addinfo" lay-submit="">提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script src="../layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    $(function() {
+        init();
+        getSelectList();
+    });
+    var correctanswer="";
+    function init() {
+        layui.use(['form', 'layedit'], function() {
+            var form = layui.form,
+                layer = layui.layer,
+                layedit = layui.layedit;
+            //自定义表单验证
+            form.verify({
+                examtypeid:function(value,item){
+                    //初始化一下记录属性
+                    correctanswer="";
+                    if(value=="" || value==null){
+                        return "请选择题目类别";
+                    }
+                },name:function(value,item){
+                    if(value=="" || value==null) {
+                        return "请输入题目内容";
+                    }
+                },a:function(value,item){
+                    if(value=="" || value==null) {
+                        return "请输入选项A内容";
+                    }
+                },b:function(value,item){
+                    //alert(value);
+                    if(value=="" || value==null) {
+                        return "请输入选项B内容";
+                    }
+                },c:function(value,item){
+                    if(value=="" || value==null) {
+                        return "请输入选项C内容";
+                    }
+                },d:function(value,item){
+                    if(value=="" || value==null) {
+                        return "请输入选项D内容";
+                    }
+                },explaininfo:function(value,item){
+                    if(value=="" || value==null) {
+                        return "请输入解释说明";
+                    }
+                }
+                ,da:function(value,item){//验证答案
+                    //判断复选框是否都选择了
+                    //alert("a==>"+ $("[name=a]").prop("checked"));
+                    if($("[name=a]").prop("checked")){
+                        correctanswer+="A";
+                    }
+                    if($("[name=b]").prop("checked")){
+                        correctanswer+="B";
+                    }
+                    if($("[name=c]").prop("checked")){
+                        correctanswer+="C";
+                    }
+                    if($("[name=d]").prop("checked")){
+                        correctanswer+="D";
+                    }
+                    if(correctanswer==""){
+                        return "请设置正确答案";
+                    }
+                }
+            });
+            form.on('submit(addinfo)', function(data){
+                //通过验证后调用添加方法
+                addInfo();
+                return false;
+            })
+            form.render(); //渲染
+        });
+    }
+    function addInfo() {
+        correctanswer="";
+        if($("[name=a]").prop("checked")){
+            correctanswer+="A";
+        }
+        if($("[name=b]").prop("checked")){
+            correctanswer+="B";
+        }
+        if($("[name=c]").prop("checked")){
+            correctanswer+="C";
+        }
+        if($("[name=d]").prop("checked")){
+            correctanswer+="D";
+        }
+        var params={
+            "examtypeid":$("#examtypeid").val(),
+            "name":$("#name").val(),
+            "a":$("#a_content").val(),
+            "b":$("#b_content").val(),
+            "c":$("#c_content").val(),
+            "d":$("#d_content").val(),
+            "correctanswer":correctanswer,
+            "explaininfo":$("#explaininfo").val()
+        };
+        $.ajax({
+            url: "/addExamInfo",
+            data:params,
+            dataType:"text",
+            type:"POST",
+            success: function(obj){
+                if(obj=="success"){
+                    alert("添加成功");
+                    doCancel();
+                }else{
+                    alert("添加失败")
+                }
+            },
+            error: function(obj){
+                alert("服务器链接错误:"+obj.toString());
+            }
+        });
+    }
+    function getSelectList() {
+        var params = {};
+        $.ajax({
+            url: "/getAllexamtype",
+            data: params,
+            dataType: "JSON",
+            type: "POST",
+            success: function (obj) {
+                //$("#type_id").append("<option value='"+data[i].id+"'>"+data[i].type_name+"</option>");
+                $("#examtypeid").append("<option value=''>" + "请选择类目" + "</option>");
+                if (obj != "undefined") {
+                    //动态添加校区下拉列表值
+                    $.each(obj, function (index, data) {
+                        //console.log(data)
+                        $("#examtypeid").append("<option value='" + data.id + "'>" + data.name + "</option>");
+                    });
+                }
+                init();
+            },
+            error: function (obj) {
+                alert("服务器链接错误:" + obj.toString());
+            }
+        });
+    }
+    //点击取消关闭窗口
+    function doCancel() {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);//关闭子窗体
+        parent.location.reload();//刷新父窗体
+    }
+</script>
+</body>
+</html>
