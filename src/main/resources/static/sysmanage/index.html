@@ -8,13 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <script src="../js/jquery.min.js"></script>
     <link rel="stylesheet" href="../layui/css/layui.css" media="all">
-
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
     <style>
         body {
             background-color: #e6e6e6;
-            margin: 0px;
-            padding: 0px;
+            margin: 0;
+            padding: 0;
         }
 
         .body_style {
@@ -26,31 +25,21 @@
 </head>
 <body>
 <div class="body_style">
-    <div class="layui-card-header">后台用户管理</div>
+    <div class="layui-card-header">账号管理</div>
     <form class="layui-form" action="">
         <!--表格-->
         <table class="layui-hide" id="test" lay-filter="test"></table>
         <script type="text/html" id="toolbarDemo">
             <!--查询条件-->
             <div class="layui-input-inline">
-                <select id="campusid" name="campusid" lay-filter="campusSelect">
-
-                </select>
+                <label for="name"></label><input type="text" id="name" name="name" autocomplete="off"
+                                                 placeholder="请输入姓名"
+                                                 class="layui-input">
             </div>
             <div class="layui-input-inline">
-                <select id="postid" name="postid" >
-
-                </select>
-            </div>
-            <div class="layui-input-inline">
-                <input type="text" id="name" name="name"  autocomplete="off"
-                       placeholder="请输入姓名"
-                       class="layui-input">
-            </div>
-            <div class="layui-input-inline">
-                <input type="text" id="phone" name="phone" lay-verify="title" autocomplete="off"
-                       placeholder="请输入手机号"
-                       class="layui-input">
+                <label for="phone"></label><input type="text" id="phone" name="phone" lay-verify="title" autocomplete="off"
+                                                  placeholder="请输入手机号"
+                                                  class="layui-input">
             </div>
             <button class="layui-btn layui-btn-normal layui-btn-sm" title="查询" onclick="initTable()">
                 <i class="layui-icon layui-icon-search" style="font-size: 30px; color: white;"></i>
@@ -59,7 +48,6 @@
                     type="button" id="newAdd" onclick="addPage()">
                 <i class="layui-icon layui-icon-add-1" style="font-size: 30px; color: white;"></i>
             </button>
-
         </script>
 
         <script type="text/html" id="barDemo">
@@ -77,17 +65,13 @@
 <script src="../layui/layui.js" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
-    var campusid=-1;
     var name="";
     var phone="";
-    var postid=-1;
     //原生js实现
     window.onload = function () {
-        campusid=-1;
-        postid=-1;
         init();
         initTable();
-    }
+    };
     function init() {
         layui.use(['form','laydate'], function () {
             var form = layui.form;
@@ -97,68 +81,13 @@
                 elem: '#classtime' //指定元素
             });
             form.render(); //渲染
-            form.on('select(campusSelect)', function(data){
-
-                getPostSelectList(data.value);
-            });
-        });
-    }
-
-    function getCampusSelectList() {
-        var params = {};
-        $.ajax({
-            url: "/getAllCampusmanage",
-            data: params,
-            dataType: "JSON",
-            type: "POST",
-            success: function (obj) {
-                $("#campusid").append("<option value='-1'>" + "请选择校区" + "</option>");
-                if (obj != "undefined") {
-                    //动态添加校区下拉列表值
-                    $.each(obj, function (index, data) {
-                        //console.log(data)
-                        $("#campusid").append("<option value='" + data.id + "'>" + data.name + "</option>");
-                    });
-                }
-                init();
-                $("#campusid").val(campusid);
-            },
-            error: function (obj) {
-                alert("服务器链接错误:" + obj.toString());
-            }
-        });
-    }
-    function getPostSelectList(id) {
-        $("#postid option[index!='-1']").remove();
-        var params = {"campusid": id};
-        $.ajax({
-            url: "/getPostListById",
-            data: params,
-            dataType: "JSON",
-            type: "POST",
-            success: function (obj) {
-                if (obj != "undefined") {
-                    //动态添加校区下拉列表值
-                    $("#postid").append("<option value='-1'>请选择岗位</option>");
-                    $.each(obj, function (index, data) {
-                        //console.log(data)
-                        $("#postid").append("<option value='" + data.id + "'>" + data.postname + "</option>");
-                    });
-                }
-
-                init();
-                $("#postid").val(postid);
-            },
-            error: function (obj) {
-                alert("服务器链接错误:" + obj.toString());
-            }
         });
     }
 
     function addPage() {
         layer.open({
             type: 2, //表示打开一个网页
-            title: '新增班级信息',
+            title: '新增管理账号',
             shadeClose: false, //点击窗体其他位置关闭
             shade: 0.3, //遮罩 透明度0.3
             maxmin: false, //开启最大化最小化按钮
@@ -174,7 +103,7 @@
         };
         layer.open({
             type: 2, //表示打开一个网页
-            title: '修改班级信息',
+            title: '修改管理账号',
             shadeClose: false, //点击窗体其他位置关闭
             shade: 0.3, //遮罩 透明度0.3
             maxmin: false, //开启最大化最小化按钮
@@ -185,20 +114,16 @@
 
     function initTable() {
         //解决初次加载时下拉列表未赋值时 是undefined的情况
-        campusid = $("#campusid").val()==undefined?-1:$("#campusid").val();
         name=$('#name').val()==undefined?"":$('#name').val();
         phone=$('#phone').val==undefined?"":$('#phone').val();
-        postid=$('#postid').val()==undefined?-1:$("#postid").val();
 
         layui.use('table', function () {
             var table = layui.table;
             table.render({
                 elem: '#test',
-                url: '/getSysuserList',
+                url: '/get_manager_list',
                 where: {
-                    name: name,
-                    postid: postid,
-                    campusid:campusid,
+                    username: name,
                     phone:phone
                 },
                 even: true, //开启隔行背景
@@ -209,43 +134,45 @@
                 cols: [
                     [{
                         fixed: 'left',
-                        field: 'campusname',
-                        title: '校区名称',
+                        field: 'username',
+                        title: '用户姓名',
                         minWidth: 150,
                         align: 'center',
                         unresize: true
                     }, {
                         fixed: 'left',
-                        field: 'postname',
-                        title: '岗位名称',
+                        field: 'loginname',
+                        title: '登录账号',
                         minWidth: 150,
                         align: 'center',
                         unresize: true
                     }, {
                         fixed: 'left',
-                        field: 'name',
-                        title: '姓名',
-                        minWidth: 150,
-                        align: 'center',
-                        unresize: true
-                    }, {
-                        field: 'sex',
+                        field: 'gender',
                         title: '性别',
                         minWidth: 80,
                         align: 'center',
                         unresize: true,
                         templet: function(res){
-                            return res.sex==1?"男":"女";
+                            return res.gender==1?"男":"女";
                         }
                     }, {
+                        fixed: 'left',
                         field: 'phone',
-                        title: '电话',
+                        title: '手机号码',
                         minWidth: 150,
                         align: 'center',
                         unresize: true
                     }, {
-                        field: 'login',
-                        title: '账号',
+                        fixed: 'left',
+                        field: 'email',
+                        title: '电子邮箱',
+                        minWidth: 150,
+                        align: 'center',
+                        unresize: true
+                    }, {
+                        field: 'formatTime',
+                        title: '创建时间',
                         minWidth: 150,
                         align: 'center',
                         unresize: true
@@ -258,16 +185,12 @@
                     }]
                 ],
                 page: true,
-                limit: 10,
-                limits: [10, 20, 30, 50]
+                limit: 15,
+                limits: [10, 15, 30, 50]
             });
-            getCampusSelectList();
-            getPostSelectList(campusid);
             //添加默认值
-            $("#postid").val(postid);
             $('#name').val(name);
             $('#phone').val(phone);
-            $('#campusid').val(campusid);
             init();
             //监听行工具事件
             table.on('tool(test)', function (obj) {
@@ -300,12 +223,12 @@
     function delInfo(id) {
         var params = {"id": id};
         $.ajax({
-            url: "/delSysuser",
+            url: "/del_manager",
             data: params,
             dataType: "text",
             type: "POST",
             success: function (obj) {
-                if (obj == "success") {
+                if (obj === "success") {
                     alert("删除成功");
                     initTable();//重新加载数据
                 } else {

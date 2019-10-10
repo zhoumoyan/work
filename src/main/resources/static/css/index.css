@@ -1,0 +1,712 @@
+*{
+	margin: 0px;
+	padding: 0px;
+}
+/*@font-face {
+	font-family: 'SourceHanSansCN-Bold';
+	src: url('../fonts/SourceHanSansCN-Bold.otf');
+}
+@font-face {
+	font-family: 'SourceHanSansCN-ExtraLight';
+	src: url('../fonts/SourceHanSansCN-ExtraLight.otf');
+}
+@font-face {
+	font-family: 'SourceHanSansCN-Light';
+	src: url('../fonts/SourceHanSansCN-Light.otf');
+}
+
+@font-face {
+	font-family: 'SourceHanSansCN-Medium';
+	src: url('../fonts/SourceHanSansCN-Medium.otf');
+}
+@font-face {
+	font-family: 'SourceHanSansCN-Normal';
+	src: url('../fonts/SourceHanSansCN-Normal.otf');
+}
+@font-face {
+	font-family: 'SourceHanSansCN-Regular_0';
+	src: url('../fonts/SourceHanSansCN-Regular_0.otf');
+}
+
+@font-face {
+	font-family: 'SourceHanSansCN-Regular';
+	src: url('../fonts/SourceHanSansCN-Regular.otf');
+}
+@font-face {
+	font-family: 'SourceHanSerifSC-Bold';
+	src: url('../fonts/SourceHanSerifSC-Bold.otf');
+}
+@font-face {
+	font-family: 'SourceHanSerifSC-ExtraLight';
+	src: url('../fonts/SourceHanSerifSC-ExtraLight.otf');
+}
+
+@font-face {
+	font-family: 'SourceHanSerifSC-Heavy';
+	src: url('../fonts/SourceHanSerifSC-Heavy.otf');
+}
+@font-face {
+	font-family: 'SourceHanSerifSC-Light';
+	src: url('../fonts/SourceHanSerifSC-Light.otf');
+}*/
+.textCenter{
+	text-align: center;
+}
+.clearBoth{
+	clear: both;
+}
+/*首页*/
+
+.indexBox{
+	height: 100%;
+	background: url(../img/bj.png) no-repeat;
+	background-size:100% 100%;
+	background-position: right;
+}
+.index_Title1{
+	width:5.61rem;
+	margin: auto;
+	box-shadow: 0rem 5rem 10rem 0rem 
+		rgba(153, 153, 153, 0.5);	
+}
+.index_Title1 img{
+	width:3.26rem;
+	margin-top: 2.2rem;
+	float: left;
+}
+.index_Title2{
+	width:5.61rem;
+	margin: auto;
+	box-shadow: 0rem 5rem 10rem 0rem 
+		rgba(153, 153, 153, 0.5);
+}
+.index_Title2 img{
+	width: 3.26rem;
+	margin-top:0.1rem;
+	float: right;
+	margin-bottom: 0.6rem;
+}
+.index_explain{
+	font-family: 'SourceHanSansCN-Medium';
+	font-size: 0.28rem;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 0.44rem;
+	letter-spacing: 0rem;
+	color: #df1314;
+	text-shadow: 0rem 0.02rem 0.02rem
+		rgba(153, 153, 153, 0.58);
+}
+.toanswerBtn{
+	width: 5.61rem;
+	height: 0.88rem;
+	background-image: linear-gradient(101deg, 
+		#fb5428 0%, 
+		#f96e2b 62%, 
+		#f7872e 100%);
+	box-shadow: 0rem 0.03rem 0.144rem 0.016rem 
+		rgba(188, 59, 25, 0.49);
+	border-radius: 0.12rem;
+	font-family: SourceHanSansCN-Medium;
+	font-size: 0.34rem;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 0.48rem;
+	letter-spacing: 0.054rem;
+	color: #ffffff;
+    border: none;
+    outline: none;
+    margin-top:1rem;
+    margin-bottom:0.23rem;
+}
+.index_tips{
+	width: 5.61rem;
+    margin: auto;
+    font-family: 'SourceHanSansCN-Medium';
+	font-size: 0.26rem;
+	font-weight: normal;
+	font-stretch: normal;
+	letter-spacing: 0rem;
+	color: #df1314;
+	text-align: center;
+}
+.index_tipsO{
+	float: left;
+}
+.index_tipsO a{
+	color: red;
+}
+.index_tipsT{
+	float: right;
+}
+.index_tipsT a{
+	color: red;
+}
+/*活动说明页面*/
+.activityDeBox{
+	text-align: center;	
+}
+.activitysBox{
+	background-color: #fff;
+	margin-top: 0.1rem;
+	padding:0px 0.3rem;
+	padding-top: 0.4rem;	
+}
+.activitysBox_1{
+	border-radius: 8px;
+	border: dashed 2px #ff0000;
+	padding: 0rem 0.4rem 0.4rem 0.4rem;
+}
+.activityText{
+	font-family: 'SourceHanSansCN-Regular';
+	font-size: 0.26rem;
+	line-height: 0.36rem;
+	color: #333333;
+}
+.activityLine{
+	width: 100%;
+	height: 1px;
+    background-color: #CCCCCC;
+    margin: 0.2rem 0rem;
+}
+.activityDeBox span{
+	border-radius: 50%;
+	display: inline-block;
+	border:1px solid #df1314;
+}
+.activityDeBox span:nth-child(4){
+	border-radius:0%;
+	border:none;
+}
+.activityDeBox span:nth-child(1),.activityDeBox  span:nth-child(7){
+	width: 0.13rem;
+	height: 0.13rem;
+	background-color: #df1314;
+	margin-bottom:0.015rem;
+}
+.activityDeBox span:nth-child(2),.activityDeBox  span:nth-child(6){
+	width: 0.15rem;
+	height: 0.15rem;
+	background-color: #df1314;
+	margin-bottom: 0.01rem;
+}
+.activityDeBox span:nth-child(3),.activityDeBox  span:nth-child(5){
+	width: 0.17rem;
+	height: 0.17rem;
+	background-color: #fff;
+}
+.activityDeBox_title{
+	text-align: center;
+	font-family: 'SourceHanSansCN-Bold';
+	font-size: 0.28rem;
+	line-height: 0.48rem;
+	color: #d52031;
+}
+.activityDeBox_tips{
+	color: #ff2222;
+}
+.mark {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  width:80%;
+  text-align: left;
+	font-size: 0.24rem;
+	padding:0rem 0.3rem;
+	line-height: 0.48rem;
+	height: 6rem;
+	z-index: 2;
+	background-color: #ffffff;
+	box-shadow: 0rem 0.03rem 0.03rem 0rem 
+		rgba(221, 221, 221, 0.69);
+	border-radius:0.1rem;
+}
+.bgMask{
+	 background-color: #000000;
+	 opacity: 0.7;
+	 display: none; 
+	 width: 100%; 
+	 position: absolute; 
+	 height: 100%; 
+	 z-index: 1;
+	 top: 0px;
+}
+.markCross{
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	width: 0.4rem;
+	height: 0.4rem;
+}
+/*答题页  answerPage*/
+.bjeb{
+	height: 0.1rem;
+	width: 100%;
+	background-color:#ebebeb;
+}
+.goHome{
+	width: 0.35rem;
+    height: 0.48rem;
+}
+.goHomeBtn{
+	width: 100%;
+	margin-top: 0.2rem;
+}
+.answerHeader{
+	width: 100%;
+	background:#ffffff;
+	height: 0.7rem;
+	line-height: 0.7rem;
+	vertical-align: top;
+}
+.answerHeader li{
+	display: inline-block;
+	list-style:none;
+	text-align: center;
+	vertical-align:top;
+	font-family: 'SourceHanSansCN-Bold';
+	font-size: 0.36rem;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 0.36rem;
+	color: #df1314;
+	line-height: 0.7rem;
+}
+.answerHeader li:nth-child(1){
+	position: absolute;
+	left: 0.1rem;
+}
+.answerHeader li:nth-child(2){
+	width:100%;
+}
+.answerPaging{
+	width: 100%;
+	font-size: 0.24rem;
+	position: fixed;
+	bottom: 0rem;
+}
+.answerPaging li{
+	display: inline-block;
+	width:0.9rem;
+	padding: 0.1rem;
+	margin:auto 0.1rem auto auto;
+	text-align: center;
+	background-color: #ADB5BD;
+}
+.answerPaging li:last-child{
+	margin-right: 0rem;
+}
+.answerPaging_active{
+	background-color: #D1ECF1 !important;
+}
+.answerSubject{
+	width: 100%;
+}
+
+.answerSubject_acive{
+	display: block !important;
+}
+.answerSubject{
+	font-size: 0.24rem;
+	line-height: 0.46rem;
+	background-color:#fff;
+}
+.subjects{
+	width: 95%;
+	margin:0.15rem auto;
+}
+.answerSubject .subjects:last-child{
+	margin-bottom:1.2rem;
+}
+.subjects p{
+	font-family: 'SourceHanSansCN-Regular';
+	font-size: 0.30rem;
+	line-height: 0.36rem;
+	color: #333333;
+	padding: 0.2rem 0rem;
+	margin-left: 0.46rem;
+}
+.subjects p{
+	/*border-bottom:1px solid #cccccc ;*/
+}
+.subjects_one{
+	text-indent: 0rem !important;
+	font-family: 'SourceHanSansCN-Bold' !important;
+	font-size: 0.32rem !important;
+	line-height: 0.60rem !important;
+	color: #333333 !important;
+	border: none !important;
+	margin: 0rem !important;
+}
+.subjects .optionAB{
+	font-family: 'SourceHanSansCN-Medium';
+	font-size: 0.34rem;
+	line-height: 0.36rem;
+	color: #333333;
+	margin:0rem 0.1rem 0rem 0.2rem;
+}
+.markCancelBtn{
+	outline: none;
+	border: none;
+	text-align: center;
+	margin-top:0.5rem;
+	width: 2.2rem;
+	height: 0.68rem;
+	background-color: #e2bb85;
+	box-shadow: 0rem 0.03rem 0.09rem 0.01rem 
+		rgba(153, 153, 153, 0.32);
+	border-radius: 0.1rem;
+	border: solid 0.02rem #e2bb85;
+	margin: 0.41rem 0.1rem;
+	font-family: 'SourceHanSansCN-Medium';
+	font-size: 0.34rem;
+	line-height: 0.36rem;
+	color: #ffffff;
+}
+
+.markConfirmBtn{
+	outline: none;
+	border: none;
+	text-align: center;
+	margin-top:0.5rem;
+	width: 2.2rem;
+	height: 0.68rem;
+	background-color: #df1314;
+	box-shadow: 0rem 0.03rem 0.09rem 0.01rem 
+		rgba(153, 153, 153, 0.32);
+	border-radius: 0.1rem;
+	margin: 0.41rem 0.1rem;
+	font-family: 'SourceHanSansCN-Bold';
+	font-size: 0.34rem;
+	line-height: 0.36rem;
+	color: #ffffff;
+}
+.submissionBtn{
+	margin-bottom:0.4rem;
+	outline: none;
+	border: none;
+	text-align: center;
+	width: 5.6rem;
+	height: 0.89rem;
+	background-color: #df1314;
+	box-shadow: 0rem 0.03rem 0.03rem 0rem 
+		rgba(169, 17, 17, 0.75);
+	border-radius: 0.08rem;
+	font-family: 'SourceHanSansCN-Bold';
+	font-size: 0.34rem;
+	line-height: 0.36rem;
+	color: #ffffff;
+}
+.answerMark{
+	height: 2.4rem;
+	text-align: center;
+}
+
+/*查看答题结果*/
+.answerBox{
+	margin:auto;
+	padding: 0rem 0.24rem;
+	margin-top: 0.1rem;
+	background-color: #fff;
+}
+
+.smarkTisp{
+	font-family: 'SourceHanSansCN-Bold';
+	font-size: 0.34rem;
+	line-height: 0.36rem;
+	color: #df1314;
+	margin-top: 0.66rem;
+}
+.answerCheckbox{
+	font-family: 'SourceHanSansCN-Medium';
+	font-size: 0.3rem;
+	line-height: 0.36rem;
+	color: #333333;
+}
+.answerCheckbox ul{
+	width: 100%;
+}
+.answerCheckbox ul li{
+	list-style:none;
+	width:18%;
+	text-align:center;
+	display:inline-block;
+	margin-bottom: 0.4rem;
+}
+.textIndent3{
+	margin-left: -0.2rem;
+}
+.answerCheckbox ul li input{
+	margin-left: 0.3rem;
+}
+.answerNumber{
+	font-size: 0.24rem;
+	margin:0rem;
+	font-family: 'SourceHanSansCN-Bold';
+	font-size: 0.36rem;
+	line-height: 0.36rem;
+	padding-top: 0.4rem;
+	padding-bottom: 0.5rem;
+	color: #df1314;
+}
+.answerNumberRight{
+	text-align: right;
+	font-family: 'SourceHanSansCN-Medium';
+	font-size: 0.34rem;
+	line-height: 0.36rem;
+	color: #333333;
+}
+.tichetNumber{
+	color: #a99c01;
+	font-size: 0.24rem;
+	margin: 0.5rem 0rem;
+}
+.answerFraction{
+	margin-left: 0.2rem;
+	font-family: 'SourceHanSansCN-Medium';
+	font-size: 0.48rem;
+	font-weight: normal;
+	color: #ff0202;
+}
+.answerAmount{
+	margin-left: 0.2rem;
+}
+.answerLine{
+	width:5.41rem;
+	height: 1px;
+	background-color: #cccccc;
+	position: absolute;
+	right: 0.3rem;
+}
+.answerLineL{
+	width:5.41rem;
+	height: 1px;
+	background-color: #cccccc;
+	position: absolute;
+	left: 0.3rem;
+}
+.answerLineT{
+	width: 100%;
+	height: 1px;
+	border-bottom:1px dashed #121416;
+	margin-bottom: 0.4rem;
+}
+.integral{
+	color: #000000;
+	text-align: right;
+	font-family: 'SourceHanSansCN-Regular';
+	font-size: 0.3rem;
+	line-height: 0.36rem;
+	color: #333333;
+	margin-top: 0.35rem;
+}
+.answer_Ticket{
+	text-align: center;
+	outline: none;
+	border: none;
+	display: inline-block;
+	width:2.5rem;
+	height: 0.89rem;
+	background-color: #e2bb85;
+	box-shadow: 0rem 0.03rem 0.03rem 0rem 
+		rgba(172, 143, 102, 0.69);
+	border-radius: 0.08rem;
+	font-family: 'SourceHanSansCN-Medium';
+	font-size: 0.34rem;
+	line-height: 0.36rem;
+	color: #ffffff;
+}
+.ticketChange{
+	margin: auto;
+	text-align: center;
+	margin-top: 1rem;
+	padding-bottom: 1rem;
+}
+.answer_Exchange{
+	text-align: center;
+	color:white;
+	outline: none;
+	border: none;
+	display: inline-block;
+	width:2.5rem;
+	height: 0.89rem;
+	background-color: #df1314;
+	box-shadow: 0rem 0.03rem 0.03rem 0rem 
+		rgba(172, 143, 102, 0.69);
+	border-radius: 0.08rem;
+	font-family: 'SourceHanSansCN-Medium';
+	font-size: 0.34rem;
+	line-height: 0.36rem;
+	color: #ffffff;
+}
+.ticketList{
+	background:#D39E00;
+	font-size: 0.24rem;
+	padding: 0.3rem 0rem;
+}
+.ticketList li{
+	display: inline-block;
+}
+.ticketList li:nth-child(1){
+	width: 30%;
+	vertical-align: super;
+	text-align: center;
+}
+.ticketList li:nth-child(1) .answerMoney{
+	font-size: 0.48rem;
+	font-weight: 700;	
+}
+.ticketList li:nth-child(2){
+	width: 68%;
+	text-align: left;
+}
+.ticketList li:nth-child(2) p{
+	width: 68%;
+	text-align: left;
+	line-height: 0.48rem;
+}
+.answerTitle{
+	font-family: 'SourceHanSansCN-Medium';
+	font-size: 0.32rem;
+	line-height: 0.36rem;
+	color: #333333;
+	padding-top: 0.5rem;
+	padding-bottom: 0.3rem;
+}
+.ticketTilte1{
+	color: red;
+}
+.confirmBtn{
+	width: 1.5rem;
+	height: 0.5rem;
+	text-align: center;
+	background-color: red;
+	color: white;
+	margin: auto;
+	outline: none;
+	border: none;
+}
+.exresult{
+	margin-top: 0.6rem;
+	font-family: 'SourceHanSansCN-Medium';
+	font-size: 0.36rem;
+	line-height: 0.36rem;
+	color: #333333;
+}
+.answerNumberLeft{
+	text-align: left;
+    font-family: 'SourceHanSansCN-Medium';
+    font-size: 0.34rem;
+    line-height: 0.36rem;
+    color: #333333;
+    margin-bottom: 0.3rem;
+    padding-top: 0.6rem;
+}
+.exchange_Ticket{
+	width: 5.6rem;
+	height: 0.89rem;
+	background-color: #df1314;
+	box-shadow: 0rem 0.03rem 0.03rem 0rem 
+		rgba(153, 12, 13, 0.69);
+	border-radius: 0.08rem;
+	border: solid 2px #ff0000;
+	margin: auto;
+	font-family: 'SourceHanSansCN-Medium';
+	font-size: 0.34rem;
+	line-height: 0.36rem;
+	color: #ffffff;
+	outline:none;
+	border: none;
+}
+.answerLineC{
+    height: 1px;
+    background-color: #cccccc;
+    margin: auto;
+}
+.ticketNumber{
+	margin-left: 0.3rem;
+}
+.exSure{
+	width:95%;
+	height: 0.88rem;
+	background-color: #e2bb85;
+	box-shadow: 0rem 0.03rem 0.03rem 0rem 
+		rgba(170, 140, 98, 0.69);
+	border-radius:0.1rem;
+	font-family: 'SourceHanSansCN-Regular';
+	font-size: 0.34rem;
+	line-height: 0.36rem;
+	color: #ffffff;
+}
+.exSureFalse{
+	font-family: 'SourceHanSansCN-Medium';
+	font-size: 0.36rem;
+	line-height: 0.36rem;
+	color: #df1314;
+}
+
+
+
+.test-label {
+	display: inline-block
+}
+.test-radio {
+	display: none
+}
+.test-radioInput {
+	border-radius: 100%;
+	display: inline-block;
+	height:0.3rem;
+	margin-right:0.1rem;
+	margin-top: -1px;
+	vertical-align: middle;
+	width:0.3rem;
+	line-height: 1;
+	text-align:center;
+	background-color: #dddddd;
+	border: solid 2px #cccccc;
+}
+.test-radio:checked+.test-radioInput:after {
+	background-color: #ff0000;
+	border-radius: 100%;
+	content: "";
+	display: inline-block;
+	height:0.26rem;
+	margin-bottom: 0.02rem;
+	width: 0.26rem;
+}
+
+.test-check {
+	display: none
+}
+.test-checkInput {
+	width: 0.3rem;
+	height: 0.3rem;
+	background-color: #dddddd;
+	border-radius: 4px;
+	border: solid 2px #cccccc;
+	display: inline-block;
+	margin-right:0.1rem;
+	margin-top: -1px;
+	vertical-align: middle;
+	line-height: 1;
+	text-align:center;
+}
+.test-check:checked+.test-checkInput:after {
+	color: #df1314;
+	content: "✓";
+	display: inline-block;
+	height:0.26rem;
+	margin-bottom: 0.02rem;
+	width: 0.26rem;
+}
+.ticketBox,.exchangeBox{
+	padding-bottom: 1rem;
+}
+html{
+	background-color: white;
+}

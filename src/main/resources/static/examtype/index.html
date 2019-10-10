@@ -10,12 +10,13 @@
     <script src="../js/jquery.min.js"></script>
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
     <style>
-        body{
+        body {
             background-color: #e6e6e6;
-            margin: 0px;
-            padding: 0px;
+            margin: 0;
+            padding: 0;
         }
-        .body_style{
+
+        .body_style {
             margin: 15px;
             padding: 5px 15px;
             background-color: white;
@@ -23,8 +24,8 @@
     </style>
 </head>
 <body>
-<div class="body_style" >
-    <div class="layui-card-header">题目类别管理</div>
+<div class="body_style">
+    <div class="layui-card-header">类别管理</div>
     <form class="layui-form" action="">
         <!--表格-->
         <table class="layui-hide" id="test" lay-filter="test"></table>
@@ -32,17 +33,17 @@
             <!--查询条件-->
             <div class="layui-input-inline">
                 <label for="title"></label><input type="text" id="title" name="title" lay-verify="title" autocomplete="off"
-                                                  placeholder="请输入题目类别名称"
+                                                  placeholder="请输入类别名称"
                                                   class="layui-input">
             </div>
 
-                <button class="layui-btn layui-btn-normal layui-btn-sm" title="查询" onclick="initTable()" >
-                    <i class="layui-icon layui-icon-search" style="font-size: 30px; color: white;"></i>
-                </button>
-                <button class="layui-btn layui-btn-normal layui-btn-sm" title="添加" style="margin-left: 1px"
-                        type="button" id="newAdd" onclick="addPage()"  >
-                    <i class="layui-icon layui-icon-add-1" style="font-size: 30px; color: white;"></i>
-                </button>
+            <button class="layui-btn layui-btn-normal layui-btn-sm" title="查询" onclick="initTable()">
+                <i class="layui-icon layui-icon-search" style="font-size: 30px; color: white;"></i>
+            </button>
+            <button class="layui-btn layui-btn-normal layui-btn-sm" title="添加" style="margin-left: 1px"
+                    type="button" id="newAdd" onclick="addPage()">
+                <i class="layui-icon layui-icon-add-1" style="font-size: 30px; color: white;"></i>
+            </button>
 
         </script>
 
@@ -50,7 +51,7 @@
             <a class="layui-btn layui-btn-xs" lay-event="edit" title="编辑">
                 <i class="layui-icon layui-icon-edit" style="font-size: 30px; color: white;"></i>
             </a>
-            <a class="layui-btn layui-btn-danger layui-btn-xs"  lay-event="del" title="删除">
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" title="删除">
                 <i class="layui-icon layui-icon-delete" style="font-size: 30px; color: white;"></i>
             </a>
         </script>
@@ -61,13 +62,13 @@
 <script src="../layui/layui.js" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
-    $(function() {
+    $(function () {
         init();
         initTable();
     });
 
     function init() {
-        layui.use(['form', 'layedit'], function() {
+        layui.use(['form', 'layedit'], function () {
             var form = layui.form,
                 layer = layui.layer,
                 layedit = layui.layedit;
@@ -86,10 +87,11 @@
             content: 'addInfo.html' //目标网页
         });
     }
+
     //编辑题目类别
     function editPage(id) {
         data = {
-            id:id
+            id: id
         };
         layer.open({
             type: 2, //表示打开一个网页
@@ -101,10 +103,11 @@
             content: 'updateInfo.html' //目标网页
         });
     }
+
     function selectPage(id) {
         //父页面给弹出的页面传递数据
         data = {
-            id:id
+            id: id
         };
         layer.open({
             type: 2, //表示打开一个网页
@@ -119,11 +122,11 @@
 
     function initTable() {
         var xqName = $('#title').val();
-        layui.use('table', function() {
+        layui.use('table', function () {
             var table = layui.table;
             table.render({
                 elem: '#test',
-                url: '/selectexamtype',
+                url: '/select_exam_type',
                 where: {
                     typeName: xqName
                 },
@@ -137,46 +140,45 @@
                         field: 'id',
                         title: '类别ID',
                         minWidth: 100,
-                        align:'center',
+                        align: 'center',
                         unresize: true
                     }, {
                         field: 'typeName',
                         title: '类别名称',
                         minWidth: 100,
-                        align:'center',
+                        align: 'center',
                         unresize: true
                     }, {
                         field: 'formatTime',
                         title: '创建时间',
                         minWidth: 100,
-                        align:'center',
+                        align: 'center',
                         unresize: true
                     }, {
                         fixed: 'right',
                         title: '操作',
-                        align:'center',
+                        align: 'center',
                         toolbar: '#barDemo',
                         width: 180
                     }]
                 ],
                 page: true,
-                limit: 10,
-                limits: [10, 20, 30, 50]
+                limit: 15,
+                limits: [10, 15, 30, 50]
             });
 
 
             //监听行工具事件
-            table.on('tool(test)', function(obj) {
+            table.on('tool(test)', function (obj) {
                 var data = obj.data;
                 console.log(data.id);
                 if (obj.event === 'del') {
                     layer.confirm("请问是否确定删除，删除后不可恢复？", {
-                        btn: ["确定","取消"] //按钮
-                    }, function(index){
+                        btn: ["确定", "取消"] //按钮
+                    }, function (index) {
                         delInfo(data.id);
                         layer.close(index);
-                    }, function(){
-
+                    }, function () {
                     });
                 } else if (obj.event === 'edit') {
                     editPage(data.id);
@@ -189,23 +191,24 @@
 
         $('#title').val(xqName);
     }
+
     function delInfo(id) {
-        var params={"id":id};
+        var params = {"id": id};
         $.ajax({
-            url: "/deleteexamtype",
-            data:params,
-            dataType:"text",
-            type:"POST",
-            success: function(obj){
-                if(obj==="success"){
+            url: "/delete_exam_type",
+            data: params,
+            dataType: "text",
+            type: "POST",
+            success: function (obj) {
+                if (obj === "success") {
                     alert("删除成功");
                     initTable();//重新加载数据
-                }else{
+                } else {
                     alert("删除失败")
                 }
             },
-            error: function(obj){
-                alert("服务器链接错误:"+obj.toString());
+            error: function (obj) {
+                alert("服务器链接错误:" + obj.toString());
             }
         });
     }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="site.zhongkai.ask.mapper.IWxUser">
+    <select id="getWxUsers" parameterType="map" resultType="site.zhongkai.ask.entity.WxUser">
+        SELECT
+        t.id,
+        t.wechat_id as wechatId,
+        t.open_id as openId,
+        t.grade,
+        t.create_time as createTime,
+        t.active_time as activeTime
+        FROM t_wx_user t
+        where 1=1
+        <if test="wechatId != null and wechatId != ''">
+            AND t.wechat_id LIKE CONCAT('%',#{wechatId},'%')
+        </if>
+        <if test="openId != null and openId != ''">
+            AND t.open_id LIKE CONCAT('%',#{openId},'%')
+        </if>
+    </select>
+</mapper>

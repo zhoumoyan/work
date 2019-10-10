@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <script src="../js/jquery.min.js"></script>
     <link rel="stylesheet" href="../layui/css/layui.css" media="all">
-
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
     <style>
         body {
@@ -35,15 +34,13 @@
             <!--查询条件-->
             <div class="layui-input-inline">
                 <label for="examtypeid"></label><select id="examtypeid" name="examtypeid">
-
-                </select>
+            </select>
             </div>
             <div class="layui-input-inline">
                 <label for="name"></label><input type="text" id="name" name="name" autocomplete="off"
                                                  placeholder="请输入题目名称"
                                                  class="layui-input">
             </div>
-
             <button class="layui-btn layui-btn-normal layui-btn-sm" title="查询" onclick="initTable()">
                 <i class="layui-icon layui-icon-search" style="font-size: 30px; color: white;"></i>
             </button>
@@ -55,10 +52,12 @@
             <!--type="button" id="uploadExcel" >-->
             <!--<i class="layui-icon layui-icon-upload-drag" style="font-size: 30px; color: white;"></i>-->
             <!--</button>-->
-            <button class="layui-btn layui-btn-normal layui-btn-sm" title="Excel导入" style="margin-left: 1px"
-                    type="button" onclick="openUpload()" id="upFile">Excel导入
+            <button class="layui-btn layui-btn-normal layui-btn-sm" title="Excel 导入" style="margin-left: 1px"
+                    type="button" onclick="openUpload()" id="upFile">Excel 导入
             </button>
-
+            <button class="layui-btn layui-btn-normal layui-btn-sm" title="导入模板" style="margin-left: 1px"
+                    type="button" onclick="location.href='ImportTemplates.xls'">导入模板下载
+            </button>
         </script>
 
         <script type="text/html" id="barDemo">
@@ -79,7 +78,6 @@
     //原生js实现
     window.onload = function () {
         init();
-
         initTable();
     };
 
@@ -92,7 +90,7 @@
             //执行实例
             var uploadInst = upload.render({
                 elem: '#uploadExcel', //绑定元素
-                url: '/uploadExcelToExamInfo',     //上传接口
+                url: '/upload_excel_to_exam_info',     //上传接口
                 size: 204800,
                 method: 'POST',
                 accept: 'file',
@@ -101,7 +99,7 @@
                 field: 'file',
                 // bindAction:'#upFile',
                 done: function (res) {
-                    layer.msg("444");
+                    layer.msg("上传完毕");
                     //上传完毕回调
                     layer.msg(res);
                 },
@@ -117,7 +115,7 @@
     function getSelectList() {
         var params = {};
         $.ajax({
-            url: "/getAllexamtype",
+            url: "/get_all_exam_type",
             data: params,
             dataType: "JSON",
             type: "POST",
@@ -126,10 +124,9 @@
                 if (obj !== "undefined") {
                     //动态添加校区下拉列表值
                     $.each(obj, function (index, data) {
-                        $("#examtypeid").append("<option value='" + data.id + "'>" + data.name + "</option>");
+                        $("#examtypeid").append("<option value='" + data.id + "'>" + data.typeName + "</option>");
                     });
                 }
-
                 init();
                 $("#examtypeid").val(examtypeid);
             },
@@ -160,7 +157,7 @@
             maxmin: false, //开启最大化最小化按钮
             offset: '10px',
             area: ['80%', '80%'],
-            content: 'fileUploader.html' //目标网页
+            content: 'fileuploader.html' //目标网页
         });
     }
 
@@ -171,7 +168,7 @@
         };
         layer.open({
             type: 2, //表示打开一个网页
-            title: '修改校区信息',
+            title: '修改题目信息',
             shadeClose: false, //点击窗体其他位置关闭
             shade: 0.3, //遮罩 透明度0.3
             maxmin: false, //开启最大化最小化按钮
@@ -205,10 +202,10 @@
             var table = layui.table;
             table.render({
                 elem: '#test',
-                url: '/getExamInfoList',
+                url: '/get_exam_info_list',
                 where: {
-                    name: name,
-                    examtypeid: examtypeid
+                    examName: name,
+                    examTypeId: examtypeid
                 },
                 even: true, //开启隔行背景
                 method: 'post',
@@ -218,49 +215,55 @@
                 cols: [
                     [{
                         fixed: 'left',
-                        field: 'examtypename',
-                        title: '类别ID',
-                        minWidth: 150,
+                        field: 'examTypeName',
+                        title: '类别名称',
+                        minWidth: 130,
                         align: 'center',
                         unresize: true
                     }, {
-                        field: 'name',
+                        field: 'examName',
                         title: '题目名称',
                         minWidth: 250,
                         align: 'center',
                         unresize: true
                     }, {
-                        field: 'a',
+                        field: 'optionA',
                         title: '选项A',
-                        minWidth: 80,
+                        minWidth: 70,
                         align: 'center',
                         unresize: true
                     }, {
-                        field: 'b',
+                        field: 'optionB',
                         title: '选项B',
-                        minWidth: 80,
+                        minWidth: 70,
                         align: 'center',
                         unresize: true
                     }, {
-                        field: 'c',
+                        field: 'optionC',
                         title: '选项C',
-                        minWidth: 80,
+                        minWidth: 70,
                         align: 'center',
                         unresize: true
                     }, {
-                        field: 'd',
+                        field: 'optionD',
                         title: '选项D',
-                        minWidth: 80,
+                        minWidth: 70,
                         align: 'center',
                         unresize: true
                     }, {
-                        field: 'correctanswer',
-                        title: '答案',
-                        minWidth: 80,
+                        field: 'optionE',
+                        title: '选项E',
+                        minWidth: 70,
                         align: 'center',
                         unresize: true
                     }, {
-                        field: 'explaininfo',
+                        field: 'correctAnswer',
+                        title: '正确答案',
+                        minWidth: 70,
+                        align: 'center',
+                        unresize: true
+                    }, {
+                        field: 'examExplain',
                         title: '解释说明',
                         minWidth: 200,
                         align: 'center',
@@ -274,8 +277,8 @@
                     }]
                 ],
                 page: true,
-                limit: 10,
-                limits: [10, 20, 30, 50]
+                limit: 15,
+                limits: [10, 15, 30, 50, 200, 1000]
             });
             getSelectList();
             $('#name').val(name);//添加默认值
@@ -305,12 +308,12 @@
     function delexam(id) {
         var params = {"id": id};
         $.ajax({
-            url: "/delExamInfo",
+            url: "/del_exam_info",
             data: params,
             dataType: "text",
             type: "POST",
             success: function (obj) {
-                if (obj == "success") {
+                if (obj === "success") {
                     alert("删除成功");
                     initTable();//重新加载数据
                 } else {

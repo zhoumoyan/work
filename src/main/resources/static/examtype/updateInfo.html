@@ -45,7 +45,7 @@
     function getInfoById(id) {
         var params={"id":id};
         $.ajax({
-            url: "/getExamtypeInfoById",
+            url: "/get_exam_type_info_by_id",
             data:params,
             dataType:"JSON",
             type:"POST",
@@ -63,7 +63,7 @@
     function updateCampus() {
         var params={"id":$("#id").val(),"typeName":$("#title").val()};
         $.ajax({
-            url: "/updateexamtype",
+            url: "/update_exam_type",
             data:params,
             dataType:"text",
             type:"POST",

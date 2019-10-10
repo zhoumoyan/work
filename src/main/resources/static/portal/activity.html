@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html style="height: 100%;">
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../css/index.css" />
+		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/fontSize.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/index.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body style="height: 100%;">
+		<div class="activityPage">
+			<ul class="answerHeader">
+				<li class="goHome"><img class="goHomeBtn" id="goHome" src="../img/back.png" alt="" /></li>
+			</ul>
+			<div class="bjeb"></div>
+			<div class="activitysBox">
+				<div class="activitysBox_1">
+					<div class="activityDeBox">
+						<span></span>
+						<span></span>
+						<span></span>
+						<span class="activityDeBox_title">活动说明</span>
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+					<div class="activityText">
+						<p>1、访问能帮就帮活动平台参与在线答题，答题时请输入真实姓名、地址、手机号码等信息；</p>
+						<div class="activityLine"></div>
+						<p>2、系统每次将随机从题库中抽取20道题，每题5分，登录用户每天最多可参与三次答题，每日累计积分上限为100分；</p>
+						<div class="activityLine"></div>
+						<p>3、答题产生的积分情况，可在答题平台上查询，100积分可兑换凯云充电1元抵扣券 <span class="activityDeBox_tips">（仅限望州南社区凯云扫码充电设备抵扣充电费用）</span></p>
+						<div class="activityLine"></div>
+						<p>4、为避免答题中出现问题，答题过程中请勿关闭或切换答题窗口。</p>
+						<div class="activityLine"></div>
+						<p class="activityDeBox_tips">*该活动细则解释权归众凯科技所有。</p>
+					</div>
+				</div>
+				<div class="textCenter"><input style="margin-top: 0rem;" class="toanswerBtn" type="button" name="" onclick="gotoAnswerPage()" value="去答题" /></div>
+		  	    <div class="index_tips textCenter" style="padding-bottom:1rem;"><span class="index_tipsO" style="color: #999999;">活动说明</span><span id="index_tipsT" class="index_tipsT">我的积分</span></div>
+			</div>
+		</div>
+	</body>
+    <script type="text/javascript">
+    	 	function gotoAnswerPage(){
+				 window.location.href = 'subjectPage.html'
+			}
+    	 	$(function() {
+				$("#goHome").on("click",function(){
+					window.history.back(-1)
+				})
+				$("#index_tipsT").on("click",function(){
+					window.location.href = 'exchange.html'
+				})
+			})
+    </script>
+</html>

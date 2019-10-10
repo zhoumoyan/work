@@ -2,7 +2,7 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>新增用户信息</title>
+    <title>新增后台用户</title>
     <link rel="stylesheet" href="../layui/css/layui.css" media="all">
     <script src="../js/jquery.min.js"></script>
 </head>
@@ -10,61 +10,49 @@
 <form class="layui-form" method="post" style="margin-top: 30px">
     <div class="layui-form-item">
         <div class="layui-inline">
-            <label class="layui-form-label">校区</label>
+            <label class="layui-form-label">用户姓名</label>
             <div class="layui-input-inline">
-                <select id="campusid" name="campusid" lay-filter="campusid" lay-verify="campusid">
-
-                </select>
+                <label for="name"></label><input type="text" id="name" name="name" lay-verify="name"
+                                                 autocomplete="off" placeholder="请输入姓名" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
-            <label class="layui-form-label">岗位</label>
+            <label class="layui-form-label">电话号码</label>
             <div class="layui-input-inline">
-                <select id="postid" name="postid"  lay-verify="postid">
-
-                </select>
+                <label for="phone"></label><input type="tel" id="phone" name="phone" lay-verify="phone"
+                                                  autocomplete="off" placeholder="请输入电话" class="layui-input">
             </div>
         </div>
     </div>
     <div class="layui-form-item">
         <div class="layui-inline">
-            <label class="layui-form-label">姓名</label>
-            <div class="layui-input-inline">
-                <input type="text" id="name" name="name" lay-verify="name"
-                       autocomplete="off" placeholder="请输入姓名" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-inline">
-            <label class="layui-form-label">电话</label>
-            <div class="layui-input-inline">
-                <input type="tel" id="phone" name="phone" lay-verify="phone"
-                       autocomplete="off" placeholder="请输入电话" class="layui-input">
-            </div>
-        </div>
-
-    </div>
-    <div class="layui-form-item">
-        <div class="layui-inline">
-            <label class="layui-form-label">性别</label>
+            <label class="layui-form-label">用户性别</label>
             <div class="layui-input-inline">
                 <input type="radio" name="sex" value="1" title="男" checked="">
                 <input type="radio" name="sex" value="0" title="女">
             </div>
         </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">电子邮箱</label>
+            <div class="layui-input-inline">
+                <label for="email"></label><input type="tel" id="email" name="phone" lay-verify="email"
+                                                  autocomplete="off" placeholder="请输入邮箱" class="layui-input">
+            </div>
+        </div>
     </div>
     <div class="layui-form-item">
         <div class="layui-inline">
-            <label class="layui-form-label">账号</label>
+            <label class="layui-form-label">登录账号</label>
             <div class="layui-input-inline">
-                <input type="text" id="login" name="login"
-                       autocomplete="off" placeholder="请设置账号" class="layui-input">
+                <label for="login"></label><input type="text" id="login" name="login"
+                                                  autocomplete="off" placeholder="请设置账号" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
-            <label class="layui-form-label">密码</label>
+            <label class="layui-form-label">登录密码</label>
             <div class="layui-input-inline">
-                <input type="text" id="pwd" name="pwd"
-                       autocomplete="off" placeholder="请设置密码" class="layui-input">
+                <label for="pwd"></label><input type="text" id="pwd" name="pwd"
+                                                autocomplete="off" placeholder="请设置密码" class="layui-input">
             </div>
         </div>
     </div>
@@ -81,136 +69,78 @@
 <script src="../layui/layui.js" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
-    $(function() {
+    $(function () {
         init();
-        getSelectList();
     });
+
     function init() {
-        layui.use(['form','laydate'], function () {
+        layui.use(['form', 'laydate'], function () {
             var form = layui.form;
             var laydate = layui.laydate;
             //执行一个laydate实例
             laydate.render({
                 elem: '#graduationtime' //指定元素
             });
-            form.on('select(campusid)', function(data){
-                getPostSelectList(data.value);
-            });
             //自定义表单验证
             form.verify({
-                campusid:function(value,item){//校区
-                    if(value=="" || value==null){
-                        return "请选择校区";
-                    }
-                },postid:function(value,item){//岗位
-                    if(value=="" || value==null) {
-                        return "请选择岗位";
-                    }
-                },name:function(value,item){//姓名
-                    if(value=="" || value==null) {
+                name: function (value, item) {//姓名
+                    if (value === "" || value == null) {
                         return "请输入姓名";
                     }
-                },phone:function(value,item){//电话
+                }, phone: function (value, item) {//电话
                     //alert(value);
-                    if(!(/^1[34578]\d{9}$/.test(value))){
+                    if (!(/^1[34578]\d{9}$/.test(value))) {
                         return "请填写正确手机号码";
                     }
                 }
             });
-            form.on('submit(addinfo)', function(data){
+            form.on('submit(addinfo)', function (data) {
                 //通过验证后调用添加方法
                 //console.log("data.field==>"+data.field)
-               // console.log("JSON.stringify==>"+JSON.stringify(data.field))
-               // console.log("JSON.parse==>"+JSON.parse(data.field))
+                // console.log("JSON.stringify==>"+JSON.stringify(data.field))
+                // console.log("JSON.parse==>"+JSON.parse(data.field))
                 addInfo();
                 return false;
-            })
+            });
             form.render(); //渲染
         });
     }
 
-    function getPostSelectList(id) {
-        $("#postid option[index!='-1']").remove();
-        var params = {"campusid": id};
-        $.ajax({
-            url: "/getPostListById",
-            data: params,
-            dataType: "JSON",
-            type: "POST",
-            success: function (obj) {
-                if (obj != "undefined") {
-                    //动态添加校区下拉列表值
-                    $("#postid").append("<option value=''>请选择岗位</option>");
-                    $.each(obj, function (index, data) {
-                        //console.log(data)
-                        $("#postid").append("<option value='" + data.id + "'>" + data.postname + "</option>");
-                    });
-                }
-
-                init();
-                $("#postid").val(postid);
-            },
-            error: function (obj) {
-                alert("服务器链接错误:" + obj.toString());
-            }
-        });
-    }
     function addInfo() {
-        var params={
-            "campusid":$("#campusid").val(),
-            "postid":$("#postid").val(),
-            "name":$("#name").val(),
-            "sex":$('input[name="sex"]:checked').val(),
-            "phone":$("#phone").val(),
-            "login":$("#login").val()
+        var params = {
+            "username": $("#name").val(),
+            "password": $("#pwd").val(),
+            "loginname": $("#login").val(),
+            "gender": $('input[name="sex"]:checked').val(),
+            "phone": $("#phone").val(),
+            "email": $("#email").val()
         };
         $.ajax({
-            url: "/addSysuser",
-            data:params,
-            dataType:"text",
-            type:"POST",
-            success: function(obj){
-                if(obj=="success"){
+            url: "/add_manager",
+            data: params,
+            dataType: "text",
+            type: "POST",
+            success: function (obj) {
+                if (obj === "success") {
                     alert("添加成功");
                     doCancel();
-                }else{
+                } else {
                     alert("添加失败")
                 }
             },
-            error: function(obj){
-                alert("服务器链接错误:"+obj.toString());
-            }
-        });
-    }
-    function getSelectList() {
-        var params = {};
-        $.ajax({
-            url: "/getAllCampusmanage",
-            data: params,
-            dataType: "JSON",
-            type: "POST",
-            success: function (obj) {
-                $("#campusid").append("<option value=''>" + "请选择校区" + "</option>");
-                if (obj != "undefined") {
-                    //动态添加校区下拉列表值
-                    $.each(obj, function (index, data) {
-                        //console.log(data)
-                        $("#campusid").append("<option value='" + data.id + "'>" + data.name + "</option>");
-                    });
-                }
-                init();
-            },
             error: function (obj) {
                 alert("服务器链接错误:" + obj.toString());
             }
         });
     }
+
     //点击取消关闭窗口
     function doCancel() {
         var index = parent.layer.getFrameIndex(window.name);
         parent.layer.close(index);//关闭子窗体
         parent.location.reload();//刷新父窗体
     }
+
 </script>
 </body>
 </html>

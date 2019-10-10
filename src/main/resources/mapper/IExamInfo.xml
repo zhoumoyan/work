@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="site.zhongkai.ask.mapper.IExamInfo">
+    <select id="getExamInfoList" parameterType="map" resultType="site.zhongkai.ask.entity.ExamInfo">
+        select
+        ei.id,
+        ei.exam_type_id as examTypeId,
+        ei.exam_name as examName,
+        ei.option_a as optionA,
+        ei.option_b as optionB,
+        ei.option_c as optionC,
+        ei.option_d as optionD,
+        ei.option_e as optionE,
+        ei.correct_answer as correctAnswer,
+        ei.exam_explain as examExplain,
+        ei.create_time as createTime,
+        et.type_name as examTypeName
+        from
+        t_exam_info ei inner join t_exam_type et on ei.exam_type_id=et.id
+        where 1=1
+        <if test="examTypeId != null and examTypeId != '' and examTypeId != -1">
+            AND ei.exam_type_id = #{examTypeId}
+        </if>
+        <if test="examName != null and examName != ''">
+            AND ei.exam_name LIKE CONCAT('%',#{examName},'%')
+        </if>
+    </select>
+
+</mapper>

@@ -19,11 +19,11 @@ import java.util.List;
  */
 public class DateUtils {
     /** 时间格式(yyyy-MM-dd) */
-    public final static String DATE_PATTERN = "yyyy-MM-dd";
+    private final static String DATE_PATTERN = "yyyy-MM-dd";
     /** 时间格式(yyyy-MM-dd HH:mm:ss) */
     public final static String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
     /*上传文件名*/
-    public final static String FULL_DATE_TIME = "YYYYMMddHHmmssSSS";
+    private final static String FULL_DATE_TIME = "YYYYMMddHHmmssSSS";
     /** 时间格式(yyyyMMddHHmmss) */
     public static final String DATE_TIME_FORMAT_ALL = "yyyyMMddHHmmss";
     /**时间格式（HH:mm:ss）*/
@@ -44,7 +44,7 @@ public class DateUtils {
      * @param pattern  格式，如：DateUtils.DATE_TIME_PATTERN
      * @return  返回yyyy-MM-dd格式日期
      */
-    public static String format(Date date, String pattern) {
+    private static String format(Date date, String pattern) {
         if(date != null){
             SimpleDateFormat df = new SimpleDateFormat(pattern);
             return df.format(date);
@@ -182,9 +182,6 @@ public class DateUtils {
 
     /**
      * 获取两个日期之间的所有日期（包含起始日期）
-     * @param minDate
-     * @param maxDate
-     * @return
      */
     public static List<String> getDaysBetweenDateStr(String minDate, String maxDate) throws ParseException {
         List<String> listDate = new ArrayList<String>();

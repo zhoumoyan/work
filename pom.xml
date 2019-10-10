@@ -11,7 +11,7 @@
     <groupId>site.zhongkai</groupId>
     <artifactId>ask</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>ask</name>
     <description>问卷调查系统</description>
 
@@ -133,6 +133,7 @@
     </dependencies>
 
     <build>
+        <finalName>ask</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

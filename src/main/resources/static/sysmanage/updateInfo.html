@@ -2,7 +2,7 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>修改用户信息</title>
+    <title>修改后台用户信息</title>
     <link rel="stylesheet" href="../layui/css/layui.css" media="all">
     <script src="../js/jquery.min.js"></script>
 </head>
@@ -11,65 +11,52 @@
     <input id="id" name="id" type="hidden">
     <div class="layui-form-item">
         <div class="layui-inline">
-            <label class="layui-form-label">校区</label>
-            <div class="layui-input-inline">
-                <label for="campusid"></label><select id="campusid" name="campusid" lay-filter="campusid" lay-verify="campusid">
-
-                </select>
-            </div>
-        </div>
-        <div class="layui-inline">
-            <label class="layui-form-label">岗位</label>
-            <div class="layui-input-inline">
-                <label for="postid"></label><select id="postid" name="postid" lay-verify="postid">
-
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <div class="layui-inline">
-            <label class="layui-form-label">姓名</label>
+            <label class="layui-form-label">用户姓名</label>
             <div class="layui-input-inline">
                 <label for="name"></label><input type="text" id="name" name="name" lay-verify="name"
                                                  autocomplete="off" placeholder="请输入姓名" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
-            <label class="layui-form-label">电话</label>
+            <label class="layui-form-label">电话号码</label>
             <div class="layui-input-inline">
                 <label for="phone"></label><input type="tel" id="phone" name="phone" lay-verify="phone"
                                                   autocomplete="off" placeholder="请输入电话" class="layui-input">
             </div>
         </div>
-
     </div>
     <div class="layui-form-item">
         <div class="layui-inline">
-            <label class="layui-form-label">性别</label>
+            <label class="layui-form-label">用户性别</label>
             <div class="layui-input-inline">
                 <input type="radio" name="sex" value="1" title="男" checked="">
                 <input type="radio" name="sex" value="0" title="女">
             </div>
         </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">电子邮箱</label>
+            <div class="layui-input-inline">
+                <label for="email"></label><input type="tel" id="email" name="email" lay-verify="email"
+                                                  autocomplete="off" placeholder="请输入电子邮箱" class="layui-input">
+            </div>
+        </div>
     </div>
     <div class="layui-form-item">
         <div class="layui-inline">
-            <label class="layui-form-label">账号</label>
+            <label class="layui-form-label">登录账号</label>
             <div class="layui-input-inline">
                 <label for="login"></label><input type="text" id="login" name="login"
                                                   autocomplete="off" placeholder="请设置账号" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
-            <label class="layui-form-label">密码</label>
+            <label class="layui-form-label">登录密码</label>
             <div class="layui-input-inline">
-                <input type="text" id="pwd" name="pwd"
-                       autocomplete="off" placeholder="请设置密码" class="layui-input">
+                <label for="pwd"></label><input type="text" id="pwd" name="pwd"
+                                                autocomplete="off" placeholder="请设置密码" class="layui-input">
             </div>
         </div>
     </div>
-
 
     <div class="layui-form-item" style="margin-top: 20px;">
         <div class="layui-input-block" style="margin-right: 8%;text-align: right">
@@ -86,7 +73,6 @@
         //获取父页面传递过来的数据
         $("#id").val(parent.data.id);
         init();
-        getSelectList();
         getInfoById($("#id").val());
     });
 
@@ -98,20 +84,9 @@
             laydate.render({
                 elem: '#graduationtime' //指定元素
             });
-            form.on('select(campusid)', function (data) {
-                getPostSelectList(data.value);
-            });
             form.verify({
-                campusid:function(value,item){//校区
-                    if(value=="" || value==null){
-                        return "请选择校区";
-                    }
-                },postid:function(value,item){//岗位
-                    if(value=="" || value==null) {
-                        return "请选择岗位";
-                    }
-                },name:function(value,item){//姓名
-                    if(value=="" || value==null) {
+                name:function(value,item){//姓名
+                    if(value==="" || value==null) {
                         return "请输入姓名";
                     }
                 },phone:function(value,item){//电话
@@ -128,89 +103,28 @@
                 // console.log("JSON.parse==>"+JSON.parse(data.field))
                 updateInfo();
                 return false;
-            })
+            });
             form.render(); //渲染
         });
     }
 
-
-    function getPostSelectList(id,postid) {
-
-        $("#postid option").remove();
-        var params = {"campusid": id};
-
-        $.ajax({
-            url: "/getPostListById",
-            data: params,
-            dataType: "JSON",
-            type: "POST",
-            success: function (obj) {
-                // $("#calssinfo").append("<option value='-1'>" + "请选择班级" + "</option>");
-                if (obj != "undefined") {
-                    //动态添加校区下拉列表值
-                    $.each(obj, function (index, data) {
-                        //console.log(data)
-                        $("#postid").append("<option value='" + data.id + "'>" + data.postname + "</option>");
-                    });
-                }
-
-                init();
-                $("#postid").val(postid);
-            },
-            error: function (obj) {
-                alert("服务器链接错误:" + obj.toString());
-            }
-        });
-    }
-
-    function getSelectList() {
-        var params = {};
-        $.ajax({
-            url: "/getAllCampusmanage",
-            data: params,
-            dataType: "JSON",
-            type: "POST",
-            success: function (obj) {
-                $("#campusid").append("<option value=''>" + "请选择校区" + "</option>");
-                if (obj != "undefined") {
-                    //动态添加校区下拉列表值
-                    $.each(obj, function (index, data) {
-                        //console.log(data)
-                        $("#campusid").append("<option value='" + data.id + "'>" + data.name + "</option>");
-                    });
-                }
-                init();
-            },
-            error: function (obj) {
-                alert("服务器链接错误:" + obj.toString());
-            }
-        });
-    }
-
-
-
     function getInfoById(id) {
         var params = {"id": id};
         $.ajax({
-            url: "/getSysuserById",
+            url: "/get_manager_by_id",
             data: params,
             dataType: "JSON",
             type: "POST",
             success: function (obj) {
-                if (obj != "undefined") {
-
+                if (obj !== "undefined") {
                     $("#id").val(obj.id);
-                    $("#campusid").val(obj.campusid);
-                    getPostSelectList(obj.campusid,obj.postid);
-                    $("#postid").val(obj.postid);
-                    $("#name").val(obj.name);
-
-                    $("input[name=sex][value=1]").attr("checked", obj.sex == 1 ? true : false);
-                    $("input[name=sex][value=0]").attr("checked", obj.sex == 0 ? true : false);
-
+                    $("#name").val(obj.username);
+                    $("input[name=sex][value='1']").attr("checked", obj.gender === '1' ? true : false);
+                    $("input[name=sex][value='0']").attr("checked", obj.gender === '0' ? true : false);
                     $("#phone").val(obj.phone);
-                    $("#login").val(obj.login);
-                    $("#pwd").val(obj.pwd);
+                    $("#email").val(obj.email);
+                    $("#login").val(obj.loginname);
+                    $("#pwd").val(obj.password);
                 }
                 init();
             },
@@ -231,21 +145,20 @@
     function updateInfo() {
         var params = {
             "id": $("#id").val(),
-            "campusid": $("#campusid").val(),
-            "postid": $("#postid").val(),
-            "name": $("#name").val(),
-            "sex": $('input[name="sex"]:checked').val(),
+            "username": $("#name").val(),
+            "gender": $('input[name="sex"]:checked').val(),
             "phone": $("#phone").val(),
-            "login": $("#login").val(),
-            "pwd": $("#pwd").val()
+            "loginname": $("#login").val(),
+            "email": $("#email").val(),
+            "password": $("#pwd").val()
         };
         $.ajax({
-            url: "/updateSysuser",
+            url: "/update_manager",
             data: params,
             dataType: "text",
             type: "POST",
             success: function (obj) {
-                if (obj == "success") {
+                if (obj === "success") {
                     alert("修改成功");
                     doCancel();
                 } else {
@@ -264,6 +177,7 @@
         parent.layer.close(index);//关闭子窗体
         parent.location.reload();//刷新父窗体
     }
+
 </script>
 </body>
 </html>
