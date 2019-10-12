@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="INFO" monitorInterval="30">
+    <appenders>
+        <console name="Console" target="SYSTEM_OUT">
+            <PatternLayout charset="GBK" pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS}] - %m%n"/>
+        </console>
+        <!--日志文件及归档路径-->
+        <RollingFile name="LogFile" fileName="C:/tmp/ask.log" filePattern="C:/tmp/ask-%d{yyyy-MM-dd}-%i.log">
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout charset="UTF-8" pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%p] - %l - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <!--单个日志文件的大小-->
+                <SizeBasedTriggeringPolicy size="20 MB"/>
+            </Policies>
+            <!--日志的最大文件数量-->
+            <DefaultRolloverStrategy max="100"/>
+        </RollingFile>
+    </appenders>
+    <loggers>
+        <logger name="site.zhongkai.ask.mapper" level="INFO"/>
+        <root level="INFO">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="LogFile"/>
+        </root>
+    </loggers>
+</configuration>

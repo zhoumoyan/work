@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="stylesheet/less" type="text/css" href="../css/index.css" />
+		<script src="../js/less.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/fontSize.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/exchange.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div class="exchangeBox">
+			<ul class="answerHeader">
+					<li class="goHome"><img class="goHomeBtn" id="goHome" src="../img/back.png" alt="" /></li>
+					<li>积分兑换</li>
+			</ul>
+			<div class="bjeb"></div>
+			<div id="answerBox">
+				<div class="answerBox">
+					<p class="answerNumberLeft">本次积分:<span class="answerFraction">10分</span></p>
+					<div class="answerLineL"></div>
+					<div>
+						<p class="answerTitle">可兑换产品列表：</p>
+						<ul class="ticketList"> 
+							<li>
+								<p>￥<span class='answerMoney'>1.00</span></p>
+								<p class="integralOne">100积分兑换</p> 
+							</li>
+							<li>
+								<p class="ticketTilte1">编号：<span>11022303014</span></p>
+								<p class="ticketTilte1">仅限望州南小区使用</p>
+							</li>
+							<li class="effectiveDate">
+								<p>有效时间：<span>2019年12月31日前</span></p>
+							    <p class="notUsed">未使用</p>
+							</li>
+						</ul>
+						<ul class="ticketList"> 
+							<li>
+								<p>￥<span class='answerMoney'>2.00</span></p>
+								<p class="integralOne">100积分兑换</p> 
+							</li>
+							<li>
+								<p class="ticketTilte1">编号：<span>11022303014</span></p>
+								<p class="ticketTilte1">仅限望州南小区使用</p>
+							</li>
+							<li class="effectiveDate">
+								<p>有效时间：<span>2019年12月31日前</span></p>
+							    <p class="notUsed">未使用</p>
+							</li>
+						</ul>
+					</div>
+					<div style="text-align: center;"><button type="button" class="exchange_Ticket" id="answerTickets">查看卡券</button></div>
+				</div>
+			</div>
+			<div id="answerBox2" style="display: none;">
+				<div class="answerBox">
+					<p class="answerNumberLeft">本次积分:<span class="answerFraction">10分</span></p>
+					<div class="answerLineL"></div>
+					<div>
+						<p class="answerTitle">确定使用100积分兑换</p>
+						<ul class="ticketList"> 
+							<li>
+								<p>￥<span class='answerMoney'>1.00</span></p>
+								<p class="integralOne">100积分兑换</p> 
+							</li>
+							<li>
+								<p class="ticketTilte1">编号：<span>11022303014</span></p>
+								<p class="ticketTilte1">仅限望州南小区使用</p>
+							</li>
+							<li class="effectiveDate">
+								<p>有效时间：<span>2019年12月31日前</span></p>
+							    <p class="notUsed">未使用</p>
+							</li>
+						</ul>
+					</div>
+					<div style="text-align: center;"><button type="button" class="exchange_Ticket" id="confirmBtn">确定</button></div>
+				</div>
+			</div>
+            <div class="mark answerMark" id="answerMark">
+				<p class="exresult" id="exresult">兑换成功</p>
+				<button id="determineBtn" type="button" value="0" class="markCancelBtn exSure">确定</button>
+			</div>
+			<div id="answerbgMask" class="bgMask"></div>
+		</div>
+		<span id="testtest"></span>
+		<script type="text/javascript">
+			$("#testtest").html(window.localStorage.getItem("openId"));
+		</script>
+	</body>
+</html>

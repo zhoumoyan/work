@@ -1,15 +1,15 @@
 $(function(){
 	$("#answerTickets").on("click",function(){
-		window.location.href = '../portal/tickets.html'
-	});
+		window.location.href = '/ask/portal/tickets'
+	})
 	$(".ticketList").on("click",function(){
 		$("#answerBox").hide();
 		$("#answerBox2").show();
-	});
+	})
 	$("#exhomePage").on("click",function(){
 		$("#answerBox").show();
 		$("#answerBox2").hide();
-	});
+	})
 	function openaMark() {
 		$('#answerMark').show();
 		$("#answerbgMask").show();
@@ -28,14 +28,14 @@ $(function(){
     	$("#exresult").addClass("exSureFalse");
     	openaMark();
     	
-    });
+    })
 	$("#determineBtn").on("click",function(){
 		closeaMark();
 		setInterval(function(){
-    		window.location.href = '../portal/tickets.html'
+    		window.location.href = '/ask/portal/tickets'
     	},100);
-	});
+	})
 	$("#goHome").on("click",function(){
 		window.history.back(-1)
 	})
-});
+})

@@ -7,5 +7,5 @@ import site.zhongkai.ask.utils.PageUtils;
 import java.util.Map;
 
 public interface WxUserService extends IService<WxUser> {
-    PageUtils getStudentList(Map<String, Object> params);
+    PageUtils getWxUserList(Map<String, Object> params);
 }

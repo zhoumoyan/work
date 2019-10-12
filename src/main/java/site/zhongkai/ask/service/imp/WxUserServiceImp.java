@@ -15,7 +15,7 @@ import java.util.Map;
 @Service
 public class WxUserServiceImp extends ServiceImpl<IWxUser, WxUser> implements WxUserService {
     @Override
-    public PageUtils getStudentList(Map<String, Object> params) {
+    public PageUtils getWxUserList(Map<String, Object> params) {
         Page<WxUser> page=new Query<WxUser>(params).getPage();
         List<WxUser> list=baseMapper.getWxUsers(page,params);
         page.setRecords(list);

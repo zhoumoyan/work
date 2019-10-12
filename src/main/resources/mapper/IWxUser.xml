@@ -7,13 +7,14 @@
         t.id,
         t.wechat_id as wechatId,
         t.open_id as openId,
+        t.nick_name as nickName,
         t.grade,
         t.create_time as createTime,
         t.active_time as activeTime
         FROM t_wx_user t
         where 1=1
         <if test="wechatId != null and wechatId != ''">
-            AND t.wechat_id LIKE CONCAT('%',#{wechatId},'%')
+            AND t.nick_name LIKE CONCAT('%',#{nickName},'%')
         </if>
         <if test="openId != null and openId != ''">
             AND t.open_id LIKE CONCAT('%',#{openId},'%')

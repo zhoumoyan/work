@@ -2,6 +2,7 @@ package site.zhongkai.ask.controller;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.web.bind.annotation.RequestMapping;
 import site.zhongkai.ask.entity.ExamType;
 import site.zhongkai.ask.service.ExamTypeService;
 import site.zhongkai.ask.utils.PageUtils;
@@ -19,13 +20,14 @@ import java.util.Map;
 
 @Log4j2
 @RestController
+@RequestMapping("/exam_type")
 public class ExamTypeController {
 
     @Resource
     private ExamTypeService examTypeService;
 
     //新增题目类别
-    @PostMapping("/add_exam_type")
+    @PostMapping("/add")
     public String addexamtype(ExamType examtype, HttpServletResponse response){
         response.setHeader("Access-Control-Allow-Origin", "*");
         examtype.setCreateTime(new Date());
@@ -37,7 +39,7 @@ public class ExamTypeController {
     }
     //修改
 
-    @PostMapping("/update_exam_type")
+    @PostMapping("/update")
     public String updateexamtype(ExamType examtype, HttpServletResponse response){
 
         response.setHeader("Access-Control-Allow-Origin", "*");
@@ -49,7 +51,7 @@ public class ExamTypeController {
     }
 
     //删除题目类别
-    @PostMapping("/delete_exam_type")
+    @PostMapping("/delete")
     public String deleteexamtype(ExamType examtype, HttpServletResponse response){
         response.setHeader("Access-Control-Allow-Origin", "*");
         if(examTypeService.deleteById(examtype)){
@@ -58,9 +60,10 @@ public class ExamTypeController {
             return "error";
         }
     }
+
     //题目类别查询
-    @PostMapping("/select_exam_type")
-    public R selectexamtype(@RequestParam Map<String, Object> map, HttpServletResponse response){
+    @PostMapping("/query")
+    public R queryExamType(@RequestParam Map<String, Object> map, HttpServletResponse response){
         response.setHeader("Access-Control-Allow-Origin", "*");
         PageUtils pu= examTypeService.getExamtypeList(map);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -69,17 +72,18 @@ public class ExamTypeController {
         }
         return new R(0,"success",pu.getTotalCount(),pu.getList());
     }
+
     //查询
-    @PostMapping("/get_exam_type_info_by_id")
-    public ExamType getExamtypeInfoById(ExamType examtype, HttpServletResponse response){
+    @PostMapping("/get_by_id")
+    public ExamType getExamtypeById(ExamType examtype, HttpServletResponse response){
         response.setHeader("Access-Control-Allow-Origin", "*");
         return examTypeService.selectOne(
                 new EntityWrapper<ExamType>().eq("id",examtype.getId()));
     }
 
-    //获取题目所有数据 用于绑定下拉列表
-    @PostMapping("/get_all_exam_type")
-    public List<ExamType> getAllexamtype(HttpServletResponse response){
+    //获取题目所有数据，用于绑定下拉列表
+    @PostMapping("/get_all")
+    public List<ExamType> getAllExamtype(HttpServletResponse response){
         response.setHeader("Access-Control-Allow-Origin", "*");
         return examTypeService.selectList(new EntityWrapper<>());
     }

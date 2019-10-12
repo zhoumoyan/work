@@ -55,6 +55,8 @@
 .clearBoth{
 	clear: both;
 }
+
+@fontWeight1:700;
 /*首页*/
 
 .indexBox{
@@ -107,7 +109,7 @@
 	box-shadow: 0rem 0.03rem 0.144rem 0.016rem 
 		rgba(188, 59, 25, 0.49);
 	border-radius: 0.12rem;
-	font-family: SourceHanSansCN-Medium;
+	font-family: 'SourceHanSansCN-Medium';
 	font-size: 0.34rem;
 	font-weight: normal;
 	font-stretch: normal;
@@ -385,7 +387,7 @@
 	line-height: 0.36rem;
 	color: #ffffff;
 }
-.submissionBtn{
+.submissionBtn{	
 	margin-bottom:0.4rem;
 	outline: none;
 	border: none;
@@ -476,25 +478,20 @@
 	margin-left: 0.2rem;
 }
 .answerLine{
-	width:5.41rem;
+	width:90%;
 	height: 1px;
 	background-color: #cccccc;
 	position: absolute;
 	right: 0.3rem;
 }
 .answerLineL{
-	width:5.41rem;
+	width:90%;
 	height: 1px;
 	background-color: #cccccc;
 	position: absolute;
 	left: 0.3rem;
 }
-.answerLineT{
-	width: 100%;
-	height: 1px;
-	border-bottom:1px dashed #121416;
-	margin-bottom: 0.4rem;
-}
+
 .integral{
 	color: #000000;
 	text-align: right;
@@ -543,31 +540,78 @@
 	line-height: 0.36rem;
 	color: #ffffff;
 }
+
 .ticketList{
 	background:#D39E00;
 	font-size: 0.24rem;
-	padding: 0.3rem 0rem;
-}
-.ticketList li{
-	display: inline-block;
+	background: url(../img/bj2.png) no-repeat;
+	background-position:100% 100%;
+    background-size:cover;
+    height:2.2rem;
+    margin-bottom: 0.9rem;
+    border-top-left-radius:0.08rem;
+    border-top-right-radius:0.08rem;
+    &>li{
+		display: inline-block;
+		vertical-align: top;
+		padding-left: 0.4rem;
+		height: 1.6rem;
+    }
+    .effectiveDate{
+		font-size: 0.26rem;
+		line-height: 0.6rem;
+		letter-spacing: 0px;
+		color: #999999;
+		width: 100%;
+		height: 0.6rem;
+		&>p{
+			display: inline-block;
+		}
+		&>.notUsed{
+			position: absolute;
+			right:0.6rem;
+		}
+	}
 }
 .ticketList li:nth-child(1){
-	width: 30%;
-	vertical-align: super;
 	text-align: center;
-}
-.ticketList li:nth-child(1) .answerMoney{
-	font-size: 0.48rem;
-	font-weight: 700;	
-}
+	font-size: 0.42rem;
+	color: #ffffff;
+	.answerMoney{
+		font-size: 0.82rem;
+		font-weight: normal;
+		color: #ffffff;
+    }
+    .integralOne{
+    	font-size: 0.26rem;
+		line-height: 0.3rem;
+		color: #ffffff;
+		opacity: 0.8;
+		text-align: right;
+    }
+} 
 .ticketList li:nth-child(2){
-	width: 68%;
-	text-align: left;
-}
-.ticketList li:nth-child(2) p{
-	width: 68%;
 	text-align: left;
 	line-height: 0.48rem;
+	&>.ticketTilte1:nth-child(1){
+		margin-top: 0.2rem;
+	}
+	.ticketTilte1{
+		font-size: 0.3rem;
+		line-height: 0.3rem;
+		letter-spacing: 0px;
+		color: #ffffff;
+		line-height: 0.47rem;
+	}
+}
+@media screen and (min-width: 1023px) {
+  .ticketList{
+  	height: 2.5rem;
+  	&>li:nth-child(3){
+  		margin-top: 0.2rem;
+  	}
+  }
+  
 }
 .answerTitle{
 	font-family: 'SourceHanSansCN-Medium';
@@ -576,10 +620,9 @@
 	color: #333333;
 	padding-top: 0.5rem;
 	padding-bottom: 0.3rem;
+	font-weight: @fontWeight1;
 }
-.ticketTilte1{
-	color: red;
-}
+
 .confirmBtn{
 	width: 1.5rem;
 	height: 0.5rem;
@@ -605,6 +648,7 @@
     color: #333333;
     margin-bottom: 0.3rem;
     padding-top: 0.6rem;
+    font-weight: @fontWeight1;
 }
 .exchange_Ticket{
 	width: 5.6rem;
@@ -676,7 +720,7 @@
 	content: "";
 	display: inline-block;
 	height:0.26rem;
-	margin-bottom: 0.02rem;
+	margin-bottom: 0.03rem;
 	width: 0.26rem;
 }
 
@@ -703,9 +747,13 @@
 	height:0.26rem;
 	margin-bottom: 0.02rem;
 	width: 0.26rem;
+	font-weight: @fontWeight1;
 }
 .ticketBox,.exchangeBox{
 	padding-bottom: 1rem;
+}
+.multiple{
+	color: #df1314;
 }
 html{
 	background-color: white;

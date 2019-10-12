@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>修改后台用户信息</title>
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <script src="../js/jquery.min.js"></script>
+</head>
+<body>
+<form class="layui-form" method="post" style="margin-top: 30px">
+    <input id="id" name="id" type="hidden">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">用户姓名</label>
+            <div class="layui-input-inline">
+                <label for="name"></label><input type="text" id="name" name="name" lay-verify="name"
+                                                 autocomplete="off" placeholder="请输入姓名" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">电话号码</label>
+            <div class="layui-input-inline">
+                <label for="phone"></label><input type="tel" id="phone" name="phone" lay-verify="phone"
+                                                  autocomplete="off" placeholder="请输入电话" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">用户性别</label>
+            <div class="layui-input-inline">
+                <input type="radio" name="sex" value="1" title="男" checked="">
+                <input type="radio" name="sex" value="0" title="女">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">电子邮箱</label>
+            <div class="layui-input-inline">
+                <label for="email"></label><input type="tel" id="email" name="email" lay-verify="email"
+                                                  autocomplete="off" placeholder="请输入电子邮箱" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">登录账号</label>
+            <div class="layui-input-inline">
+                <label for="login"></label><input type="text" id="login" name="login"
+                                                  autocomplete="off" placeholder="请设置账号" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">登录密码</label>
+            <div class="layui-input-inline">
+                <label for="pwd"></label><input type="text" id="pwd" name="pwd"
+                                                autocomplete="off" placeholder="请设置密码" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item" style="margin-top: 20px;">
+        <div class="layui-input-block" style="margin-right: 8%;text-align: right">
+            <!--<button  class="layui-btn" lay-filter="addInfo">保存</button>-->
+            <button class="layui-btn" lay-filter="addinfo" lay-submit="">提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script src="../layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    $(function () {
+        //获取父页面传递过来的数据
+        $("#id").val(parent.data.id);
+        init();
+        getInfoById($("#id").val());
+    });
+
+    function init() {
+        layui.use(['form', 'laydate'], function () {
+            var form = layui.form;
+            var laydate = layui.laydate;
+            //执行一个laydate实例
+            laydate.render({
+                elem: '#graduationtime' //指定元素
+            });
+            form.verify({
+                name:function(value,item){//姓名
+                    if(value==="" || value==null) {
+                        return "请输入姓名";
+                    }
+                },phone:function(value,item){//电话
+                    //alert(value);
+                    if(!(/^1[34578]\d{9}$/.test(value))){
+                        return "请填写正确手机号码";
+                    }
+                }
+            });
+            form.on('submit(addinfo)', function (data) {
+                //通过验证后调用添加方法
+                //console.log("data.field==>"+data.field)
+                // console.log("JSON.stringify==>"+JSON.stringify(data.field))
+                // console.log("JSON.parse==>"+JSON.parse(data.field))
+                updateInfo();
+                return false;
+            });
+            form.render(); //渲染
+        });
+    }
+
+    function getInfoById(id) {
+        var params = {"id": id};
+        $.ajax({
+            url: "/ask/manager/get_by_id",
+            data: params,
+            dataType: "JSON",
+            type: "POST",
+            success: function (obj) {
+                if (obj !== "undefined") {
+                    $("#id").val(obj.id);
+                    $("#name").val(obj.username);
+                    $("input[name=sex][value='1']").attr("checked", obj.gender === '1' ? true : false);
+                    $("input[name=sex][value='0']").attr("checked", obj.gender === '0' ? true : false);
+                    $("#phone").val(obj.phone);
+                    $("#email").val(obj.email);
+                    $("#login").val(obj.loginname);
+                    $("#pwd").val(obj.password);
+                }
+                init();
+            },
+            error: function (obj) {
+                alert("服务器链接错误:" + obj.toString());
+            }
+        });
+    }
+
+    function fmtDate(obj) {
+        var date = new Date(obj);
+        var y = 1900 + date.getYear();
+        var m = "0" + (date.getMonth() + 1);
+        var d = "0" + date.getDate();
+        return y + "-" + m.substring(m.length - 2, m.length) + "-" + d.substring(d.length - 2, d.length);
+    }
+
+    function updateInfo() {
+        var params = {
+            "id": $("#id").val(),
+            "username": $("#name").val(),
+            "gender": $('input[name="sex"]:checked').val(),
+            "phone": $("#phone").val(),
+            "loginname": $("#login").val(),
+            "email": $("#email").val(),
+            "password": $("#pwd").val()
+        };
+        $.ajax({
+            url: "/ask/manager/update",
+            data: params,
+            dataType: "text",
+            type: "POST",
+            success: function (obj) {
+                if (obj === "success") {
+                    alert("修改成功");
+                    doCancel();
+                } else {
+                    alert("修改失败")
+                }
+            },
+            error: function (obj) {
+                alert("服务器链接错误:" + obj.toString());
+            }
+        });
+    }
+
+    //点击取消关闭窗口
+    function doCancel() {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);//关闭子窗体
+        parent.location.reload();//刷新父窗体
+    }
+
+</script>
+</body>
+</html>

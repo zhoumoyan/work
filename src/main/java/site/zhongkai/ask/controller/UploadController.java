@@ -11,6 +11,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +28,7 @@ import java.util.*;
 
 @Log4j2
 @RestController
+@RequestMapping("/upload")
 public class UploadController {
 
     @Resource
@@ -37,7 +39,7 @@ public class UploadController {
      *
      * @param file 上传的文件名
      */
-    @PostMapping(value = "/upload_excel_to_exam_info_by_io")
+    @PostMapping(value = "/excel_to_exam_info_by_io")
     public Map<String, Object> uploadExcelToExamInfoByIO(@RequestParam("file") MultipartFile file, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         List<ExamInfo> list = new ArrayList<>();       //正常可插入数据
@@ -100,7 +102,7 @@ public class UploadController {
     /**
      * 上传excel到题库基本信息表 临时文件形式
      */
-    @PostMapping(value = "/upload_excel_to_exam_info")
+    @PostMapping(value = "/excel_to_exam_info")
     public Map<String, Object> uploadExcelToExamInfo(@RequestParam("file") MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         // 指定文件上传位置
@@ -171,7 +173,7 @@ public class UploadController {
     }
 
     //Excel 数据添加
-    @PostMapping(value = "/add_exam_info_by_excel")
+    @PostMapping(value = "/excel_add_exam_info")
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public String addExamInfoByExcel(String array, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
