@@ -27,7 +27,7 @@ public class ManagerController {
     private ManagerService managerService;
 
     //用户登录
-    @PostMapping("/handle_login")
+    @PostMapping("/login")
     public Manager handleLogin(Manager manager, HttpServletResponse response, HttpSession session) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         Manager loginUser = managerService.selectOne(new EntityWrapper<Manager>()

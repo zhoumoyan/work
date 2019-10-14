@@ -21,7 +21,8 @@ public  class Constant implements Serializable {
 	public static final String OPTION_D = "D";
 	public static final String OPTION_E = "E";
 
-
+	// 配置文件
+	public static final String SYSTEM_PROPERTIES= "configure/system.properties";
 
 	// 数据状态
 	public static final String STATE_NORMAL = "0";       // 正常
@@ -76,10 +77,6 @@ public  class Constant implements Serializable {
 	// 呼叫类型
 	public static final Integer CALL_TYPE_PASSIVE = 1;  // App被动呼叫
 	public static final Integer CALL_TYPE_ACTIVE = 2;   // App主动呼叫
-
-	// 配置文件
-	public static final String SYSTEM_PROPERTIES= "configure/system.properties";
-	public static final String PUSH_PROPERTIES= "configure/push.properties";
 
 	// 门禁的类型：1-门,2-闸
 	public static final String TYPE_DOOR = "1";

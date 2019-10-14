@@ -31,8 +31,8 @@ public class Interceptor implements WebMvcConfigurer {
         list.add("/ask/login.html");
         list.add("/ask/index.html");
         list.add("/ask/answer/**");
-        list.add("/ask/manager/handle_login");
-*/
+        list.add("/ask/manager/login");
+        */
         registry.addInterceptor(interceptor).addPathPatterns("/**").excludePathPatterns(list);
         //WebMvcConfigurer.super.addInterceptors(registry);
     }

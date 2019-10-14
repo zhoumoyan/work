@@ -42,7 +42,7 @@ public class AnswerController {
 
     // 获取结果
     @PostMapping("/get_result")
-    public ResponseResult getResult(@RequestParam("openId") String openId, @RequestParam("answerFraction") Integer answerFraction) {
-        return null;
+    public String getResult(@RequestParam("openId") String openId, @RequestParam("answerFraction") String answerFraction) {
+        return JSON.toJSONString(answerService.getUserGrade(openId, Integer.valueOf(answerFraction)));
     }
 }

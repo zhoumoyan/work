@@ -2,12 +2,12 @@ package site.zhongkai.ask.mapper;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import site.zhongkai.ask.entity.WxUser;
+import site.zhongkai.ask.entity.Manager;
 
 import java.util.List;
 import java.util.Map;
 
-public interface IWxUser extends BaseMapper<WxUser> {
+public interface IManagerMapper extends BaseMapper<Manager> {
     //多表联查方式
-    List<WxUser> getWxUsers(Page<WxUser> page, Map<String, Object> params);
+    List<Manager> getManagers(Page<Manager> page, Map<String, Object> params);
 }

@@ -6,6 +6,6 @@ import site.zhongkai.ask.utils.PageUtils;
 
 import java.util.Map;
 
-public interface IExamType extends BaseMapper<ExamType> {
+public interface IExamTypeMapper extends BaseMapper<ExamType> {
     PageUtils getExamtypeList(Map<String, Object> params);
 }

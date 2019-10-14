@@ -8,7 +8,7 @@ import site.zhongkai.ask.entity.ExamInfo;
 import java.util.List;
 import java.util.Map;
 
-public interface IExamInfo extends BaseMapper<ExamInfo> {
+public interface IExamInfoMapper extends BaseMapper<ExamInfo> {
     //多表联查方式
     List<ExamInfo> getExamInfoList(Page<ExamInfo> page, Map<String, Object> params);
 }

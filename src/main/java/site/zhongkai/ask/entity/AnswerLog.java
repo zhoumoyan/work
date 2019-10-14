@@ -17,15 +17,15 @@ public class AnswerLog implements Serializable {
     @TableId(type = IdType.ID_WORKER_STR)
     private String id;
     private String openId;
-    private String score;
-    private Date operationTime;
+    private Integer score;
+    private Date operateTime;
 
     public AnswerLog() {
     }
 
-    public AnswerLog(String openId, String score, Date operationTime) {
+    public AnswerLog(String openId, Integer score, Date operateTime) {
         this.openId = openId;
         this.score = score;
-        this.operationTime = operationTime;
+        this.operateTime = operateTime;
     }
 }

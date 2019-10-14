@@ -2,7 +2,7 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="site.zhongkai.ask.mapper.IManager">
+<mapper namespace="site.zhongkai.ask.mapper.IManagerMapper">
     <select id="getManagers" parameterType="map" resultType="site.zhongkai.ask.entity.Manager">
         select
         t.id,

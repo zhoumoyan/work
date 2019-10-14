@@ -13,4 +13,14 @@ public class UserGrade implements Serializable {
     private Integer todayScore;
     private Integer validScore;
     private Integer historyScore;
+
+    public UserGrade() {
+    }
+
+    public UserGrade(String openId, Integer todayScore, Integer validScore, Integer historyScore) {
+        this.openId = openId;
+        this.todayScore = todayScore;
+        this.validScore = validScore;
+        this.historyScore = historyScore;
+    }
 }

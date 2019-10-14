@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="site.zhongkai.ask.mapper.IAnswerLogMapper">
+    <select id="selectTodayList" resultType="site.zhongkai.ask.entity.AnswerLog">
+        SELECT
+        t.id,
+        t.open_id as openId,
+        t.score,
+        t.operate_time as operateTime
+        FROM t_answer_log t
+        where t.operate_time >= DATEADD(DAY, 0, DATEDIFF(DAY, 0,GETDATE()))
+        <if test="openId != null and openId != ''">
+            AND t.open_id = #{openId}
+        </if>
+    </select>
+</mapper>

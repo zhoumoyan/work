@@ -1,6 +1,6 @@
 # SpringBoot的服务端口
 server:
-  port: 8088
+  port: 8092
   servlet:
     context-path: /ask
 # MyBatis配置文件

@@ -31,6 +31,10 @@ public class WxUser implements Serializable {
     public WxUser() {
     }
 
+    public WxUser(String openId) {
+        this.openId = openId;
+    }
+
     public WxUser(String openId, String nickName) {
         this.openId = openId;
         this.nickName = nickName;

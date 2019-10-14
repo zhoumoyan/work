@@ -1,20 +1,26 @@
 package site.zhongkai.ask.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import site.zhongkai.ask.config.Constant;
+import site.zhongkai.ask.entity.Voucher;
 import site.zhongkai.ask.entity.WxUser;
+import site.zhongkai.ask.mapper.IVoucherMapper;
+import site.zhongkai.ask.mapper.IWxUserMapper;
 import site.zhongkai.ask.service.WxUserService;
 import site.zhongkai.ask.utils.PageUtils;
 import site.zhongkai.ask.utils.R;
+import site.zhongkai.ask.utils.ResponseResult;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @Log4j2
@@ -24,9 +30,11 @@ public class WxUserController {
 
     @Resource
     private WxUserService wxUserService;
+    @Resource
+    private IWxUserMapper wxUserMapper;
 
     //用户登录
-    @GetMapping("/handle_login")
+    @GetMapping("/login")
     public ModelAndView handleLogin(@RequestParam("openId") String openId, @RequestParam("nickName") String nickName, ModelAndView modelAndView) {
         WxUser wxUser = new WxUser(openId, nickName);
         modelAndView.addObject("openId", wxUser.getOpenId());
@@ -36,11 +44,20 @@ public class WxUserController {
             wxUser.setCreateTime(operTime).setActiveTime(operTime);
             wxUserService.insert(wxUser);
         } else {
-            user.setActiveTime(operTime);
+            user.setNickName(nickName).setActiveTime(operTime);
             wxUserService.updateById(user);
         }
         modelAndView.setViewName("index");
         return modelAndView;
+    }
+
+    // 获取积分
+    @PostMapping("/get_grade")
+    @ResponseBody
+    public String getUserGrade(@RequestParam("openId") String openId) {
+        WxUser wxUser = wxUserMapper.selectOne(new WxUser(openId));
+        if (wxUser.getGrade() == null) wxUser.setGrade(0);
+        return JSON.toJSONString(new ResponseResult<>(true, Constant.STATE_SUCCESS, Constant.EXPLAIN_SUCCESS, wxUser.getGrade()));
     }
 
     //分页查询
