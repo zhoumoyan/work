@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import site.zhongkai.ask.entity.ExamInfo;
-import site.zhongkai.ask.service.ExamInfoService;
+import site.zhongkai.ask.service.IExamInfoService;
 import site.zhongkai.ask.utils.PageUtils;
 import site.zhongkai.ask.utils.R;
 
@@ -22,7 +22,7 @@ import java.util.Map;
 public class ExamInfoController {
 
     @Resource
-    private ExamInfoService examInfoService;
+    private IExamInfoService examInfoService;
 
     //分页查询
     @PostMapping("/get_all")

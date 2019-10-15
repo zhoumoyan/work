@@ -20,14 +20,14 @@ public class AnswerController {
     @Resource
     private IAnswerService answerService;
 
-    // 获取题目
-    @GetMapping("/get_exam_info")
-    public String getExamInfo(HttpServletResponse response) {
+    // 答题主页数据
+    @GetMapping("/get_index")
+    public String getAnswerIndex(@RequestParam("openId") String openId, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
-        return JSON.toJSONString(answerService.getRandomExamInfo().getData());
+        return JSON.toJSONString(answerService.getRandomAnswerIndex(openId).getData());
     }
 
-    // 计算积分
+    // 计算积分(积分暂由前台js计算)
     @PostMapping("/calculate_score")
     public String calculateScore(HttpServletRequest request, HttpServletResponse response) {
         Enumeration<String> parameterNames = request.getParameterNames();
@@ -42,7 +42,7 @@ public class AnswerController {
 
     // 获取结果
     @PostMapping("/get_result")
-    public String getResult(@RequestParam("openId") String openId, @RequestParam("answerFraction") String answerFraction) {
-        return JSON.toJSONString(answerService.getUserGrade(openId, Integer.valueOf(answerFraction)));
+    public String getResult(@RequestParam("openId") String openId, @RequestParam(required = false, value = "answerFraction") String answerFraction) {
+        return JSON.toJSONString(answerService.getUserGrade(openId, answerFraction));
     }
 }

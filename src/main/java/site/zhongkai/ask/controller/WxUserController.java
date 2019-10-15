@@ -7,11 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import site.zhongkai.ask.config.Constant;
-import site.zhongkai.ask.entity.Voucher;
 import site.zhongkai.ask.entity.WxUser;
-import site.zhongkai.ask.mapper.IVoucherMapper;
 import site.zhongkai.ask.mapper.IWxUserMapper;
-import site.zhongkai.ask.service.WxUserService;
+import site.zhongkai.ask.service.IWxUserService;
 import site.zhongkai.ask.utils.PageUtils;
 import site.zhongkai.ask.utils.R;
 import site.zhongkai.ask.utils.ResponseResult;
@@ -20,7 +18,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 @Log4j2
@@ -29,7 +26,7 @@ import java.util.Map;
 public class WxUserController {
 
     @Resource
-    private WxUserService wxUserService;
+    private IWxUserService wxUserService;
     @Resource
     private IWxUserMapper wxUserMapper;
 
@@ -41,7 +38,7 @@ public class WxUserController {
         WxUser user = wxUserService.selectOne(new EntityWrapper<WxUser>().eq("open_id", wxUser.getOpenId()));
         Date operTime = new Date();
         if (user == null) {
-            wxUser.setCreateTime(operTime).setActiveTime(operTime);
+            wxUser.setGrade(0).setCreateTime(operTime).setActiveTime(operTime);
             wxUserService.insert(wxUser);
         } else {
             user.setNickName(nickName).setActiveTime(operTime);
@@ -49,15 +46,6 @@ public class WxUserController {
         }
         modelAndView.setViewName("index");
         return modelAndView;
-    }
-
-    // 获取积分
-    @PostMapping("/get_grade")
-    @ResponseBody
-    public String getUserGrade(@RequestParam("openId") String openId) {
-        WxUser wxUser = wxUserMapper.selectOne(new WxUser(openId));
-        if (wxUser.getGrade() == null) wxUser.setGrade(0);
-        return JSON.toJSONString(new ResponseResult<>(true, Constant.STATE_SUCCESS, Constant.EXPLAIN_SUCCESS, wxUser.getGrade()));
     }
 
     //分页查询

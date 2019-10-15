@@ -2,7 +2,7 @@ package site.zhongkai.ask.vo;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import site.zhongkai.ask.entity.Voucher;
+import site.zhongkai.ask.entity.SysVoucher;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,14 +11,14 @@ import java.util.List;
 @Accessors(chain = true)
 public class GetVoucher implements Serializable {
     private static final long serialVersionUID = -3926729164448230324L;
-    private Integer userGrade;      // 用户积分
-    private List<Voucher> vouchers; // 代金卷列表
+    private Integer userGrade;              // 用户积分
+    private List<SysVoucher> sysVouchers;   // 代金卷列表
 
     public GetVoucher() {
     }
 
-    public GetVoucher(Integer userGrade, List<Voucher> vouchers) {
+    public GetVoucher(Integer userGrade, List<SysVoucher> sysVouchers) {
         this.userGrade = userGrade;
-        this.vouchers = vouchers;
+        this.sysVouchers = sysVouchers;
     }
 }

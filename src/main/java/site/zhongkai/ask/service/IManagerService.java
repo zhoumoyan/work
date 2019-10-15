@@ -6,6 +6,6 @@ import site.zhongkai.ask.utils.PageUtils;
 
 import java.util.Map;
 
-public interface ManagerService extends IService<Manager> {
+public interface IManagerService extends IService<Manager> {
     PageUtils getManagers(Map<String, Object> params);
 }

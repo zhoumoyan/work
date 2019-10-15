@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import site.zhongkai.ask.entity.ExamInfo;
-import site.zhongkai.ask.service.ExamInfoService;
+import site.zhongkai.ask.service.IExamInfoService;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +32,7 @@ import java.util.*;
 public class UploadController {
 
     @Resource
-    private ExamInfoService examInfoService;
+    private IExamInfoService examInfoService;
 
     /**
      * 上传excel到题库基本信息表 IO流形式

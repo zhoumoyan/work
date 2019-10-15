@@ -6,6 +6,6 @@ import site.zhongkai.ask.utils.PageUtils;
 
 import java.util.Map;
 
-public interface ExamInfoService extends IService<ExamInfo> {
+public interface IExamInfoService extends IService<ExamInfo> {
     PageUtils getExamInfoList(Map<String, Object> params);
 }

@@ -5,27 +5,26 @@ $(function () {
     /*$(document).on('click', '.ticketList', function () {
         $("#answerBox").hide();
         $("#answerBox2").show();
-    })*/
-    /*$(".ticketList").on("click", function () {
+    })
+    $(".ticketList").on("click", function () {
         $("#answerBox").hide();
         $("#answerBox2").show();
-    })*/
+    })
     $("#exhomePage").on("click", function () {
         $("#answerBox").show();
         $("#answerBox2").hide();
     })
-
     function openaMark() {
         $('#answerMark').show();
         $("#answerbgMask").show();
-    }
+    }*/
 
     function closeaMark() {
         $('#answerMark').hide();
         $("#answerbgMask").hide();
     }
 
-    $("#confirmBtn").on("click", function () {
+    /*$("#confirmBtn").on("click", function () {
         //兑换成功
 //		$("#exresult").text('兑换成功');
 //		$("#exresult").removeClass("exSureFalse");
@@ -35,7 +34,7 @@ $(function () {
         $("#exresult").addClass("exSureFalse");
         openaMark();
 
-    })
+    })*/
     $("#determineBtn").on("click", function () {
         closeaMark();
         setInterval(function () {
@@ -43,7 +42,8 @@ $(function () {
         }, 100);
     })
     $("#goHome").on("click", function () {
-        window.history.back(-1)
+        /*window.history.back(-1)*/
+        window.location.href = '/ask/portal/index';
     })
 
 })
@@ -51,25 +51,24 @@ $(function () {
 $(document).ready(function () {
     showVoucherList();
 });
-
 function showVoucherList() {
     $("#voucher_list").empty();
     $.ajax({
-        "url": "/ask/voucher/get_all",
+        "url": "/ask/voucher/get",
         "type": "POST",
         "data": "openId=" + window.localStorage.getItem("openId"),
         "dataType": "json",
         "success": function (result) {
-            var list = result.data.vouchers;
+            var list = result.data.sysVouchers;
             for (var i = 0; i < list.length; i++) {
                 var html =
-                    '<ul class="ticketList" onclick="showVoucher(' + i + ')"> ' +
+                    '<ul class="ticketList" onclick="showSelectVoucher(' + i + ')"> ' +
                     '<li>' +
                     '<p>￥<span class="answerMoney">#{money}</span></p>' +
                     '<p class="integralOne">#{consumeExplain}<span><input id="consume_score' + i + '" type="hidden" value="#{consumeScore}"></span></p> ' +
                     '</li>' +
                     '<li>' +
-                    '<p class="ticketTilte1">编号：<span>#{id}</span></p>' +
+                    '<p class="ticketTilte1">编号：<span id="voucher_id' + i + '">#{id}</span></p>' +
                     '<p class="ticketTilte1">#{voucherExplain}</p>' +
                     '</li>' +
                     '<li class="effectiveDate">' +
@@ -77,7 +76,8 @@ function showVoucherList() {
                     '<p class="notUsed">#{state}</p>' +
                     '</li>' +
                     '</ul>';
-                var state = (list[i].state === 0 ? "未使用" : "已使用");
+                var state = (list[i].consumeScore <= result.data.userGrade ? "可以兑换" : "积分不足");
+                /*html = html.replace("#{money}", list[i].money.toFixed(2));*/
                 html = html.replace("#{money}", list[i].money);
                 html = html.replace("#{consumeExplain}", list[i].consumeExplain);
                 html = html.replace("#{consumeScore}", list[i].consumeScore);
@@ -93,11 +93,42 @@ function showVoucherList() {
     })
 }
 
-function showVoucher(i) {
-    var elementsByTagNameElement = document.getElementById("voucher_list").getElementsByTagName("ul")[i];
+function showSelectVoucher(i) {
+    var elements = document.getElementById("voucher_list").getElementsByTagName("ul")[i];
     $("#answerBox").hide();
     $("#answerBox2").show();
-    var html = '<p class="answerTitle">确定使用'+$("#consume_score"+i).val()+'积分兑换</p>';
-    $("#select_voucher").show().html(html).append(elementsByTagNameElement);
+    var html1 = '<p class="answerTitle">确定使用' + $("#consume_score" + i).val() + '积分兑换</p>';
+    $("#select_voucher").show().html(html1).append(elements);
+    var html2 = '<button type="button" class="exchange_Ticket" id="confirmBtn" onclick="confirmExchange(' + i + ')">确定</button>';
+    $("#confirm_div").html(html2);
+}
 
+function confirmExchange(i) {
+    if (parseInt($("#valid_score2").html()) < parseInt($("#consume_score" + i).val())) {
+        $("#exresult").text('可用积分不足，兑换失败').addClass("exSureFalse");
+        openaMark();
+        return false;
+    }
+    var data = "openId=" + window.localStorage.getItem("openId") + "&voucherId=" + $("#voucher_id" + i).html();
+    $.ajax({
+        "url": "/ask/voucher/confirm_exchange",
+        "type": "POST",
+        "data": data,
+        "dataType": "json",
+        "success": function (result) {
+            if (result.success) {
+                $("#exresult").text('兑换成功').removeClass("exSureFalse");
+                $("#valid_score1").html($("#valid_score1").html() - $("#consume_score" + i).val());
+                $("#valid_score2").html($("#valid_score2").html() - $("#consume_score" + i).val());
+            } else {
+                $("#exresult").text(result.message).addClass("exSureFalse");
+            }
+            openaMark();
+        }
+    })
+}
+
+function openaMark() {
+    $('#answerMark').show();
+    $("#answerbgMask").show();
 }

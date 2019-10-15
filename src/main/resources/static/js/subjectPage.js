@@ -3,9 +3,11 @@ $(function(){
 	//获取题目
 	$.ajax({
 		type:"get",
-		url:"/ask/answer/get_exam_info",
+		url:"/ask/answer/get_index",
+		data: "openId=" + window.localStorage.getItem("openId"),
 		async:true,
-		success:function(res){
+		success:function(json){
+			res = json.examInfos;
 			$("#answerSubject").find("li").eq(0).find(".subjects").empty();
 			for(var key in res){
 				correctArrayo.push(res[key].correct);
@@ -21,6 +23,7 @@ $(function(){
 					$("#answerSubject").find("li").eq(0).find(".subjects").append(tmdan);
 				}
 			}
+			$("#today_score").html(json.todayScore);
 		},
 		error:function(res){			
 		}

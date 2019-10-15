@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.RequestMapping;
 import site.zhongkai.ask.entity.ExamType;
-import site.zhongkai.ask.service.ExamTypeService;
+import site.zhongkai.ask.service.IExamTypeService;
 import site.zhongkai.ask.utils.PageUtils;
 import site.zhongkai.ask.utils.R;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +24,7 @@ import java.util.Map;
 public class ExamTypeController {
 
     @Resource
-    private ExamTypeService examTypeService;
+    private IExamTypeService examTypeService;
 
     //新增题目类别
     @PostMapping("/add")

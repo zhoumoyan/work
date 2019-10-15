@@ -5,9 +5,9 @@ import site.zhongkai.ask.utils.ResponseResult;
 public interface IAnswerService {
 
 	// 随机20道题
-	ResponseResult getRandomExamInfo();
+	ResponseResult getRandomAnswerIndex(String openId);
 
 	// 获取积分
-	ResponseResult getUserGrade(String openId, Integer answerFraction);
+	ResponseResult getUserGrade(String openId, String score);
 
 }

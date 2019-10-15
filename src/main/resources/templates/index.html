@@ -1,28 +1,38 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" style="height: 100%;" lang="zh">
-	<head>
-		<meta charset="utf-8" />
-		<title></title>
-		<base th:href="@{/}">
-		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-		<link rel="stylesheet/less" type="text/css" href="css/index.css"/>
-		<script src="js/less.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/fontSize.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/index.js" type="text/javascript" charset="utf-8"></script>
-	</head>
-	<body style="height: 100%;">
-		<div class="indexBox">
-			<div class="cardTicketIndex">
-			   <div style="width: 100%;">
-					<div class="index_Title1" ><img src="img/bt1.png" alt="" /><div class="clearBoth"></div></div>
-				    <div class="index_Title2"><img src="img/bt2.png" alt="" /><div class="clearBoth"></div></div>
-			   </div>
-		  	   <p class="index_explain textCenter">望州南社区红色知识学习竞赛</p>
-		  	   <div class="textCenter"><input class="toanswerBtn" type="button" name="" onclick="gotoAnswerPage()" value="去答题" /></div>
-		  	   <div class="index_tips textCenter"><span id="index_tipsOBtn" class="index_tipsO">活动说明</span><span id="index_tipsT" class="index_tipsT">我的积分</span></div>		         
-			</div>
-		</div>
-		<input id="open_id" type="hidden" th:value="${openId}"/>
-	</body>
+<head>
+    <meta charset="utf-8"/>
+    <title></title>
+    <base th:href="@{/}">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link rel="stylesheet/less" type="text/css" href="css/index.css"/>
+    <script src="js/less.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/fontSize.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/index.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body style="height: 100%;">
+<input id="open_id" type="hidden" th:value="${openId}"/>
+<div class="indexBox">
+    <div class="cardTicketIndex">
+        <div style="width: 100%;">
+            <div class="index_Title1"><img src="img/bt1.png" alt=""/>
+                <div class="clearBoth"></div>
+            </div>
+            <div class="index_Title2"><img src="img/bt2.png" alt=""/>
+                <div class="clearBoth"></div>
+            </div>
+        </div>
+        <p class="index_explain textCenter">望州南社区红色知识学习竞赛</p>
+        <div class="textCenter"><input class="toanswerBtn" type="button" name="" onclick="gotoAnswerPage()" value="去答题"/></div>
+        <div class="index_tips textCenter"><span id="index_tipsOBtn" class="index_tipsO">活动说明</span><span id="index_tipsT"
+                                                                                                          class="index_tipsT">我的积分</span></div>
+    </div>
+</div>
+<script type="text/javascript">
+    var openId = $("#open_id").val();
+    if (openId.length !== 0) window.localStorage.setItem("openId", openId);
+</script>
+</body>
 </html>

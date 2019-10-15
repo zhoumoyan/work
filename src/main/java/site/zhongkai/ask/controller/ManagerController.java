@@ -2,12 +2,10 @@ package site.zhongkai.ask.controller;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 import site.zhongkai.ask.entity.Manager;
-import site.zhongkai.ask.service.ManagerService;
+import site.zhongkai.ask.service.IManagerService;
 import site.zhongkai.ask.utils.PageUtils;
 import site.zhongkai.ask.utils.R;
 
@@ -19,15 +17,21 @@ import java.util.Date;
 import java.util.Map;
 
 @Log4j2
-@RestController
+@Controller
 @RequestMapping("/manager")
 public class ManagerController {
 
     @Resource
-    private ManagerService managerService;
+    private IManagerService managerService;
 
-    //用户登录
-    @PostMapping("/login")
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    // 处理用户登录
+    @PostMapping("/handle_login")
+    @ResponseBody
     public Manager handleLogin(Manager manager, HttpServletResponse response, HttpSession session) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         Manager loginUser = managerService.selectOne(new EntityWrapper<Manager>()
@@ -40,8 +44,9 @@ public class ManagerController {
         return loginUser;
     }
 
-    //分页查询
+    // 分页查询
     @PostMapping("/get_all")
+    @ResponseBody
     public R getAllManager(@RequestParam Map<String, Object> map, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         PageUtils pu = managerService.getManagers(map);
@@ -52,8 +57,9 @@ public class ManagerController {
         return new R(0, "success", pu.getTotalCount(), pu.getList());
     }
 
-    //添加
+    // 添加
     @PostMapping("/add")
+    @ResponseBody
     public String addManager(Manager manager, HttpServletResponse response) {
         manager.setState("0").setCreateTime(new Date());
         System.err.println(manager);
@@ -65,8 +71,9 @@ public class ManagerController {
         }
     }
 
-    //删除
+    // 删除
     @PostMapping("/delete")
+    @ResponseBody
     public String delManager(Manager manager, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         if (managerService.deleteById(manager)) {
@@ -76,8 +83,9 @@ public class ManagerController {
         }
     }
 
-    //修改
+    // 修改
     @PostMapping("/update")
+    @ResponseBody
     public String updateManager(Manager manager, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         if (managerService.updateById(manager)) {
@@ -87,8 +95,9 @@ public class ManagerController {
         }
     }
 
-    //根据id查询信息
+    // 根据id查询信息
     @PostMapping("/get_by_id")
+    @ResponseBody
     public Manager getManagerById(Manager manager, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         return managerService.selectOne(

@@ -29,25 +29,27 @@ $(function () {
                 '<span class="test-checkInput"></span>' + (parseInt(key) + 1) + '</lable></li>';
         }
         $("#answerCheckbox ul").append(html);
-        $("#answerFraction").text(answerFraction + '分');
+        $("#answerFraction").text(answerFraction + ' 分');
     }
+    submitResult(answerFraction);
+});
 
-	var openId = window.localStorage.getItem("openId");
-	$.ajax({
+function submitResult(answerFraction) {
+    var data = "openId=" + window.localStorage.getItem("openId") + "&answerFraction=" + answerFraction;
+    $.ajax({
         "url": "/ask/answer/get_result",
-        "data": "openId=" + openId + "&answerFraction=" + answerFraction,
+        "data": data,
         "type": "POST",
         "dataType": "json",
         "success": function (result) {
             if (result.success) {
-				var grade = result.data;
-				$("#today_score").html(grade.todayScore);
-				$("#valid_score").html(grade.validScore);
-				$("#history_score").html(grade.historyScore);
-            }else {
-				alert(result.message);
-			}
+                var grade = result.data;
+                $("#today_score").html(grade.todayScore);
+                $("#valid_score").html(grade.validScore);
+                $("#history_score").html(grade.historyScore);
+            } else {
+                alert(result.message);
+            }
         }
     });
-
-})
+}

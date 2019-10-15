@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import site.zhongkai.ask.mapper.IWxUserMapper;
 import site.zhongkai.ask.entity.WxUser;
-import site.zhongkai.ask.service.WxUserService;
+import site.zhongkai.ask.service.IWxUserService;
 import site.zhongkai.ask.utils.PageUtils;
 import site.zhongkai.ask.utils.Query;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class WxUserServiceImp extends ServiceImpl<IWxUserMapper, WxUser> implements WxUserService {
+public class WxUserServiceImp extends ServiceImpl<IWxUserMapper, WxUser> implements IWxUserService {
     @Override
     public PageUtils getWxUserList(Map<String, Object> params) {
         Page<WxUser> page=new Query<WxUser>(params).getPage();
