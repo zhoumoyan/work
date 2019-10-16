@@ -33,7 +33,7 @@
         <script type="text/html" id="toolbarDemo">
             <!--查询条件-->
             <div class="layui-input-inline">
-                <label for="wechatid"></label><input type="text" id="wechatid" name="wechatid" autocomplete="off"
+                <label for="nickName"></label><input type="text" id="nickName" name="nickName" autocomplete="off"
                                                     placeholder="请输入微信昵称"
                                                     class="layui-input">
             </div>
@@ -57,7 +57,7 @@
 <script src="../layui/layui.js" charset="utf-8"></script>
 
 <script>
-    var wechatid;
+    var nickName;
     var openid;
     //原生js实现
     window.onload = function () {
@@ -93,7 +93,7 @@
     }
 
     function initTable() {
-        wechatid=$('#wechatid').val();
+        nickName=$('#nickName').val();
         openid=$('#openid').val();
 
         layui.use('table', function () {
@@ -102,7 +102,7 @@
                 elem: '#test',
                 url: '/ask/wx_user/get_all',
                 where: {
-                    wechatId: wechatid,
+                    nickName: nickName,
                     openId:openid
                 },
                 even: true, //开启隔行背景
