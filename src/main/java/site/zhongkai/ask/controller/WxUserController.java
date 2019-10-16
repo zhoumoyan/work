@@ -56,7 +56,6 @@ public class WxUserController {
         PageUtils pu = wxUserService.getWxUserList(map);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         for (Object wxUser : pu.getList()) {
-            System.err.println(wxUser);
             ((WxUser) wxUser).setCreateTimeFormat((simpleDateFormat).format(((WxUser) wxUser).getCreateTime()));
             if (((WxUser) wxUser).getActiveTime() != null)
                 ((WxUser) wxUser).setActiveTimeFormat((simpleDateFormat).format(((WxUser) wxUser).getActiveTime()));

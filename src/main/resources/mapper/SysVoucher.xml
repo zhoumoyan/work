@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="site.zhongkai.ask.mapper.ISysVoucherMapper">
+    <select id="getSysVouchers" parameterType="map" resultType="site.zhongkai.ask.entity.SysVoucher">
+        SELECT
+        id,
+        money,
+        voucher_explain as voucherExplain,
+        consume_explain as consumeExplain,
+        consume_score as consumeScore,
+        valid_time as validTime,
+        state,
+        operate_user_id as operateUserId,
+        create_time as createTime
+        FROM t_sys_voucher t
+        where 1=1
+        <if test="id != null and id != ''">
+            AND t.id LIKE CONCAT('%',#{id},'%')
+        </if>
+    </select>
+</mapper>

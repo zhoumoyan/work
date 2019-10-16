@@ -26,7 +26,7 @@
         <label class="layui-form-label">选项</label>
         <div class="layui-input-block">
             <div class="layui-input-inline" style="width:15%;">
-                <input type="checkbox" name="a"  lay-skin="primary" title="选项A" lay-verify="da" >
+                <input type="checkbox" name="a"  lay-skin="primary" title="选项A" lay-verify="an" >
             </div>
             <div class="layui-input-block" style="margin-left:10px">
                 <label for="a_content"></label><input type="text" id="a_content" lay-verify="a" style="width: 75%" name="optionA"
@@ -35,7 +35,7 @@
         </div>
         <div class="layui-input-block">
             <div class="layui-input-inline" style="width:15%;">
-                <input type="checkbox" name="b" lay-skin="primary" title="选项B" lay-verify="da">
+                <input type="checkbox" name="b" lay-skin="primary" title="选项B" lay-verify="an">
             </div>
             <div class="layui-input-block" style="margin-left:10px">
                 <label for="b_content"></label><input type="text" id="b_content" lay-verify="b" style="width: 75%" name="optionB"
@@ -44,7 +44,7 @@
         </div>
         <div class="layui-input-block">
             <div class="layui-input-inline" style="width:15%;">
-                <input type="checkbox" name="c" lay-skin="primary" title="选项C" lay-verify="da">
+                <input type="checkbox" name="c" lay-skin="primary" title="选项C" lay-verify="an">
             </div>
             <div class="layui-input-block" style="margin-left:10px">
                 <label for="c_content"></label><input type="text" id="c_content" lay-verify="c" style="width: 75%" name="optionC"
@@ -53,7 +53,7 @@
         </div>
         <div class="layui-input-block">
             <div class="layui-input-inline" style="width:15%;">
-                <input type="checkbox" name="d"  lay-skin="primary" title="选项D" lay-verify="da">
+                <input type="checkbox" name="d"  lay-skin="primary" title="选项D" lay-verify="an">
             </div>
             <div class="layui-input-block" style="margin-left:10px">
                 <label for="d_content"></label><input type="text" id="d_content" lay-verify="d" style="width: 75%" name="optionD"
@@ -62,7 +62,7 @@
         </div>
         <div class="layui-input-block">
             <div class="layui-input-inline" style="width:15%;">
-                <input type="checkbox" name="d"  lay-skin="primary" title="选项E" lay-verify="da">
+                <input type="checkbox" name="d"  lay-skin="primary" title="选项E" lay-verify="an">
             </div>
             <div class="layui-input-block" style="margin-left:10px">
                 <label for="e_content"></label><input type="text" id="e_content" lay-verify="e" style="width: 75%" name="optionE"
@@ -84,7 +84,7 @@
     </div>
 </form>
 <script src="../layui/layui.js" charset="utf-8"></script>
-<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
 <script>
     $(function() {
         init();
@@ -110,12 +110,11 @@
                     }
                 },a:function(value,item){
                     if(value==="" || value==null) {
-                        return "请输入选项A内容";
+                        return "至少要输入A和B选项内容";
                     }
                 },b:function(value,item){
-                    //alert(value);
                     if(value==="" || value==null) {
-                        return "请输入选项B内容";
+                        return "至少要输入A和B选项内容";
                     }
                 }/*,c:function(value,item){
                     if(value==="" || value==null) {
@@ -134,7 +133,7 @@
                         return "请输入解释说明";
                     }
                 }*/
-                ,da:function(value,item){//验证答案
+                ,an:function(value,item){//验证答案
                     //判断复选框是否都选择了
                     //alert("a==>"+ $("[name=a]").prop("checked"));
                     if($("[name=a]").prop("checked")){
@@ -153,7 +152,7 @@
                         correctanswer+="E";
                     }
                     if(correctanswer===""){
-                        return "请勾选正确的答案";
+                        return "请勾选设置题目答案";
                     }
                 }
             });

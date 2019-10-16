@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>用户卡卷兑换详情</title>
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+</head>
+<body>
+<input id="open_id" name="open_id" type="hidden">
+<table class="layui-hide" id="test" lay-filter="test"></table>
+<script type="text/html" id="toolbarDemo">
+</script>
+<script src="../layui/layui.js"></script>
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+        //第一个实例
+        table.render({
+            elem: '#test'
+            ,method: 'post'
+            ,where: {
+                openId: parent.data.openId
+            }
+            ,height: 'full-20'
+            ,url: '/ask/voucher/get_user' //数据接口
+            ,page: true //开启分页
+            ,limit: 10
+            ,limits: [10, 30, 50, 200]
+            ,title: '用户兑换详情'
+            ,toolbar: '#toolbarDemo'
+            ,defaultToolbar: ['filter', 'print', 'exports']
+            ,cols: [[ //表头
+                {field: 'voucherId', title: '卡券编号', minWidth:100, align: 'center', fixed: 'left'}
+                ,{field: 'moneyFormat', title: '卡券金额', minWidth:30, align: 'center', fixed: 'right'}
+                ,{field: 'consumeScore', title: '消耗积分', minWidth: 30, align: 'center', fixed: 'right'}
+                ,{field: 'validTimeFormat', title: '有效日期', minWidth: 100, align: 'center', fixed: 'right'}
+                ,{title: '状态', minWidth: 30, align: 'center', fixed: 'right', templet: function(res) {return res.state === 0 ? "未使用" : "已使用";}}
+                ,{field: 'exchangeTimeFormat', title: '兑换时间', minWidth: 100, sort: true, align: 'center', fixed: 'right'}
+                ,{field: 'useTimeFormat', title: '使用时间', minWidth: 100, align: 'center', fixed: 'right'}
+            ]]
+        });
+
+    });
+</script>
+</body>
+</html>

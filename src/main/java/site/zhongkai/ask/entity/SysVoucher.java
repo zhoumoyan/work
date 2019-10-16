@@ -18,8 +18,10 @@ public class SysVoucher implements Serializable {
     private static final long serialVersionUID = 5416764545565521439L;
     @TableId(type= IdType.ID_WORKER_STR)
     private String id;                  // 业务主键
-    private BigDecimal money;           // 代金卷金额
-    private String voucherExplain;      // 代金卷说明
+    private BigDecimal money;           // 卡券金额
+    @TableField(exist = false)
+    private String moneyFormat;         // 格式化金额
+    private String voucherExplain;      // 卡券说明
     private String consumeExplain;      // 消耗说明
     private Integer consumeScore;       // 消耗分数
     private Date validTime;             // 有效时间
@@ -28,4 +30,6 @@ public class SysVoucher implements Serializable {
     private Integer state;              // 卡券状态：0-正常，1-停用
     private String operateUserId;       // 操作人员ID
     private Date createTime;            // 创建时间
+    @TableField(exist = false)
+    private String createTimeFormat;    // 格式化时间
 }

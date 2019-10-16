@@ -63,7 +63,7 @@
 </div>
 </body>
 <script src="../layui/layui.js" charset="utf-8"></script>
-<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
 <script>
     var name="";
     var phone="";
@@ -171,8 +171,9 @@
                         align: 'center',
                         unresize: true
                     }, {
+                        fixed: 'left',
                         field: 'formatTime',
-                        title: '创建时间',
+                        title: '添加时间',
                         minWidth: 150,
                         align: 'center',
                         unresize: true
@@ -196,7 +197,7 @@
             table.on('tool(test)', function (obj) {
                 var data = obj.data;
                 if (obj.event === 'del') {
-                    layer.confirm("请问是否确定删除，删除后不可恢复？", {
+                    layer.confirm("请问是否确定删除，删除后不可恢复！", {
                         btn: ["确定", "取消"] //按钮
                     }, function (index) {
                         delInfo(data.id);
@@ -213,13 +214,7 @@
             });
         });
     }
-    function fmtDate(obj){
-        var date =  new Date(obj);
-        var y = 1900+date.getYear();
-        var m = "0"+(date.getMonth()+1);
-        var d = "0"+date.getDate();
-        return y+"-"+m.substring(m.length-2,m.length)+"-"+d.substring(d.length-2,d.length);
-    }
+
     function delInfo(id) {
         var params = {"id": id};
         $.ajax({

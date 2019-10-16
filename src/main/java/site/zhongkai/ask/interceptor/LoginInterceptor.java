@@ -9,19 +9,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-//@Component
+// 拦截组件
+@Component
 public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
         HttpSession session = request.getSession();
         if (session.getAttribute("userid") == null) {
-            try {
-                response.sendRedirect("/ask/login"); // 重定向
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return false; // 仍然需要写return来终止方法
+            response.sendRedirect("/ask/login.html");
+            return false;
         }
         return true; // 放行
     }

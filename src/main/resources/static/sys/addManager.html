@@ -28,7 +28,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">用户性别</label>
             <div class="layui-input-inline">
-                <input type="radio" name="sex" value="1" title="男" checked="">
+                <input type="radio" name="sex" value="1" title="男" checked="checked">
                 <input type="radio" name="sex" value="0" title="女">
             </div>
         </div>
@@ -44,14 +44,14 @@
         <div class="layui-inline">
             <label class="layui-form-label">登录账号</label>
             <div class="layui-input-inline">
-                <label for="login"></label><input type="text" id="login" name="login"
+                <label for="login"></label><input type="text" id="login" name="login" lay-verify="login"
                                                   autocomplete="off" placeholder="请设置账号" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">登录密码</label>
             <div class="layui-input-inline">
-                <label for="pwd"></label><input type="text" id="pwd" name="pwd"
+                <label for="pwd"></label><input type="password" id="pwd" name="pwd" lay-verify="pwd"
                                                 autocomplete="off" placeholder="请设置密码" class="layui-input">
             </div>
         </div>
@@ -60,14 +60,12 @@
 
     <div class="layui-form-item" style="margin-top: 20px;">
         <div class="layui-input-block" style="margin-right: 8%;text-align: right">
-            <!--<button  class="layui-btn" lay-filter="addInfo">保存</button>-->
             <button class="layui-btn" lay-filter="addinfo" lay-submit="">提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
 </form>
 <script src="../layui/layui.js" charset="utf-8"></script>
-<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
     $(function () {
         init();
@@ -77,32 +75,31 @@
         layui.use(['form', 'laydate'], function () {
             var form = layui.form;
             var laydate = layui.laydate;
-            //执行一个laydate实例
-            laydate.render({
-                elem: '#graduationtime' //指定元素
-            });
-            //自定义表单验证
             form.verify({
-                name: function (value, item) {//姓名
+                name: function (value, item) {
                     if (value === "" || value == null) {
                         return "请输入姓名";
                     }
-                }, phone: function (value, item) {//电话
+                }, phone: function (value, item) {
                     //alert(value);
                     if (!(/^1[34578]\d{9}$/.test(value))) {
                         return "请填写正确手机号码";
                     }
-                }
+                }, login: function (value, item) {
+                    //alert(value);
+                    if (value === "" || value == null) {
+                        return "请设置账号";
+                    }
+                }, pwd: [
+                    /^[\S]{6,12}$/
+                    ,'密码必须6到12位，且不能出现空格'
+                ]
             });
             form.on('submit(addinfo)', function (data) {
-                //通过验证后调用添加方法
-                //console.log("data.field==>"+data.field)
-                // console.log("JSON.stringify==>"+JSON.stringify(data.field))
-                // console.log("JSON.parse==>"+JSON.parse(data.field))
                 addInfo();
                 return false;
             });
-            form.render(); //渲染
+            form.render();
         });
     }
 
@@ -134,11 +131,11 @@
         });
     }
 
-    //点击取消关闭窗口
+    /*点击取消关闭窗口*/
     function doCancel() {
         var index = parent.layer.getFrameIndex(window.name);
-        parent.layer.close(index);//关闭子窗体
-        parent.location.reload();//刷新父窗体
+        parent.layer.close(index);/*关闭子窗体*/
+        parent.location.reload();/*刷新父窗体*/
     }
 
 </script>

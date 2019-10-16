@@ -73,7 +73,7 @@
 </div>
 </body>
 <script src="../layui/layui.js" charset="utf-8"></script>
-<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
 <script>
     //原生js实现
     window.onload = function () {
@@ -288,7 +288,7 @@
             table.on('tool(test)', function (obj) {
                 var data = obj.data;
                 if (obj.event === 'del') {
-                    layer.confirm("请问是否确定删除，删除后不可恢复？", {
+                    layer.confirm("请问是否确定删除，删除后不可恢复！", {
                         btn: ["确定", "取消"] //按钮
                     }, function (index) {
                         delexam(data.id);

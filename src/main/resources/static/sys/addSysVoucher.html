@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>新增系统卡券</title>
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <script src="../js/jquery.min.js"></script>
+</head>
+<body>
+<form class="layui-form" method="post" style="margin-top: 30px">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">卡券金额</label>
+            <div class="layui-input-inline">
+                <label for="money"></label><input type="text" id="money" name="money" lay-verify="money"
+                                                  autocomplete="off" placeholder="请输入卡券金额" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">卡券说明</label>
+            <div class="layui-input-inline">
+                <label for="voucherExplain"></label><input type="tel" id="voucherExplain" name="voucherExplain" lay-verify="voucherExplain"
+                                                           autocomplete="off" placeholder="请输入卡券说明" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">卡券状态</label>
+            <div class="layui-input-inline">
+                <input type="radio" name="state" value="0" title="正常"  checked="checked">
+                <input type="radio" name="state" value="1" title="停用">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">消耗积分</label>
+            <div class="layui-input-inline">
+                <label for="consumeScore"></label><input type="tel" id="consumeScore" name="consumeScore" lay-verify="consumeScore"
+                                                         autocomplete="off" placeholder="请输入消耗积分" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">有效日期</label>
+            <div class="layui-input-inline">
+                <label for="validTime"></label>
+                <input type="tel" id="validTime" name="validTime" lay-verify="validTime"
+                       autocomplete="off" placeholder="请选择有效日期" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">消耗说明</label>
+            <div class="layui-input-inline">
+                <label for="consumeExplain"></label><input type="tel" id="consumeExplain" name="consumeExplain" lay-verify="consumeExplain"
+                                                           autocomplete="off" placeholder="请输入消耗说明" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item" style="margin-top: 20px;">
+        <div class="layui-input-block" style="margin-right: 8%;text-align: right">
+            <button class="layui-btn" lay-filter="addinfo" lay-submit="">提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script src="../layui/layui.js" charset="utf-8"></script>
+<script>
+    $(function () {
+        init();
+    });
+
+    function init() {
+        layui.use(['form', 'laydate'], function () {
+            var form = layui.form;
+            var laydate = layui.laydate;
+            //执行一个laydate实例
+            laydate.render({
+                elem: '#validTime' //指定元素
+            });
+            //自定义表单验证
+            form.verify({
+                money: function (value, item) {
+                    if (value === "" || value == null) {
+                        return "请输入卡券金额";
+                    }
+                }, voucherExplain: function (value, item) {
+                    if (value === "" || value == null) {
+                        return "请输入卡卷说明";
+                    }
+                }, consumeScore: function (value, item) {
+                    if (value === "" || value == null) {
+                        return "请输入消耗积分";
+                    }
+                }, validTime: function (value, item) {
+                    if (value === "" || value == null) {
+                        return "请选择有效日期";
+                    }
+                }, consumeExplain: function (value, item) {
+                    if (value === "" || value == null) {
+                        return "请输入消耗说明";
+                    }
+                }
+            });
+            form.on('submit(addinfo)', function (data) {
+                addInfo();
+                return false;
+            });
+            form.render(); //渲染
+        });
+    }
+
+    function addInfo() {
+        var params = {
+            "money": $("#money").val(),
+            "voucherExplain": $("#voucherExplain").val(),
+            "consumeExplain": $("#consumeExplain").val(),
+            "state": $('input[name="state"]:checked').val(),
+            "consumeScore": $("#consumeScore").val(),
+            "validTimeFormat": $("#validTime").val()
+        };
+        $.ajax({
+            url: "/ask/voucher/add_sys",
+            data: params,
+            dataType: "text",
+            type: "POST",
+            success: function (obj) {
+                if (obj === "success") {
+                    alert("添加成功");
+                    doCancel();
+                } else {
+                    alert("添加失败")
+                }
+            },
+            error: function (obj) {
+                alert("服务器链接错误:" + obj.toString());
+            }
+        });
+    }
+
+    //点击取消关闭窗口
+    function doCancel() {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);//关闭子窗体
+        parent.location.reload();//刷新父窗体
+    }
+
+</script>
+</body>
+</html>

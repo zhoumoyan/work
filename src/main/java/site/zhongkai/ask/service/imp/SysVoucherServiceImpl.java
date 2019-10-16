@@ -1,6 +1,8 @@
 package site.zhongkai.ask.service.imp;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import site.zhongkai.ask.config.Constant;
@@ -11,7 +13,9 @@ import site.zhongkai.ask.entity.WxUser;
 import site.zhongkai.ask.mapper.IUserVoucherMapper;
 import site.zhongkai.ask.mapper.ISysVoucherMapper;
 import site.zhongkai.ask.mapper.IWxUserMapper;
-import site.zhongkai.ask.service.IVoucherService;
+import site.zhongkai.ask.service.ISysVoucherService;
+import site.zhongkai.ask.utils.PageUtils;
+import site.zhongkai.ask.utils.Query;
 import site.zhongkai.ask.utils.ResponseResult;
 import site.zhongkai.ask.vo.GetVoucher;
 
@@ -19,10 +23,11 @@ import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Log4j2
 @Service
-public class VoucherServiceImpl implements IVoucherService {
+public class SysVoucherServiceImpl extends ServiceImpl<ISysVoucherMapper, SysVoucher> implements ISysVoucherService {
 
     @Resource
     private IWxUserMapper wxUserMapper;
@@ -65,4 +70,13 @@ public class VoucherServiceImpl implements IVoucherService {
         }
         return Response.getErrorResult(40002);
     }
+
+    @Override
+    public PageUtils findSysVoucher(Map<String, Object> params) {
+        Page<SysVoucher> page=new Query<SysVoucher>(params).getPage();
+        List<SysVoucher> list=baseMapper.getSysVouchers(page,params);
+        page.setRecords(list);
+        return new PageUtils(page);
+    }
+
 }

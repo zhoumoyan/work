@@ -24,7 +24,7 @@ public  class Constant implements Serializable {
 	// 配置文件
 	public static final String SYSTEM_PROPERTIES= "configure/system.properties";
 
-	// 代金卷状态
+	// 卡券状态
 	public static final Integer VOUCHER_NORMAL = 0;       // 未使用
 	public static final Integer VOUCHER_USED = 1;         // 已使用
 

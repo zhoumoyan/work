@@ -46,11 +46,16 @@
                 <i class="layui-icon layui-icon-search" style="font-size: 30px; color: white;"></i>
             </button>
         </script>
+        <script type="text/html" id="barDemo">
+            <a class="layui-btn layui-btn-xs" lay-event="details" title="兑换详情">
+                <i class="layui-icon layui-icon-form" style="font-size: 30px; color: white;"></i>
+            </a>
+        </script>
     </form>
 </div>
 </body>
 <script src="../layui/layui.js" charset="utf-8"></script>
-<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
 <script>
     var wechatid;
     var openid;
@@ -123,39 +128,61 @@
                     }, {
                         fixed: 'left',
                         field: 'grade',
-                        title: '目前积分',
+                        title: '可用积分',
                         minWidth: 150,
                         align: 'center',
                         unresize: true
                     }, {
+                        fixed: 'left',
                         field: 'createTimeFormat',
                         title: '添加时间',
                         minWidth: 150,
                         align: 'center',
                         unresize: true
                     }, {
+                        fixed: 'left',
                         field: 'activeTimeFormat',
                         title: '最近活跃时间',
                         minWidth: 150,
                         align: 'center',
                         unresize: true
+                    }, {
+                        fixed: 'right',
+                        title: '操作',
+                        align: 'center',
+                        toolbar: '#barDemo',
+                        width: 180
                     }]
                 ],
                 page: true,
                 limit: 15,
                 limits: [10, 15, 30, 50]
             });
-            //添加默认值
-            $('#wechatid').val(wechatid);
-            $('#openid').val(openid);
             init();
             //监听行工具事件
             table.on('tool(test)', function (obj) {
                 var data = obj.data;
-                if (obj.event === 'select') {
-                    selectPage(data.id);
+                if (obj.event === 'details') {
+                    detailsPage(data.openId);
                 }
             });
+        });
+    }
+
+    function detailsPage(id) {
+        console.log(id);
+        data = {
+            openId: id
+        };
+        layer.open({
+            type: 2, //表示打开一个网页
+            title: '用户兑换详情',
+            shadeClose: false, //点击窗体其他位置关闭
+            shade: 0.3, //遮罩 透明度0.3
+            maxmin: true, //开启最大化最小化按钮
+            area: ['58%', '70%'],
+            defaultToolbar: ['filter', 'print', 'exports'],
+            content: 'indexUserVoucher.html' //目标网页
         });
     }
 

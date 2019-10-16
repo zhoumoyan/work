@@ -9,30 +9,27 @@ import site.zhongkai.ask.interceptor.LoginInterceptor;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Configuration
+// 拦截器
+@Configuration
 public class Interceptor implements WebMvcConfigurer {
 
-    //添加拦截器
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        //创建拦截器对象
         HandlerInterceptor interceptor = new LoginInterceptor();
-
-        //放行的白名单
         List<String> list = new ArrayList<>();
-        list.add("/ask/**");
-        /*list.add("/ask/css/**");
-        list.add("/ask/fonts/**");
-        list.add("/ask/ico/**");
-        list.add("/ask/img/**");
-        list.add("/ask/js/**");
-        list.add("/ask/layui/**");
-        list.add("/ask/html/**");
-        list.add("/ask/login.html");
-        list.add("/ask/index.html");
-        list.add("/ask/answer/**");
-        list.add("/ask/manager/login");
-        */
+        list.add("/manager/handle_login");
+        list.add("/manager/logout");
+        list.add("/wx_user/login");
+        list.add("/portal/**");
+        list.add("/answer/**");
+        list.add("/css/**");
+        list.add("/down/**");
+        list.add("/fonts/**");
+        list.add("/ico/**");
+        list.add("/img/**");
+        list.add("/js/**");
+        list.add("/layui/**");
+        list.add("/login.html");
         registry.addInterceptor(interceptor).addPathPatterns("/**").excludePathPatterns(list);
         //WebMvcConfigurer.super.addInterceptors(registry);
     }

@@ -12,6 +12,7 @@ import site.zhongkai.ask.utils.R;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
@@ -24,9 +25,17 @@ public class ManagerController {
     @Resource
     private IManagerService managerService;
 
-    @GetMapping("/login")
-    public String login() {
-        return "login";
+    @GetMapping("/logout")
+    public void logout(HttpServletResponse response, HttpSession session) throws IOException {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        if(session == null){
+            response.sendRedirect("/ask/login.html");
+            return;
+        }
+        session.removeAttribute("userid");
+        session.removeAttribute("username");
+        session.removeAttribute("avatar");
+        response.sendRedirect("/ask/login.html");
     }
 
     // 处理用户登录
@@ -40,6 +49,7 @@ public class ManagerController {
         loginUser.setPassword(null).setSalt(null).setToken(null);
         session.setAttribute("userid", loginUser.getId());
         session.setAttribute("username", loginUser.getUsername());
+        session.setAttribute("avatar", loginUser.getAvatar());
         session.setMaxInactiveInterval(1800);
         return loginUser;
     }
@@ -62,7 +72,6 @@ public class ManagerController {
     @ResponseBody
     public String addManager(Manager manager, HttpServletResponse response) {
         manager.setState("0").setCreateTime(new Date());
-        System.err.println(manager);
         response.setHeader("Access-Control-Allow-Origin", "*");
         if (managerService.insert(manager)) {
             return "success";

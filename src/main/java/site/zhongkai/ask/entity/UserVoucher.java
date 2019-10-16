@@ -19,9 +19,11 @@ public class UserVoucher implements Serializable {
     @TableId(type= IdType.ID_WORKER_STR)
     private String id;                  // 业务主键
     private String openId;              // OpenID
-    private BigDecimal money;           // 代金卷金额
-    private String voucherId;           // 代金卷编号
-    private String voucherExplain;      // 代金卷说明
+    private BigDecimal money;           // 卡券金额
+    @TableField(exist = false)
+    private String moneyFormat;         // 格式金额
+    private String voucherId;           // 卡券编号
+    private String voucherExplain;      // 卡券说明
     private String consumeExplain;      // 消耗说明
     private Integer consumeScore;       // 消耗分数
     private Date validTime;             // 有效时间
@@ -29,7 +31,11 @@ public class UserVoucher implements Serializable {
     private String validTimeFormat;     // 格式时间
     private Integer state;              // 卡券状态：0-未使用，1-已使用
     private Date exchangeTime;          // 兑换时间
+    @TableField(exist = false)
+    private String exchangeTimeFormat;    // 格式时间
     private Date useTime;               // 使用时间
+    @TableField(exist = false)
+    private String useTimeFormat;         // 格式时间
 
     public UserVoucher() {
     }

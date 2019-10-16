@@ -12,7 +12,7 @@ import java.util.List;
 public class GetVoucher implements Serializable {
     private static final long serialVersionUID = -3926729164448230324L;
     private Integer userGrade;              // 用户积分
-    private List<SysVoucher> sysVouchers;   // 代金卷列表
+    private List<SysVoucher> sysVouchers;   // 卡券列表
 
     public GetVoucher() {
     }
