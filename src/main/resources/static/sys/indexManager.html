@@ -121,7 +121,7 @@
             var table = layui.table;
             table.render({
                 elem: '#test',
-                url: '/ask/manager/get_all',
+                url: '/ask/manage/get_users',
                 where: {
                     username: name,
                     phone:phone
@@ -154,7 +154,7 @@
                         align: 'center',
                         unresize: true,
                         templet: function(res){
-                            return res.gender==1?"男":"女";
+                            return res.gender===1?"男":"女";
                         }
                     }, {
                         fixed: 'left',
@@ -218,7 +218,7 @@
     function delInfo(id) {
         var params = {"id": id};
         $.ajax({
-            url: "/ask/manager/delete",
+            url: "/ask/manage/delete_user",
             data: params,
             dataType: "text",
             type: "POST",

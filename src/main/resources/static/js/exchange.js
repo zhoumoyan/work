@@ -54,7 +54,7 @@ $(document).ready(function () {
 function showVoucherList() {
     $("#voucher_list").empty();
     $.ajax({
-        "url": "/ask/voucher/get",
+        "url": "/ask/wx_user/get_voucher",
         "type": "POST",
         "data": "openId=" + window.localStorage.getItem("openId"),
         "dataType": "json",
@@ -111,7 +111,7 @@ function confirmExchange(i) {
     }
     var data = "openId=" + window.localStorage.getItem("openId") + "&voucherId=" + $("#voucher_id" + i).html();
     $.ajax({
-        "url": "/ask/voucher/confirm_exchange",
+        "url": "/ask/wx_user/confirm_exchange",
         "type": "POST",
         "data": data,
         "dataType": "json",

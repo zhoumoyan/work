@@ -2,6 +2,7 @@ package site.zhongkai.ask.service.imp;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import site.zhongkai.ask.config.Constant;
 import site.zhongkai.ask.config.Response;
@@ -46,12 +47,13 @@ public class AnswerServiceImpl implements IAnswerService {
             for (Integer integer : randoms) examInfoRandoms.add(examInfos.get(integer));
         }
         for (ExamInfo examInfo : examInfoRandoms) {
+            if (StringUtils.isAnyBlank(examInfo.getExamName(), examInfo.getCorrectAnswer(), examInfo.getOptionA(), examInfo.getOptionB())) continue;
             List<ExamOption> options = new LinkedList<>();
             options.add(new ExamOption(Constant.OPTION_A, examInfo.getOptionA()));
             options.add(new ExamOption(Constant.OPTION_B, examInfo.getOptionB()));
-            if (examInfo.getOptionC() != null && !"".equals(examInfo.getOptionC())) options.add(new ExamOption(Constant.OPTION_C, examInfo.getOptionC()));
-            if (examInfo.getOptionD() != null && !"".equals(examInfo.getOptionD())) options.add(new ExamOption(Constant.OPTION_D, examInfo.getOptionD()));
-            if (examInfo.getOptionE() != null && !"".equals(examInfo.getOptionE())) options.add(new ExamOption(Constant.OPTION_E, examInfo.getOptionE()));
+            if (StringUtils.isNotBlank(examInfo.getOptionC())) options.add(new ExamOption(Constant.OPTION_C, examInfo.getOptionC()));
+            if (StringUtils.isNotBlank(examInfo.getOptionD())) options.add(new ExamOption(Constant.OPTION_D, examInfo.getOptionD()));
+            if (StringUtils.isNotBlank(examInfo.getOptionE())) options.add(new ExamOption(Constant.OPTION_E, examInfo.getOptionE()));
             responseExamInfos.add(new ExamRandom(examInfo.getId(), examInfo.getExamName(), examInfo.getCorrectAnswer(), options));
         }
         List<AnswerLog> answerLogs = answerLog.selectTodayList(openId);

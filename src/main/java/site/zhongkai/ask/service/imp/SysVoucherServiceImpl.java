@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import site.zhongkai.ask.config.Constant;
 import site.zhongkai.ask.config.Response;
@@ -39,7 +40,7 @@ public class SysVoucherServiceImpl extends ServiceImpl<ISysVoucherMapper, SysVou
     @Override
     public ResponseResult findVoucher(String openId, String operateType) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
-        if (operateType == null){
+        if (StringUtils.isEmpty(operateType)){
             List<SysVoucher> sysVouchers = voucherMapper.selectList(new EntityWrapper<SysVoucher>().eq("state", 0).ge("valid_time", new Date()));
             for (SysVoucher sysVoucher : sysVouchers) {
                 sysVoucher.setValidTimeFormat((simpleDateFormat).format(sysVoucher.getValidTime()));

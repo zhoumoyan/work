@@ -112,7 +112,7 @@
     function getInfoById(id) {
         var params = {"id": id};
         $.ajax({
-            url: "/ask/voucher/get_sys_by_id",
+            url: "/ask/manage/get_voucher_by_id",
             data: params,
             dataType: "JSON",
             type: "POST",
@@ -120,8 +120,8 @@
                 if (obj !== "undefined") {
                     $("#id").val(obj.id);
                     $("#money").val(obj.money);
-                    $("input[name=state][value='1']").attr("checked", obj.state === 1 ? true : false);
-                    $("input[name=state][value='0']").attr("checked", obj.state === 0 ? true : false);
+                    $("input[name=state][value='1']").attr("checked", obj.state === 1);
+                    $("input[name=state][value='0']").attr("checked", obj.state === 0);
                     $("#voucherExplain").val(obj.voucherExplain);
                     $("#consumeExplain").val(obj.consumeExplain);
                     $("#consumeScore").val(obj.consumeScore);
@@ -154,7 +154,7 @@
             "validTimeFormat": $("#validTime").val()
         };
         $.ajax({
-            url: "/ask/voucher/update_sys",
+            url: "/ask/manage/update_voucher",
             data: params,
             dataType: "text",
             type: "POST",

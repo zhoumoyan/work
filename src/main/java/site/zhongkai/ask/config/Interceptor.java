@@ -17,9 +17,9 @@ public class Interceptor implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         HandlerInterceptor interceptor = new LoginInterceptor();
         List<String> list = new ArrayList<>();
-        list.add("/manager/handle_login");
-        list.add("/manager/logout");
-        list.add("/wx_user/login");
+        list.add("/manage/handle_login");
+        list.add("/manage/logout");
+        list.add("/wx_user/**");
         list.add("/portal/**");
         list.add("/answer/**");
         list.add("/css/**");

@@ -22,7 +22,7 @@
                 openId: parent.data.openId
             }
             ,height: 'full-20'
-            ,url: '/ask/voucher/get_user' //数据接口
+            ,url: '/ask/manage/get_user_vouchers' //数据接口
             ,page: true //开启分页
             ,limit: 10
             ,limits: [10, 30, 50, 200]
@@ -30,7 +30,7 @@
             ,toolbar: '#toolbarDemo'
             ,defaultToolbar: ['filter', 'print', 'exports']
             ,cols: [[ //表头
-                {field: 'voucherId', title: '卡券编号', minWidth:100, align: 'center', fixed: 'left'}
+                {field: 'id', title: '卡券编号', minWidth:100, align: 'center', fixed: 'left'}
                 ,{field: 'moneyFormat', title: '卡券金额', minWidth:30, align: 'center', fixed: 'right'}
                 ,{field: 'consumeScore', title: '消耗积分', minWidth: 30, align: 'center', fixed: 'right'}
                 ,{field: 'validTimeFormat', title: '有效日期', minWidth: 100, align: 'center', fixed: 'right'}

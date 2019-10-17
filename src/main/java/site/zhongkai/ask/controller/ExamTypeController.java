@@ -28,62 +28,62 @@ public class ExamTypeController {
 
     //新增题目类别
     @PostMapping("/add")
-    public String addexamtype(ExamType examtype, HttpServletResponse response){
+    public String addexamtype(ExamType examtype, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         examtype.setCreateTime(new Date());
-        if(examTypeService.insert(examtype)){
+        if (examTypeService.insert(examtype)) {
             return "success";
-        }else{
+        } else {
             return "error";
         }
     }
-    //修改
 
+    //修改
     @PostMapping("/update")
-    public String updateexamtype(ExamType examtype, HttpServletResponse response){
+    public String updateexamtype(ExamType examtype, HttpServletResponse response) {
 
         response.setHeader("Access-Control-Allow-Origin", "*");
-        if(examTypeService.insertOrUpdate(examtype)){
+        if (examTypeService.insertOrUpdate(examtype)) {
             return "success";
-        }else{
+        } else {
             return "error";
         }
     }
 
     //删除题目类别
     @PostMapping("/delete")
-    public String deleteexamtype(ExamType examtype, HttpServletResponse response){
+    public String deleteexamtype(ExamType examtype, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
-        if(examTypeService.deleteById(examtype)){
+        if (examTypeService.deleteById(examtype)) {
             return "success";
-        }else{
+        } else {
             return "error";
         }
     }
 
     //题目类别查询
     @PostMapping("/query")
-    public R queryExamType(@RequestParam Map<String, Object> map, HttpServletResponse response){
+    public R queryExamType(@RequestParam Map<String, Object> map, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
-        PageUtils pu= examTypeService.getExamtypeList(map);
+        PageUtils pu = examTypeService.getExamtypeList(map);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         for (Object examType : pu.getList()) {
             ((ExamType) examType).setFormatTime((simpleDateFormat).format(((ExamType) examType).getCreateTime()));
         }
-        return new R(0,"success",pu.getTotalCount(),pu.getList());
+        return new R(0, "success", pu.getTotalCount(), pu.getList());
     }
 
     //查询
     @PostMapping("/get_by_id")
-    public ExamType getExamtypeById(ExamType examtype, HttpServletResponse response){
+    public ExamType getExamtypeById(ExamType examtype, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         return examTypeService.selectOne(
-                new EntityWrapper<ExamType>().eq("id",examtype.getId()));
+                new EntityWrapper<ExamType>().eq("id", examtype.getId()));
     }
 
     //获取题目所有数据，用于绑定下拉列表
     @PostMapping("/get_all")
-    public List<ExamType> getAllExamtype(HttpServletResponse response){
+    public List<ExamType> getAllExamtype(HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         return examTypeService.selectList(new EntityWrapper<>());
     }

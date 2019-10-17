@@ -14,7 +14,7 @@ $(document).ready(function () {
 function getUserVoucher() {
     $("#user_voucher").empty();
     $.ajax({
-        "url": "/ask/voucher/get",
+        "url": "/ask/wx_user/get_voucher",
         "type": "POST",
         "data": "operateType=iVoucher&openId=" + window.localStorage.getItem("openId"),
         "dataType": "json",

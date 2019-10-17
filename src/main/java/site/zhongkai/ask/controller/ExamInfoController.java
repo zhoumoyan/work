@@ -24,15 +24,16 @@ public class ExamInfoController {
     @Resource
     private IExamInfoService examInfoService;
 
-    //分页查询
+    // 获取所有
     @PostMapping("/get_all")
     public R getAllExamInfo(@RequestParam Map<String, Object> map, HttpServletResponse response) {
+        System.err.println(map);
         response.setHeader("Access-Control-Allow-Origin", "*");
         PageUtils pu = examInfoService.getExamInfoList(map);
         return new R(0, "success", pu.getTotalCount(), pu.getList());
     }
 
-    //添加
+    // 添加
     @PostMapping("/add")
     public String addExamInfo(ExamInfo examinfo, HttpServletResponse response) {
         examinfo.setCreateTime(new Date());
@@ -44,7 +45,7 @@ public class ExamInfoController {
         }
     }
 
-    //删除
+    // 删除
     @PostMapping("/delete")
     public String delExamInfo(ExamInfo examinfo, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
@@ -55,7 +56,7 @@ public class ExamInfoController {
         }
     }
 
-    //修改
+    // 修改
     @PostMapping("/update")
     public String updateExamInfo(ExamInfo examinfo, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
@@ -66,7 +67,7 @@ public class ExamInfoController {
         }
     }
 
-    //根据id查询题目信息
+    // 根据id查询题目信息
     @PostMapping("/get_by_id")
     public ExamInfo getExamInfoById(ExamInfo examinfo, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");

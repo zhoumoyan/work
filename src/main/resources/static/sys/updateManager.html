@@ -125,7 +125,7 @@
     function getInfoById(id) {
         var params = {"id": id};
         $.ajax({
-            url: "/ask/manager/get_by_id",
+            url: "/ask/manage/get_user_by_id",
             data: params,
             dataType: "JSON",
             type: "POST",
@@ -133,8 +133,8 @@
                 if (obj !== "undefined") {
                     $("#id").val(obj.id);
                     $("#name").val(obj.username);
-                    $("input[name=sex][value='1']").attr("checked", obj.gender === '1' ? true : false);
-                    $("input[name=sex][value='0']").attr("checked", obj.gender === '0' ? true : false);
+                    $("input[name=sex][value='1']").attr("checked", obj.gender === 1);
+                    $("input[name=sex][value='0']").attr("checked", obj.gender === 0);
                     $("#phone").val(obj.phone);
                     $("#email").val(obj.email);
                     $("#login").val(obj.loginname);
@@ -159,7 +159,7 @@
             "password": $("#pwd").val()
         };
         $.ajax({
-            url: "/ask/manager/update",
+            url: "/ask/manage/update_user",
             data: params,
             dataType: "text",
             type: "POST",

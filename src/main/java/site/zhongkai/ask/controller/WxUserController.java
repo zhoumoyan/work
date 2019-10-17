@@ -6,19 +6,12 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import site.zhongkai.ask.config.Constant;
 import site.zhongkai.ask.entity.WxUser;
-import site.zhongkai.ask.mapper.IWxUserMapper;
+import site.zhongkai.ask.service.ISysVoucherService;
 import site.zhongkai.ask.service.IWxUserService;
-import site.zhongkai.ask.utils.PageUtils;
-import site.zhongkai.ask.utils.R;
-import site.zhongkai.ask.utils.ResponseResult;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Map;
 
 @Log4j2
 @Controller
@@ -28,7 +21,7 @@ public class WxUserController {
     @Resource
     private IWxUserService wxUserService;
     @Resource
-    private IWxUserMapper wxUserMapper;
+    private ISysVoucherService sysVoucherService;
 
     //用户登录
     @GetMapping("/login")
@@ -48,19 +41,18 @@ public class WxUserController {
         return modelAndView;
     }
 
-    //分页查询
-    @PostMapping("/get_all")
+    // 获取卡券
+    @PostMapping("/get_voucher")
     @ResponseBody
-    public R getAllWxUser(@RequestParam Map<String, Object> map, HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        PageUtils pu = wxUserService.getWxUserList(map);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        for (Object wxUser : pu.getList()) {
-            ((WxUser) wxUser).setCreateTimeFormat((simpleDateFormat).format(((WxUser) wxUser).getCreateTime()));
-            if (((WxUser) wxUser).getActiveTime() != null)
-                ((WxUser) wxUser).setActiveTimeFormat((simpleDateFormat).format(((WxUser) wxUser).getActiveTime()));
-        }
-        return new R(0, "success", pu.getTotalCount(), pu.getList());
+    public String getVoucher(@RequestParam("openId") String openId, @RequestParam(required = false, value = "operateType") String operateType) {
+        return JSON.toJSONString(sysVoucherService.findVoucher(openId, operateType));
+    }
+
+    // 兑换卡券
+    @PostMapping("/confirm_exchange")
+    @ResponseBody
+    public String confirmVoucher(@RequestParam("openId") String openId, @RequestParam("voucherId") String voucherId){
+        return JSON.toJSONString(sysVoucherService.exchangeVoucher(openId, voucherId));
     }
 
 }

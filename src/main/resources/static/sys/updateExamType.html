@@ -39,7 +39,6 @@
         });
         //获取父页面传递过来的数据
         $("#id").val(parent.data.id);
-
         getInfoById(parent.data.id)
     }
     function getInfoById(id) {
@@ -51,7 +50,7 @@
             type:"POST",
             success: function(obj){
                 if(obj!=="undefined"){
-                    $("#title").val(obj.name);
+                    $("#title").val(obj.typeName);
                 }
             },
             error: function(obj){

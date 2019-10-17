@@ -21,7 +21,7 @@ public class Manager implements Serializable {
     private String password;    // 登录密码
     private String username;    // 用户姓名
     private String phone;       // 手机号码
-    private String gender;      // 性别：1-男,2-女
+    private Integer gender;     // 性别：0-女,1-男
     private String telephone;   // 电话号码
     private String email;       // 电子邮箱
     private String salt;        // 加密盐
