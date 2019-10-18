@@ -9,6 +9,7 @@ import site.zhongkai.ask.config.Response;
 import site.zhongkai.ask.entity.*;
 import site.zhongkai.ask.mapper.*;
 import site.zhongkai.ask.service.IAnswerService;
+import site.zhongkai.ask.utils.JudgeUtils;
 import site.zhongkai.ask.utils.PropertiesUtils;
 import site.zhongkai.ask.utils.ResponseResult;
 import site.zhongkai.ask.vo.AnswerIndex;
@@ -47,13 +48,13 @@ public class AnswerServiceImpl implements IAnswerService {
             for (Integer integer : randoms) examInfoRandoms.add(examInfos.get(integer));
         }
         for (ExamInfo examInfo : examInfoRandoms) {
-            if (StringUtils.isAnyBlank(examInfo.getExamName(), examInfo.getCorrectAnswer(), examInfo.getOptionA(), examInfo.getOptionB())) continue;
+            if (JudgeUtils.isAnyEmpty(examInfo.getExamName(), examInfo.getCorrectAnswer(), examInfo.getOptionA(), examInfo.getOptionB())) continue;
             List<ExamOption> options = new LinkedList<>();
             options.add(new ExamOption(Constant.OPTION_A, examInfo.getOptionA()));
             options.add(new ExamOption(Constant.OPTION_B, examInfo.getOptionB()));
-            if (StringUtils.isNotBlank(examInfo.getOptionC())) options.add(new ExamOption(Constant.OPTION_C, examInfo.getOptionC()));
-            if (StringUtils.isNotBlank(examInfo.getOptionD())) options.add(new ExamOption(Constant.OPTION_D, examInfo.getOptionD()));
-            if (StringUtils.isNotBlank(examInfo.getOptionE())) options.add(new ExamOption(Constant.OPTION_E, examInfo.getOptionE()));
+            if (!JudgeUtils.isEmpty(examInfo.getOptionC())) options.add(new ExamOption(Constant.OPTION_C, examInfo.getOptionC()));
+            if (!JudgeUtils.isEmpty(examInfo.getOptionD())) options.add(new ExamOption(Constant.OPTION_D, examInfo.getOptionD()));
+            if (!JudgeUtils.isEmpty(examInfo.getOptionE())) options.add(new ExamOption(Constant.OPTION_E, examInfo.getOptionE()));
             responseExamInfos.add(new ExamRandom(examInfo.getId(), examInfo.getExamName(), examInfo.getCorrectAnswer(), options));
         }
         List<AnswerLog> answerLogs = answerLog.selectTodayList(openId);

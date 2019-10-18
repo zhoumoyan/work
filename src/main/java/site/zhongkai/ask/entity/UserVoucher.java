@@ -22,7 +22,7 @@ public class UserVoucher implements Serializable {
     private BigDecimal money;           // 卡券金额
     @TableField(exist = false)
     private String moneyFormat;         // 格式金额
-    private String voucherId;           // 卡券编号
+    private String voucherId;           // 系统卡券编号
     private String voucherExplain;      // 卡券说明
     private String consumeExplain;      // 消耗说明
     private Integer consumeScore;       // 消耗分数
@@ -32,12 +32,18 @@ public class UserVoucher implements Serializable {
     private Integer state;              // 卡券状态：0-未使用，1-已使用
     private Date exchangeTime;          // 兑换时间
     @TableField(exist = false)
-    private String exchangeTimeFormat;    // 格式时间
+    private String exchangeTimeFormat;  // 格式时间
     private Date useTime;               // 使用时间
     @TableField(exist = false)
-    private String useTimeFormat;         // 格式时间
+    private String useTimeFormat;       // 格式时间
 
     public UserVoucher() {
+    }
+
+    public UserVoucher(String id, Integer state, Date useTime) {
+        this.id = id;
+        this.state = state;
+        this.useTime = useTime;
     }
 
     public UserVoucher(String openId, BigDecimal money, String voucherId, String voucherExplain, String consumeExplain, Integer consumeScore, Date validTime, Integer state, Date exchangeTime) {

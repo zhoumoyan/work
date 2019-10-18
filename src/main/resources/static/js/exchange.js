@@ -107,7 +107,7 @@ function confirmExchange(i) {
     if (parseInt($("#valid_score2").html()) < parseInt($("#consume_score" + i).val())) {
         $("#exresult").text('可用积分不足，兑换失败').addClass("exSureFalse");
         openaMark();
-        return false;
+        return;
     }
     var data = "openId=" + window.localStorage.getItem("openId") + "&voucherId=" + $("#voucher_id" + i).html();
     $.ajax({

@@ -16,6 +16,7 @@ import site.zhongkai.ask.utils.PageUtils;
 import site.zhongkai.ask.utils.R;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -40,12 +41,13 @@ public class ManageController {
     private IWxUserService wxUserService;
 
     @GetMapping("/logout")
-    public void logout(HttpServletResponse response, HttpSession session) throws IOException {
+    public void logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         response.setHeader("Access-Control-Allow-Origin", "*");
         if(session == null){
             response.sendRedirect("/ask/login.html");
             return;
         }
+        log.info("[" + request.getRemoteAddr() + "]-管理员[" + session.getAttribute("username") + "]退出登录");
         session.removeAttribute("userid");
         session.removeAttribute("username");
         session.removeAttribute("avatar");
@@ -55,11 +57,12 @@ public class ManageController {
     // 处理用户登录
     @PostMapping("/handle_login")
     @ResponseBody
-    public Manager handleLogin(Manager manager, HttpServletResponse response, HttpSession session) {
+    public Manager handleLogin(Manager manager, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         Manager loginUser = managerService.selectOne(new EntityWrapper<Manager>()
                 .eq("loginname", manager.getLoginname())
                 .eq("password", manager.getPassword()));
+        log.info("[" + request.getRemoteAddr() + "]-管理员[" + loginUser.getUsername() + "]登录后台");
         loginUser.setPassword(null).setSalt(null).setToken(null);
         session.setAttribute("userid", loginUser.getId());
         session.setAttribute("username", loginUser.getUsername());

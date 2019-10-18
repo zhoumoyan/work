@@ -1,6 +1,7 @@
 $(function () {
     $("#answerExchanges").on("click", function () {
-        window.location.href = '/ask/portal/exchange'
+        /*window.location.href = ''*/
+        confirmCharge();
     })
     $("#goHome").on("click", function () {
         window.history.back(-1)
@@ -10,6 +11,19 @@ $(function () {
 $(document).ready(function () {
     getUserVoucher();
 });
+
+function confirmCharge() {
+    $.ajax({
+        "url": "/ask/wx_user/confirm_charge",
+        "type": "POST",
+        "data": "openId=" + window.localStorage.getItem("openId"),
+        "dataType": "json",
+        "success": function (result) {
+            alert(result.message);
+            window.location.reload();
+        }
+    })
+}
 
 function getUserVoucher() {
     $("#user_voucher").empty();
@@ -28,13 +42,13 @@ function getUserVoucher() {
             }
             for (var i = 0; i < list.length; i++) {
                 var html =
-                    '<ul class="ticketList" onclick="showSelectVoucher(' + i + ')"> ' +
+                    '<ul class="ticketList">' +
                     '<li>' +
                     '<p>￥<span class="answerMoney">#{money}</span></p>' +
-                    '<p class="integralOne">#{consumeExplain}<span><input id="consume_score' + i + '" type="hidden" value="#{consumeScore}"></span></p> ' +
+                    '<p class="integralOne">#{consumeExplain}</p>' +
                     '</li>' +
                     '<li>' +
-                    '<p class="ticketTilte1">编号：<span id="voucher_id' + i + '">#{id}</span></p>' +
+                    '<p class="ticketTilte1">编号：<span>#{id}</span></p>' +
                     '<p class="ticketTilte1">#{voucherExplain}</p>' +
                     '</li>' +
                     '<li class="effectiveDate">' +
@@ -46,7 +60,6 @@ function getUserVoucher() {
                 /*html = html.replace("#{money}", list[i].money.toFixed(2));*/
                 html = html.replace("#{money}", list[i].money);
                 html = html.replace("#{consumeExplain}", list[i].consumeExplain);
-                html = html.replace("#{consumeScore}", list[i].consumeScore);
                 html = html.replace("#{id}", list[i].id);
                 html = html.replace("#{voucherExplain}", list[i].voucherExplain);
                 html = html.replace("#{validTimeFormat}", list[i].validTimeFormat);
