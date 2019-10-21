@@ -35,7 +35,7 @@ public class WxUserController {
             log.error("收到来自[" + request.getRemoteAddr() + "]的非法访问-[openId=" + openId + ",nickName=" + nickName + ",secretKey=" + secretKey + "]");
             return null;
         }
-        log.info("收到来自[" + request.getRemoteAddr() + "]的访问请求-[openId=" + openId + ",微信昵称=" + nickName + ",secretKey=" + secretKey + "]");
+        log.info("收到来自[" + request.getRemoteAddr() + "]的访问请求-[OpenID=" + openId + ",微信昵称=" + nickName + ",Key=" + secretKey + "]");
         WxUser wxUser = new WxUser(openId, nickName);
         modelAndView.addObject("openId", wxUser.getOpenId());
         WxUser user = wxUserService.selectOne(new EntityWrapper<WxUser>().eq("open_id", wxUser.getOpenId()));

@@ -34,13 +34,18 @@ $(function () {
         $("#exresult").addClass("exSureFalse");
         openaMark();
 
-    })*/
+    })
+    */
     $("#determineBtn").on("click", function () {
         closeaMark();
-        setInterval(function () {
+        /*setInterval(function () {
             window.location.href = '/ask/portal/tickets'
-        }, 100);
+        }, 100);*/
+        if ($("#determineBtn").val() === 0) {
+            window.location.href = '/ask/portal/tickets';
+        }
     })
+
     $("#goHome").on("click", function () {
         /*window.history.back(-1)*/
         window.location.href = '/ask/portal/index';
@@ -99,6 +104,7 @@ function showSelectVoucher(i) {
     $("#answerBox2").show();
     var html1 = '<p class="answerTitle">确定使用' + $("#consume_score" + i).val() + '积分兑换</p>';
     $("#select_voucher").show().html(html1).append(elements);
+    document.getElementById("select_voucher").getElementsByTagName("ul")[0].removeAttribute("onclick");
     var html2 = '<button type="button" class="exchange_Ticket" id="confirmBtn" onclick="confirmExchange(' + i + ')">确定</button>';
     $("#confirm_div").html(html2);
 }
@@ -122,6 +128,7 @@ function confirmExchange(i) {
                 $("#valid_score2").html($("#valid_score2").html() - $("#consume_score" + i).val());
             } else {
                 $("#exresult").text(result.message).addClass("exSureFalse");
+                $("#determineBtn").val(1);
             }
             openaMark();
         }

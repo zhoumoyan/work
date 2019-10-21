@@ -4,7 +4,8 @@ $(function () {
         confirmCharge();
     })
     $("#goHome").on("click", function () {
-        window.history.back(-1)
+        //window.history.back(-1)
+        window.location.href = '/ask/portal/index';
     })
 })
 

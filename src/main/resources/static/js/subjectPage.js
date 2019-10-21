@@ -9,7 +9,7 @@ $(function(){
 		success:function(json){
 			res = json.examInfos;
 			$("#answerSubject").find("li").eq(0).find(".subjects").empty();
-			for(var key in res){
+			/*for(var key in res){
 				correctArrayo.push(res[key].correct);
 				var multipleHtml = (res[key].correct.length > 1? multipleHtml='<span class="multiple">[多选题]</span>':multipleHtml='<span class="multiple">[单选题]</span>');
 				var html = '<p class="subjects_one">'+(parseInt(key)+1)+'、'+res[key].title+multipleHtml+'</p>';
@@ -19,6 +19,22 @@ $(function(){
 				for (var index in optionContent) {
 					var optionsHtml = '<p><label class="test-label"><input type="checkbox" class="test-radio" name="'+key+'" value="'+optionContent[index].option+'" />'+
 					'<span class="test-radioInput optionAB"></span>'+optionContent[index].option+"."+'</lable>'+optionContent[index].answer+'</p>';
+					tmdan.append(optionsHtml);
+					$("#answerSubject").find("li").eq(0).find(".subjects").append(tmdan);
+				}
+			}*/
+			for(var key in res){
+				correctArrayo.push(res[key].correct);
+				var multipleHtml = (res[key].correct.length > 1? multipleHtml='<span class="multiple">[多选题]</span>':multipleHtml='<span class="multiple">[单选题]</span>');
+				var html = '<p class="subjects_one">'+(parseInt(key)+1)+'、'+res[key].title+multipleHtml+'</p>';
+				$("#answerSubject").find("li").eq(0).find(".subjects").append(html);
+				var optionContent  = res[key].options;
+				var tmdan =$('<div class="tmdan"></div>');
+				for (var index in optionContent) {
+					var inputType = (res[key].correct.length > 1?
+						inputType='<input type="checkbox" class="test-check" name="'+key+'" value="'+optionContent[index].option+'" /><span class="test-checkInput optionAB"></span>':
+						inputType='<input type="radio" class="test-radio" name="'+key+'" value="'+optionContent[index].option+'" /><span class="test-radioInput optionAB"></span>');
+					var optionsHtml = '<p><label class="test-label">'+ inputType + optionContent[index].option+"."+'</lable>'+optionContent[index].answer+'</p>';
 					tmdan.append(optionsHtml);
 					$("#answerSubject").find("li").eq(0).find(".subjects").append(tmdan);
 				}
@@ -49,24 +65,24 @@ $(function(){
 	$("#submissionBtn").on("click",function(){
 		dataArry.length = 0;
 		$('#answerSubject .tmdan').each(function(index,value){
-			if($(this).find("input[type='checkbox']:checked").length == 0){
+			if($(this).find("input:checked").length == 0){
 				//题目尚未答完
-			    openaMarkT();
-			    return false;
+				openaMarkT();
+				return false;
 			} else {
-		        //题目已经答完
-		        var obj = {id:index,correct:'',correctRight:correctArrayo[index]};
-		        var thiso = $(this);
-		        thiso.find("input[type='checkbox']").each(function(){
-		        	var thist = $(this);
-		        	if(thist.prop('checked')){
-		        	     obj.correct += thist.val();   
-		        	}
-		        })
-			    dataArry.push(obj);
+				//题目已经答完
+				var obj = {id:index,correct:'',correctRight:correctArrayo[index]};
+				var thiso = $(this);
+				thiso.find("input").each(function(){
+					var thist = $(this);
+					if(thist.prop('checked')){
+						obj.correct += thist.val();
+					}
+				})
+				dataArry.push(obj);
 				openaMark();
 			}
-		});	
+		});
 	})
 	$("#answerMark").find("button").on("click",function(){
     	if($(this).val() == 0){
