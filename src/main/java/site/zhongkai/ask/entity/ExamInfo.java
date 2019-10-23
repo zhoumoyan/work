@@ -3,6 +3,7 @@ package site.zhongkai.ask.entity;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.FieldFill;
 import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -28,5 +29,6 @@ public class ExamInfo implements Serializable {
 	private String optionE;			//选项E
 	private String correctAnswer;	//答案
 	private String examExplain;		//解释说明
+	@TableField(fill = FieldFill.INSERT)
 	private Date createTime;		//创建时间
 }

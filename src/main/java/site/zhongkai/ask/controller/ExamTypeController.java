@@ -30,7 +30,6 @@ public class ExamTypeController {
     @PostMapping("/add")
     public String addexamtype(ExamType examtype, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
-        examtype.setCreateTime(new Date());
         if (examTypeService.insert(examtype)) {
             return "success";
         } else {

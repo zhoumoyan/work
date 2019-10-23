@@ -1,7 +1,9 @@
 package site.zhongkai.ask.entity;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.FieldFill;
 import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -18,14 +20,14 @@ public class AnswerLog implements Serializable {
     private String id;
     private String openId;
     private Integer score;
+    @TableField(fill = FieldFill.INSERT)
     private Date operateTime;
 
     public AnswerLog() {
     }
 
-    public AnswerLog(String openId, Integer score, Date operateTime) {
+    public AnswerLog(String openId, Integer score) {
         this.openId = openId;
         this.score = score;
-        this.operateTime = operateTime;
     }
 }

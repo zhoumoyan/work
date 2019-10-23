@@ -2,12 +2,17 @@ package site.zhongkai.ask.service.imp;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import lombok.extern.log4j.Log4j2;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import site.zhongkai.ask.config.Constant;
 import site.zhongkai.ask.config.Response;
-import site.zhongkai.ask.entity.*;
-import site.zhongkai.ask.mapper.*;
+import site.zhongkai.ask.entity.AnswerLog;
+import site.zhongkai.ask.entity.ExamInfo;
+import site.zhongkai.ask.entity.UserVoucher;
+import site.zhongkai.ask.entity.WxUser;
+import site.zhongkai.ask.mapper.IAnswerLogMapper;
+import site.zhongkai.ask.mapper.IExamInfoMapper;
+import site.zhongkai.ask.mapper.IUserVoucherMapper;
+import site.zhongkai.ask.mapper.IWxUserMapper;
 import site.zhongkai.ask.service.IAnswerService;
 import site.zhongkai.ask.utils.JudgeUtils;
 import site.zhongkai.ask.utils.PropertiesUtils;
@@ -69,7 +74,7 @@ public class AnswerServiceImpl implements IAnswerService {
         if (answerLogs.size() >= Integer.parseInt(Objects.requireNonNull(MAX_ANSWER_COUNT))) return Response.getErrorResult(40001);
         if (score == null) return Response.getSuccessResult(20000);
         Integer answerFraction = Integer.valueOf(score);
-        answerLog.insert(new AnswerLog(openId, answerFraction, new Date()));
+        answerLog.insert(new AnswerLog(openId, answerFraction));
         // 当日积分
         for (AnswerLog answerLog : answerLogs) {
             answerFraction += answerLog.getScore();

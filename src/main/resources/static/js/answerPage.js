@@ -1,6 +1,6 @@
 $(function () {
     $("#ticket").on("click", function () {
-        window.location.href = '/ask/portal/exchange'
+        window.location.href = '/ask/portal/tickets'
     })
     $("#exchange").on("click", function () {
         window.location.href = '/ask/portal/exchange'

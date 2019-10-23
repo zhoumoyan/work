@@ -2,6 +2,7 @@ package site.zhongkai.ask.controller;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,7 +37,10 @@ public class ExamInfoController {
     // 添加
     @PostMapping("/add")
     public String addExamInfo(ExamInfo examinfo, HttpServletResponse response) {
-        examinfo.setCreateTime(new Date());
+        if (StringUtils.isBlank(examinfo.getExamExplain())) examinfo.setExamExplain(null);
+        if (StringUtils.isBlank(examinfo.getOptionC())) examinfo.setOptionC(null);
+        if (StringUtils.isBlank(examinfo.getOptionD())) examinfo.setOptionD(null);
+        if (StringUtils.isBlank(examinfo.getOptionE())) examinfo.setOptionE(null);
         response.setHeader("Access-Control-Allow-Origin", "*");
         if (examInfoService.insert(examinfo)) {
             return "success";
@@ -59,6 +63,10 @@ public class ExamInfoController {
     // 修改
     @PostMapping("/update")
     public String updateExamInfo(ExamInfo examinfo, HttpServletResponse response) {
+        if (StringUtils.isBlank(examinfo.getExamExplain())) examinfo.setExamExplain(null);
+        if (StringUtils.isBlank(examinfo.getOptionC())) examinfo.setOptionC(null);
+        if (StringUtils.isBlank(examinfo.getOptionD())) examinfo.setOptionD(null);
+        if (StringUtils.isBlank(examinfo.getOptionE())) examinfo.setOptionE(null);
         response.setHeader("Access-Control-Allow-Origin", "*");
         if (examInfoService.updateById(examinfo)) {
             return "success";

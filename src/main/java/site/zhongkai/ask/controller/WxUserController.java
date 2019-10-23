@@ -39,12 +39,11 @@ public class WxUserController {
         WxUser wxUser = new WxUser(openId, nickName);
         modelAndView.addObject("openId", wxUser.getOpenId());
         WxUser user = wxUserService.selectOne(new EntityWrapper<WxUser>().eq("open_id", wxUser.getOpenId()));
-        Date operTime = new Date();
         if (user == null) {
-            wxUser.setGrade(0).setCreateTime(operTime);
+            wxUser.setGrade(0);
             wxUserService.insert(wxUser);
         } else {
-            user.setNickName(nickName).setActiveTime(operTime);
+            user.setNickName(nickName);
             wxUserService.updateById(user);
         }
         modelAndView.setViewName("index");

@@ -3,6 +3,7 @@ package site.zhongkai.ask.entity;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.FieldFill;
 import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -21,9 +22,11 @@ public class WxUser implements Serializable {
     private String openId;          // OpenID
     private String nickName;        // 微信昵称
     private Integer grade;          // 用户积分
+    @TableField(fill = FieldFill.INSERT)
     private Date createTime;        // 创建时间
     @TableField(exist = false)
     private String createTimeFormat;
+    @TableField(fill = FieldFill.UPDATE)
     private Date activeTime;        // 活跃时间
     @TableField(exist = false)
     private String activeTimeFormat;
