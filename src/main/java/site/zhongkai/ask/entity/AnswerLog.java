@@ -30,4 +30,5 @@ public class AnswerLog implements Serializable {
         this.openId = openId;
         this.score = score;
     }
+
 }

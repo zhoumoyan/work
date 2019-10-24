@@ -10,11 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 import site.zhongkai.ask.entity.ExamInfo;
 import site.zhongkai.ask.service.IExamInfoService;
 import site.zhongkai.ask.utils.PageUtils;
-import site.zhongkai.ask.utils.R;
+import site.zhongkai.ask.utils.ResponseLayui;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
 import java.util.Map;
 
 @Log4j2
@@ -27,11 +26,11 @@ public class ExamInfoController {
 
     // 获取所有
     @PostMapping("/get_all")
-    public R getAllExamInfo(@RequestParam Map<String, Object> map, HttpServletResponse response) {
+    public ResponseLayui getAllExamInfo(@RequestParam Map<String, Object> map, HttpServletResponse response) {
         System.err.println(map);
         response.setHeader("Access-Control-Allow-Origin", "*");
         PageUtils pu = examInfoService.getExamInfoList(map);
-        return new R(0, "success", pu.getTotalCount(), pu.getList());
+        return new ResponseLayui(0, "success", pu.getTotalCount(), pu.getList());
     }
 
     // 添加

@@ -13,7 +13,7 @@ import site.zhongkai.ask.service.ISysVoucherService;
 import site.zhongkai.ask.service.IUserVoucherService;
 import site.zhongkai.ask.service.IWxUserService;
 import site.zhongkai.ask.utils.PageUtils;
-import site.zhongkai.ask.utils.R;
+import site.zhongkai.ask.utils.ResponseLayui;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -62,6 +62,7 @@ public class ManageController {
         Manager loginUser = managerService.selectOne(new EntityWrapper<Manager>()
                 .eq("loginname", manager.getLoginname())
                 .eq("password", manager.getPassword()));
+        if (loginUser == null) return null;
         log.info("[" + request.getRemoteAddr() + "]-管理员[" + loginUser.getUsername() + "]登录后台");
         loginUser.setPassword(null).setSalt(null).setToken(null);
         session.setAttribute("userid", loginUser.getId());
@@ -73,14 +74,14 @@ public class ManageController {
     // 获取后台用户信息
     @PostMapping("/get_users")
     @ResponseBody
-    public R getAllManager(@RequestParam Map<String, Object> map, HttpServletResponse response) {
+    public ResponseLayui getAllManager(@RequestParam Map<String, Object> map, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         PageUtils pu = managerService.getManagers(map);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         for (Object manager : pu.getList()) {
             ((Manager) manager).setFormatTime((simpleDateFormat).format(((Manager) manager).getCreateTime()));
         }
-        return new R(0, "success", pu.getTotalCount(), pu.getList());
+        return new ResponseLayui(0, "success", pu.getTotalCount(), pu.getList());
     }
 
     @PostMapping("/add_user")
@@ -129,7 +130,7 @@ public class ManageController {
     // 获取卡券
     @PostMapping("/get_vouchers")
     @ResponseBody
-    public R getSysVoucher(@RequestParam Map<String, Object> map, HttpServletResponse response) {
+    public ResponseLayui getSysVoucher(@RequestParam Map<String, Object> map, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         PageUtils pu = sysVoucherService.findSysVoucher(map);
         SimpleDateFormat formatDate = new SimpleDateFormat("yyyy年MM月dd日");
@@ -139,7 +140,7 @@ public class ManageController {
             ((SysVoucher) sysVoucher).setCreateTimeFormat((formatTime).format(((SysVoucher) sysVoucher).getCreateTime()));
             ((SysVoucher) sysVoucher).setMoneyFormat(((SysVoucher) sysVoucher).getMoney().toString());
         }
-        return new R(0, "success", pu.getTotalCount(), pu.getList());
+        return new ResponseLayui(0, "success", pu.getTotalCount(), pu.getList());
     }
 
     // 根据id查询信息
@@ -187,7 +188,7 @@ public class ManageController {
     // 获取用户兑换的卡券
     @PostMapping("/get_user_vouchers")
     @ResponseBody
-    public R getUserVoucher(@RequestParam Map<String, Object> map, HttpServletResponse response) {
+    public ResponseLayui getUserVoucher(@RequestParam Map<String, Object> map, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         PageUtils pu = userVoucherService.findUserVoucher(map);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -198,13 +199,13 @@ public class ManageController {
             ((UserVoucher) userVoucher).setExchangeTimeFormat((simpleDateFormat).format(((UserVoucher) userVoucher).getExchangeTime()));
             if (((UserVoucher) userVoucher).getUseTime() != null) ((UserVoucher) userVoucher).setUseTimeFormat((simpleDateFormat).format(((UserVoucher) userVoucher).getUseTime()));
         }
-        return new R(0, "success", pu.getTotalCount(), pu.getList());
+        return new ResponseLayui(0, "success", pu.getTotalCount(), pu.getList());
     }
 
     // 获取微信用户
     @PostMapping("/get_wx_users")
     @ResponseBody
-    public R getAllWxUser(@RequestParam Map<String, Object> map, HttpServletResponse response) {
+    public ResponseLayui getAllWxUser(@RequestParam Map<String, Object> map, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         PageUtils pu = wxUserService.getWxUserList(map);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -213,7 +214,7 @@ public class ManageController {
             if (((WxUser) wxUser).getActiveTime() != null)
                 ((WxUser) wxUser).setActiveTimeFormat((simpleDateFormat).format(((WxUser) wxUser).getActiveTime()));
         }
-        return new R(0, "success", pu.getTotalCount(), pu.getList());
+        return new ResponseLayui(0, "success", pu.getTotalCount(), pu.getList());
     }
 
 }

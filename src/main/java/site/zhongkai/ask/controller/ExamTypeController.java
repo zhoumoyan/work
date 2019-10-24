@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import site.zhongkai.ask.entity.ExamType;
 import site.zhongkai.ask.service.IExamTypeService;
 import site.zhongkai.ask.utils.PageUtils;
-import site.zhongkai.ask.utils.R;
+import site.zhongkai.ask.utils.ResponseLayui;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -62,14 +61,14 @@ public class ExamTypeController {
 
     //题目类别查询
     @PostMapping("/query")
-    public R queryExamType(@RequestParam Map<String, Object> map, HttpServletResponse response) {
+    public ResponseLayui queryExamType(@RequestParam Map<String, Object> map, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         PageUtils pu = examTypeService.getExamtypeList(map);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         for (Object examType : pu.getList()) {
             ((ExamType) examType).setFormatTime((simpleDateFormat).format(((ExamType) examType).getCreateTime()));
         }
-        return new R(0, "success", pu.getTotalCount(), pu.getList());
+        return new ResponseLayui(0, "success", pu.getTotalCount(), pu.getList());
     }
 
     //查询
