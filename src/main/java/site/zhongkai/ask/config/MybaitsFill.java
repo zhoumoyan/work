@@ -11,11 +11,13 @@ public class MybaitsFill extends MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {
-        if (metaObject.hasGetter("operateTime") && metaObject.getValue("operateTime") == null) setFieldValByName("operateTime", new Date(), metaObject);
+        setFieldValByName("operateTime", new Date(), metaObject);
+        setFieldValByName("createTime", new Date(), metaObject);
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
+        setFieldValByName("activeTime", new Date(), metaObject);
     }
 
 }

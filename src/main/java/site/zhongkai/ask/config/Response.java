@@ -10,7 +10,7 @@ public class Response {
 	private static final ResponseResult E40003_RESULT = new ResponseResult<>(false, 40003, "可用积分不足，兑换失败");
 	private static final ResponseResult E40004_RESULT = new ResponseResult<>(false, 40004, "非法访问");
 	private static final ResponseResult E40005_RESULT = new ResponseResult<>(false, 40005, "兑换充电失败，请稍后再试");
-	private static final ResponseResult E40006_RESULT = new ResponseResult<>(false, 40006, "部分卡券兑换充电失败，请稍后再试");
+	private static final ResponseResult E40006_RESULT = new ResponseResult<>(false, 40006, "部分卡券兑换充电失败");
 	private static final ResponseResult E40007_RESULT = new ResponseResult<>(false, 40007, "操作失败，您没有未使用的卡券");
 	private static final ResponseResult E50000_RESULT = new ResponseResult<>(false, 50000, "未知错误");
 

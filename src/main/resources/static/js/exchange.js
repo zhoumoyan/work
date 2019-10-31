@@ -126,6 +126,7 @@ function confirmExchange(i) {
                 $("#exresult").text('兑换成功').removeClass("exSureFalse");
                 $("#valid_score1").html($("#valid_score1").html() - $("#consume_score" + i).val());
                 $("#valid_score2").html($("#valid_score2").html() - $("#consume_score" + i).val());
+                window.location.reload();
             } else {
                 $("#exresult").text(result.message).addClass("exSureFalse");
                 $("#determineBtn").val(1);

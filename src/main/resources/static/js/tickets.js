@@ -20,8 +20,15 @@ function confirmCharge() {
         "data": "openId=" + window.localStorage.getItem("openId"),
         "dataType": "json",
         "success": function (result) {
-            alert(result.message);
-            window.location.reload();
+            if (result.success){
+                window.location.href = 'http://kyunai.com/charging/mobilepage/index?code=1';
+            } else if (result.state === 40006){
+                alert(result.message);
+                window.location.href = 'http://kyunai.com/charging/mobilepage/index?code=1';
+            } else {
+                alert(result.message);
+                window.location.reload();
+            }
         }
     })
 }
