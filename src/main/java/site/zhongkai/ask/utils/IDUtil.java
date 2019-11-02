@@ -58,8 +58,6 @@ public class IDUtil {
             }
             count++;
         }while (li.size()<20);
-        System.out.println(li.toString());
-        System.out.println("循环次数："+count);
     }
     public static int getRandomNum(){
         Random random=new Random();

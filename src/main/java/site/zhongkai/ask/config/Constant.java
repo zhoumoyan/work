@@ -30,8 +30,8 @@ public  class Constant implements Serializable {
 	public static final String SYSTEM_PROPERTIES= "configure/system.properties";
 
 	// 卡券状态
-	public static final Integer VOUCHER_NORMAL = 0;       		// 未使用
-	public static final Integer VOUCHER_USED = 1;         		// 已使用
+	public static final Integer VOUCHER_NORMAL = 0;       		// 未充电
+	public static final Integer VOUCHER_USED = 1;         		// 已充电
 
 	// 接口类型
 	public static final Integer INTERFACE_CHARGING_PILE = 1;	// 充电桩

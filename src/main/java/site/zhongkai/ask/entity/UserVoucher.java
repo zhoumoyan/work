@@ -29,7 +29,7 @@ public class UserVoucher implements Serializable {
     private Date validTime;             // 有效时间
     @TableField(exist = false)
     private String validTimeFormat;     // 格式时间
-    private Integer state;              // 卡券状态：0-未使用，1-已使用
+    private Integer state;              // 卡券状态：0-未充电，1-已充电
     private Date exchangeTime;          // 兑换时间
     @TableField(exist = false)
     private String exchangeTimeFormat;  // 格式时间

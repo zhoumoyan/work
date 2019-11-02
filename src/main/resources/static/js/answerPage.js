@@ -35,7 +35,7 @@ $(function () {
 });
 
 function submitResult(answerFraction) {
-    var data = "openId=" + window.localStorage.getItem("openId") + "&answerFraction=" + answerFraction;
+    var data = "answerFraction=-1&openId=" + window.localStorage.getItem("openId");
     $.ajax({
         "url": "/ask/answer/get_result",
         "data": data,

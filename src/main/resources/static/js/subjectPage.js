@@ -87,10 +87,11 @@ $(function(){
 	$("#answerMark").find("button").on("click",function(){
     	if($(this).val() == 0){
     		closeaMark();
-    	}else{
+    	} else {
     		closeaMark();
     		localStorage.setItem('correctArray',JSON.stringify(dataArry))
-			window.location.replace("/ask/portal/answer_page");    
+			var answerFraction = calculated(dataArry);
+			submitScore(answerFraction);  
     	}
     });
     $("#answerMarkT").find("button").on("click",function(){
@@ -100,3 +101,29 @@ $(function(){
 		window.location.href = '/ask/portal/index';
 	})
 })
+
+function calculated(correctArray) {
+	var answerFraction = 0;
+	for (var key in correctArray) {
+		if (correctArray[key].correct === correctArray[key].correctRight) answerFraction += 5;
+	}
+	return answerFraction;
+}
+
+
+function submitScore(answerFraction) {
+	var data = "openId=" + window.localStorage.getItem("openId") + "&answerFraction=" + answerFraction;
+	$.ajax({
+		"url": "/ask/answer/get_result",
+		"data": data,
+		"type": "POST",
+		"dataType": "json",
+		"success": function (result) {
+			if (result.success) {
+				window.location.replace("/ask/portal/answer_page");
+			} else {
+				alert(result.message);
+			}
+		}
+	});
+}

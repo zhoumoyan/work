@@ -71,10 +71,14 @@ public class AnswerServiceImpl implements IAnswerService {
     @Override
     public ResponseResult getUserGrade(String openId, String score) {
         List<AnswerLog> answerLogs = answerLog.selectTodayList(openId);
-        if (answerLogs.size() >= Integer.parseInt(Objects.requireNonNull(MAX_ANSWER_COUNT))) return Response.getErrorResult(40001);
+        if (!"-1".equals(score) && answerLogs.size() >= Integer.parseInt(Objects.requireNonNull(MAX_ANSWER_COUNT))) return Response.getErrorResult(40001);
         if (score == null) return Response.getSuccessResult(20000);
         Integer answerFraction = Integer.valueOf(score);
-        answerLog.insert(new AnswerLog(openId, answerFraction));
+        if (!"-1".equals(score)) {
+            answerLog.insert(new AnswerLog(openId, answerFraction));
+        } else {
+            answerFraction = 0;
+        }
         // 当日积分
         for (AnswerLog answerLog : answerLogs) {
             answerFraction += answerLog.getScore();

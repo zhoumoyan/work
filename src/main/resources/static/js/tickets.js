@@ -4,8 +4,7 @@ $(function () {
         confirmCharge();
     })
     $("#goHome").on("click", function () {
-        //window.history.back(-1)
-        window.location.href = '/ask/portal/index';
+        window.history.back(-1)
     })
 })
 
@@ -64,7 +63,7 @@ function getUserVoucher() {
                     '<p class="notUsed">#{state}</p>' +
                     '</li>' +
                     '</ul>';
-                var state = (list[i].state === 0 ? "未使用" : "已使用");
+                var state = (list[i].state === 0 ? "未充电" : "已充电");
                 /*html = html.replace("#{money}", list[i].money.toFixed(2));*/
                 html = html.replace("#{money}", list[i].money);
                 html = html.replace("#{consumeExplain}", list[i].consumeExplain);

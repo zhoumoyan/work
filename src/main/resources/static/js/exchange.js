@@ -2,6 +2,7 @@ $(function () {
     $("#answerTickets").on("click", function () {
         window.location.href = '/ask/portal/tickets'
     })
+
     /*$(document).on('click', '.ticketList', function () {
         $("#answerBox").hide();
         $("#answerBox2").show();
@@ -47,8 +48,7 @@ $(function () {
     })
 
     $("#goHome").on("click", function () {
-        /*window.history.back(-1)*/
-        window.location.href = '/ask/portal/index';
+        window.history.back(-1)
     })
 
 })
@@ -56,6 +56,7 @@ $(function () {
 $(document).ready(function () {
     showVoucherList();
 });
+
 function showVoucherList() {
     $("#voucher_list").empty();
     $.ajax({
@@ -126,7 +127,11 @@ function confirmExchange(i) {
                 $("#exresult").text('兑换成功').removeClass("exSureFalse");
                 $("#valid_score1").html($("#valid_score1").html() - $("#consume_score" + i).val());
                 $("#valid_score2").html($("#valid_score2").html() - $("#consume_score" + i).val());
-                window.location.reload();
+                if (parseInt($("#valid_score2").html()) < parseInt($("#consume_score" + i).val())) {
+                    window.location.href = '/ask/portal/tickets';
+                } else {
+                    window.location.reload();
+                }
             } else {
                 $("#exresult").text(result.message).addClass("exSureFalse");
                 $("#determineBtn").val(1);

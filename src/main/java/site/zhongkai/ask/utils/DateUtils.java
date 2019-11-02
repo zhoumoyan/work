@@ -295,7 +295,8 @@ public class DateUtils {
         return currYearList;
     }
 
-    public static void main(String args[]){
+    /*public static void main(String args[]){
         System.out.println(timeStamp2Date("153832320",DATE_PATTERN));
-    }
+    }*/
+
 }
