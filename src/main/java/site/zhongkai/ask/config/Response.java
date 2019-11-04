@@ -12,6 +12,8 @@ public class Response {
 	private static final ResponseResult E40005_RESULT = new ResponseResult<>(false, 40005, "兑换充电失败，请稍后再试");
 	private static final ResponseResult E40006_RESULT = new ResponseResult<>(false, 40006, "部分卡券兑换充电失败");
 	private static final ResponseResult E40007_RESULT = new ResponseResult<>(false, 40007, "操作失败，您没有未充电的卡券");
+	private static final ResponseResult E40008_RESULT = new ResponseResult<>(false, 40008, "参数不合法");
+	private static final ResponseResult E40009_RESULT = new ResponseResult<>(false, 40009, "卡券不存在");
 	private static final ResponseResult E50000_RESULT = new ResponseResult<>(false, 50000, "未知错误");
 
 	// 异常响应
@@ -31,6 +33,10 @@ public class Response {
 				return E40006_RESULT;
 			case 40007:
 				return E40007_RESULT;
+			case 40008:
+				return E40008_RESULT;
+			case 40009:
+				return E40009_RESULT;
 			default:
 				return E50000_RESULT;
 		}

@@ -1,9 +1,12 @@
 package site.zhongkai.ask.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import site.zhongkai.ask.config.Constant;
+import site.zhongkai.ask.config.Response;
 import site.zhongkai.ask.entity.Manager;
 import site.zhongkai.ask.entity.SysVoucher;
 import site.zhongkai.ask.entity.UserVoucher;
@@ -12,8 +15,7 @@ import site.zhongkai.ask.service.IManagerService;
 import site.zhongkai.ask.service.ISysVoucherService;
 import site.zhongkai.ask.service.IUserVoucherService;
 import site.zhongkai.ask.service.IWxUserService;
-import site.zhongkai.ask.utils.PageUtils;
-import site.zhongkai.ask.utils.ResponseLayui;
+import site.zhongkai.ask.utils.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -23,14 +25,14 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 @Log4j2
 @Controller
 @RequestMapping("/manage")
 public class ManageController {
 
+    private static final String CHARGING_PILE_IP = PropertiesUtils.getValue(Constant.SYSTEM_PROPERTIES, "chargingPileIp");
     @Resource
     private IManagerService managerService;
     @Resource
@@ -43,7 +45,7 @@ public class ManageController {
     @GetMapping("/logout")
     public void logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         response.setHeader("Access-Control-Allow-Origin", "*");
-        if(session == null){
+        if (session == null) {
             response.sendRedirect("/ask/login.html");
             return;
         }
@@ -197,7 +199,8 @@ public class ManageController {
             ((UserVoucher) userVoucher).setMoneyFormat(((UserVoucher) userVoucher).getMoney().toString());
             ((UserVoucher) userVoucher).setValidTimeFormat((formatDate).format(((UserVoucher) userVoucher).getValidTime()));
             ((UserVoucher) userVoucher).setExchangeTimeFormat((simpleDateFormat).format(((UserVoucher) userVoucher).getExchangeTime()));
-            if (((UserVoucher) userVoucher).getUseTime() != null) ((UserVoucher) userVoucher).setUseTimeFormat((simpleDateFormat).format(((UserVoucher) userVoucher).getUseTime()));
+            if (((UserVoucher) userVoucher).getUseTime() != null)
+                ((UserVoucher) userVoucher).setUseTimeFormat((simpleDateFormat).format(((UserVoucher) userVoucher).getUseTime()));
         }
         return new ResponseLayui(0, "success", pu.getTotalCount(), pu.getList());
     }
@@ -215,6 +218,28 @@ public class ManageController {
                 ((WxUser) wxUser).setActiveTimeFormat((simpleDateFormat).format(((WxUser) wxUser).getActiveTime()));
         }
         return new ResponseLayui(0, "success", pu.getTotalCount(), pu.getList());
+    }
+
+    // 获取微信用户
+    @PostMapping("/use_voucher")
+    @ResponseBody
+    public String useVoucher(@RequestParam("voucherId") String voucherId, @RequestParam("useTimestamp") String useTimestamp, HttpServletRequest request, HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        List<String> strings = Arrays.asList(Objects.requireNonNull(CHARGING_PILE_IP).split(","));
+        if (strings.contains(request.getRemoteAddr()) || ("*".equals(strings.get(0)))) {
+            if (JudgeUtils.isAnyEmpty(voucherId, useTimestamp)) return JSON.toJSONString(Response.getErrorResult(40008));
+            Date useTime;
+            try {
+                useTime = new Date(Long.parseLong(useTimestamp));
+            } catch (Exception e) {
+                log.error(e.toString());
+                return JSON.toJSONString(Response.getErrorResult(40008));
+            }
+            return JSON.toJSONString(managerService.setVoucherState(voucherId, useTime));
+        } else {
+            log.error("收到来自[" + request.getRemoteAddr() + "]的非法访问manage/use_voucher接口");
+            return JSON.toJSONString(Response.getErrorResult(40004));
+        }
     }
 
 }

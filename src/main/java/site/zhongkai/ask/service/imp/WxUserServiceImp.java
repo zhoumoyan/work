@@ -76,7 +76,7 @@ public class WxUserServiceImp extends ServiceImpl<IWxUserMapper, WxUser> impleme
             if ("ok".equals(httpResult.getData())) {
                 interfaceLog.setOperateResult(0).setResultMessage(httpResult.getData());
                 interfaceLogMapper.insert(interfaceLog);
-                userVoucherMapper.updateById(new UserVoucher(voucherId,1, interfaceTime));
+                userVoucherMapper.updateById(new UserVoucher(voucherId, 2, interfaceTime));
                 return new ResponseResult(true, Constant.STATE_SUCCESS, Constant.OPERATE_SUCCESS);
             } else {
                 interfaceLog.setOperateResult(2).setResultMessage(httpResult.getData());

@@ -19,7 +19,8 @@ function confirmCharge() {
         "data": "openId=" + window.localStorage.getItem("openId"),
         "dataType": "json",
         "success": function (result) {
-            if (result.success){
+            window.location.href = 'http://kyunai.com/charging/mobilepage/index?code=1';
+            /*if (result.success){
                 window.location.href = 'http://kyunai.com/charging/mobilepage/index?code=1';
             } else if (result.state === 40006){
                 alert(result.message);
@@ -27,7 +28,7 @@ function confirmCharge() {
             } else {
                 alert(result.message);
                 window.location.reload();
-            }
+            }*/
         }
     })
 }
@@ -63,7 +64,7 @@ function getUserVoucher() {
                     '<p class="notUsed">#{state}</p>' +
                     '</li>' +
                     '</ul>';
-                var state = (list[i].state === 0 ? "未充电" : "已充电");
+                var state = (list[i].state === 1 ? "已充电" : "未充电");
                 /*html = html.replace("#{money}", list[i].money.toFixed(2));*/
                 html = html.replace("#{money}", list[i].money);
                 html = html.replace("#{consumeExplain}", list[i].consumeExplain);

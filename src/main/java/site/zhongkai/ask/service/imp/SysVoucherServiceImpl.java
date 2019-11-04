@@ -48,7 +48,7 @@ public class SysVoucherServiceImpl extends ServiceImpl<ISysVoucherMapper, SysVou
             WxUser wxUser = wxUserMapper.selectOne(new WxUser(openId));
             return new ResponseResult<>(true, Constant.STATE_SUCCESS, Constant.EXPLAIN_SUCCESS, new GetVoucher(wxUser.getGrade(), sysVouchers));
         } else {
-            List<UserVoucher> userVouchers = userVoucherMapper.selectList(new EntityWrapper<UserVoucher>().eq("open_id", openId).orderBy("state", true));
+            List<UserVoucher> userVouchers = userVoucherMapper.selectList(new EntityWrapper<UserVoucher>().eq("open_id", openId).orderBy("use_time", true));
             for (UserVoucher userVoucher : userVouchers) {
                 userVoucher.setValidTimeFormat((simpleDateFormat).format(userVoucher.getValidTime()));
             }

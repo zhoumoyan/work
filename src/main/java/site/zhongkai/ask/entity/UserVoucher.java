@@ -29,8 +29,9 @@ public class UserVoucher implements Serializable {
     private Date validTime;             // 有效时间
     @TableField(exist = false)
     private String validTimeFormat;     // 格式时间
-    private Integer state;              // 卡券状态：0-未充电，1-已充电
+    private Integer state;              // 卡券状态：0-未充电，1-已充电，2-已传给充电桩
     private Date exchangeTime;          // 兑换时间
+    private Date interfaceTime;         // 充电桩接口时间
     @TableField(exist = false)
     private String exchangeTimeFormat;  // 格式时间
     private Date useTime;               // 使用时间
@@ -40,10 +41,10 @@ public class UserVoucher implements Serializable {
     public UserVoucher() {
     }
 
-    public UserVoucher(String id, Integer state, Date useTime) {
+    public UserVoucher(String id, Integer state, Date interfaceTime) {
         this.id = id;
         this.state = state;
-        this.useTime = useTime;
+        this.interfaceTime = interfaceTime;
     }
 
     public UserVoucher(String openId, BigDecimal money, String voucherId, String voucherExplain, String consumeExplain, Integer consumeScore, Date validTime, Integer state, Date exchangeTime) {

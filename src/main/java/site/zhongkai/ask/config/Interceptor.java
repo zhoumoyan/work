@@ -19,6 +19,7 @@ public class Interceptor implements WebMvcConfigurer {
         List<String> list = new ArrayList<>();
         list.add("/manage/handle_login");
         list.add("/manage/logout");
+        list.add("/manage/use_voucher");
         list.add("/wx_user/**");
         list.add("/portal/**");
         list.add("/answer/**");
