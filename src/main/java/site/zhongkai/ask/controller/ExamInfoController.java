@@ -27,7 +27,6 @@ public class ExamInfoController {
     // 获取所有
     @PostMapping("/get_all")
     public ResponseLayui getAllExamInfo(@RequestParam Map<String, Object> map, HttpServletResponse response) {
-        System.err.println(map);
         response.setHeader("Access-Control-Allow-Origin", "*");
         PageUtils pu = examInfoService.getExamInfoList(map);
         return new ResponseLayui(0, "success", pu.getTotalCount(), pu.getList());

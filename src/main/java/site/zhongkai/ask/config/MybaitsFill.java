@@ -17,7 +17,6 @@ public class MybaitsFill extends MetaObjectHandler {
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        setFieldValByName("activeTime", new Date(), metaObject);
     }
 
 }

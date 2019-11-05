@@ -74,7 +74,7 @@ function showVoucherList() {
                     '<p class="integralOne">#{consumeExplain}<span><input id="consume_score' + i + '" type="hidden" value="#{consumeScore}"></span></p> ' +
                     '</li>' +
                     '<li>' +
-                    '<p class="ticketTilte1">编号：<span id="voucher_id' + i + '">#{id}</span></p>' +
+                    /*'<p class="ticketTilte1">编号：<span id="voucher_id' + i + '">#{id}</span></p>' +*/
                     '<p class="ticketTilte1">#{voucherExplain}</p>' +
                     '</li>' +
                     '<li class="effectiveDate">' +

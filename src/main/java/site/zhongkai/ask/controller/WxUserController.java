@@ -43,7 +43,7 @@ public class WxUserController {
             wxUser.setGrade(0);
             wxUserService.insert(wxUser);
         } else {
-            user.setNickName(nickName);
+            user.setNickName(nickName).setActiveTime(new Date());
             wxUserService.updateById(user);
         }
         modelAndView.setViewName("index");

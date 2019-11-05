@@ -26,8 +26,8 @@ public class ManagerServiceImp extends ServiceImpl<IManagerMapper, Manager> impl
 
     @Override
     public PageUtils getManagers(Map<String, Object> params) {
-        Page<Manager> page=new Query<Manager>(params).getPage();
-        List<Manager> list=baseMapper.getManagers(page,params);
+        Page<Manager> page = new Query<Manager>(params).getPage();
+        List<Manager> list = baseMapper.getManagers(page, params);
         page.setRecords(list);
         return new PageUtils(page);
     }
@@ -36,7 +36,11 @@ public class ManagerServiceImp extends ServiceImpl<IManagerMapper, Manager> impl
     public ResponseResult setVoucherState(String voucherId, Date useTime) {
         UserVoucher voucher = userVoucherMapper.selectById(voucherId);
         if (voucher == null) return Response.getErrorResult(40009);
-        userVoucherMapper.updateById(new UserVoucher().setId(voucherId).setUseTime(useTime).setState(1));
+        if (voucher.getUseTime() == null && voucher.getState() != 1) {
+            userVoucherMapper.updateById(new UserVoucher().setId(voucherId).setUseTime(useTime).setState(1));
+        } else {
+            return Response.getErrorResult(40010);
+        }
         return Response.getSuccessResult(20001);
     }
 }

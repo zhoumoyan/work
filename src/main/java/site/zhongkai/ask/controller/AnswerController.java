@@ -34,7 +34,7 @@ public class AnswerController {
         while (parameterNames.hasMoreElements()) {
             String paramName = parameterNames.nextElement();
             String[] values = request.getParameterValues(paramName);
-            for (String value : values) System.err.println(paramName + "=" + value);
+            //for (String value : values) System.err.println(paramName + "=" + value);
         }
         response.setHeader("Access-Control-Allow-Origin", "*");
         return JSON.toJSONString(new ResponseResult<>(true, Constant.STATE_SUCCESS, Constant.EXPLAIN_SUCCESS));
@@ -43,7 +43,6 @@ public class AnswerController {
     // 获取结果
     @PostMapping("/get_result")
     public String getResult(@RequestParam("openId") String openId, @RequestParam(required = false, value = "answerFraction") String answerFraction) {
-        log.error("answerFraction" + answerFraction);
         return JSON.toJSONString(answerService.getUserGrade(openId, answerFraction));
     }
 }
