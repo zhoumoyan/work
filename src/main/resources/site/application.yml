@@ -1,6 +1,7 @@
 # SpringBoot的服务端口
 server:
   port: 8092
+  max-http-header-size: 8192
   servlet:
     context-path: /ask
 # MyBatis配置文件
