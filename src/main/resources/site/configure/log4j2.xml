@@ -19,6 +19,7 @@
     </appenders>
     <loggers>
         <!--<logger name="site.zhongkai.ask.mapper" level="DEBUG"/>-->
+        <logger name="org.apache.juli.logging.DirectJDKLog.log" level="ERROR"/>
         <root level="info">
             <appender-ref ref="Console"/>
             <appender-ref ref="LogFile"/>
