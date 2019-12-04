@@ -35,11 +35,13 @@ $(function () {
 });
 
 function submitResult(answerFraction) {
+    var timestamp = (new Date()).getTime();
     var data = "answerFraction=-1&openId=" + window.localStorage.getItem("openId");
     $.ajax({
-        "url": "/ask/answer/get_result",
+        "url": "/ask/answer/get_result?timestamp=" + timestamp,
         "data": data,
         "type": "POST",
+        "cache": "false",
         "dataType": "json",
         "success": function (result) {
             if (result.success) {

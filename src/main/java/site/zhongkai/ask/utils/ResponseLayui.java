@@ -17,6 +17,11 @@ public class ResponseLayui {
 
     }
 
+    public ResponseLayui(Integer code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
     public ResponseLayui(Integer code, String msg, Long count, List data) {
         this.code = code;
         this.msg = msg;

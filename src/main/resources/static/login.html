@@ -58,10 +58,11 @@
                           if(obj!=="undefined"){
                               $("#result").html("");
                               sessionStorage.localLogin=JSON.stringify(obj);
+
                               $.cookie('userid', obj.id, {expires: 3 });
                               $.cookie('username', obj.username, {expires: 3 });
                               $.cookie('avatar', obj.avatar, {expires: 3 });
-                              location.href='sys/main.html';
+                              window.location.href='sys/main.html';
                           }
                       },
                       error: function(obj){

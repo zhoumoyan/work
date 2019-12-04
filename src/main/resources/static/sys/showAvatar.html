@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>查看/更新头像</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="../js/jquery.min.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+    <style>
+        body {
+            background-color: #e6e6e6;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .body_style {
+            width:500px;
+            margin: 50px auto;
+            padding: 5px 15px;
+            background-color: #e6e6e6;
+        }
+
+    </style>
+</head>
+<body>
+<div class="body_style">
+    <form class="layui-form" action="" lay-filter="example" id="form-change-avatar">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <div class="layui-input-block">
+                <img id="img-avatar" src="../img/default_avatar.png" width="288px"  alter="图片被外星人吃了"/>
+            </div>
+            <div class="layui-input-block">
+                <input type="file" name="avatar"  id="avatar">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button  class="layui-btn" type="button" id="edit"  onclick="changeAvatar()">上传头像</button>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+</body>
+
+<script src="../layui/layui.js" charset="utf-8"></script>
+
+<script>
+    window.onload = function () {
+        init();
+        initFrom();
+    };
+    function init() {
+        layui.use(['form','laydate'], function () {
+            var form = layui.form;
+            var laydate = layui.laydate;
+            //执行一个laydate实例
+            laydate.render({
+                elem: '#classtime' //指定元素
+            });
+            form.render(); //渲染
+        });
+    }
+
+    function initFrom(){
+        var params={
+            "userId":JSON.parse(sessionStorage.localLogin).id
+        };
+        $.ajax({
+            url: "/ask/manage/showInfo",
+            data:params,
+            dataType:"json",
+            type:"POST",
+            success: function(json){
+                if(json.avatar!=null){
+                    $("#img-avatar").attr("src", "/ask/"+json.avatar);
+
+                }
+            },
+            error: function(obj){
+                alert("服务器链接错误:"+obj);
+            }
+        });
+    }
+    //上传图片选择文件改变后刷新预览图
+    $("#avatar").change(function (e) {
+        var file = e.target.files || e.dataTransfer.files;  //获取目标文件
+        console.log(file[0])
+        if (file) {   //如果目标文件存在
+            var reader = new FileReader();   //定义一个文件阅读器
+            reader.onload = function () {   //文件装载后将其显示在图片预览里
+                $("#img-avatar").attr("src", this.result);
+            };
+            reader.readAsDataURL(file[0]);  //装载文件
+        }
+    });
+    function changeAvatar() {
+
+        $.ajax({
+            url: "/ask/manage/changeAvatar",
+            data:new FormData($("#form-change-avatar")[0]),
+            dataType:"json",
+            type:"POST",
+            processData:false,
+            contentType:false,
+            success: function(json){
+                if(json.data!=null){
+                    alert("上传成功");
+                    $("#img-avatar").attr("src", "/ask/"+json.data.avatarPath);
+                    doCancel();
+                }else {
+                    alert(json.message);
+                }
+            },
+            error: function(obj){
+                alert("服务器链接错误:"+obj);
+            }
+        });
+    }
+    //点击取消关闭窗口
+    function doCancel() {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);//关闭子窗体
+        parent.location.reload();//刷新父窗体
+    }
+</script>
+</html>

@@ -11,6 +11,7 @@ import site.zhongkai.ask.entity.WxUser;
 import site.zhongkai.ask.service.ISysVoucherService;
 import site.zhongkai.ask.service.IWxUserService;
 import site.zhongkai.ask.utils.JudgeUtils;
+import site.zhongkai.ask.utils.ResponseResult;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -54,13 +55,16 @@ public class WxUserController {
     @PostMapping("/get_voucher")
     @ResponseBody
     public String getVoucher(@RequestParam("openId") String openId, @RequestParam(required = false, value = "operateType") String operateType) {
-        return JSON.toJSONString(sysVoucherService.findVoucher(openId, operateType));
+        ResponseResult voucher = sysVoucherService.findVoucher(openId, operateType);
+        //log.error("获取卡券" + JSON.toJSONString(voucher));
+        return JSON.toJSONString(voucher);
     }
 
     // 兑换卡券
     @PostMapping("/confirm_exchange")
     @ResponseBody
     public String confirmVoucher(@RequestParam("openId") String openId, @RequestParam("voucherId") String voucherId) {
+        log.error(openId + "兑换卡券" + voucherId);
         return JSON.toJSONString(sysVoucherService.exchangeVoucher(openId, voucherId));
     }
 

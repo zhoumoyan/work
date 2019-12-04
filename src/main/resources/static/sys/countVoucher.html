@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>卡劵使用情况统计</title>
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/echarts.min.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+</head>
+<body>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div style="margin: 80px auto;width: 80% ">
+    <div id="main" style="width: 600px;height:400px;" />
+</div>
+<script type="text/javascript">
+    var a;
+    var b;
+    var c;
+    window.onload = function () {
+        getNum();
+    };
+    function getNum() {
+        var params = {"username": $.cookie('username'),
+                        "userid":$.cookie('userid')};
+        $.ajax({
+            url: "/ask/manage/get_voucher_used_type",
+            data: params,
+            dataType: "json",
+            type: "Post",
+            success: function (obj) {
+                if (obj === "0") {
+                    alert("用户信息过期，请重新登陆！");
+                    sessionStorage.clear();
+                    window.location.href = "../login.html";
+                } else if (obj!=null) {
+                     a = obj[0].num;
+                     b = obj[1].num;
+                     c = obj[2].num;
+                    initMain(a, b,c);
+                }
+            },
+            error: function (obj) {
+                alert("服务器链接错误!" );
+            }
+        });
+    }
+    function initMain(a,b,c) {
+
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '卡劵使用情况统计'
+            },
+            tooltip: {},
+            legend: {
+                data: ['张数']
+            },
+            xAxis: {
+                data: ["0-未使用", "1-已使用", "2-已传给充电桩"]
+            },
+            yAxis: {},
+            series: [{
+                name: '张数',
+                type: 'bar',
+                data: [a, b, c]
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+
+</script>
+</body>
+</html>

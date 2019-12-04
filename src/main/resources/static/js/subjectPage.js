@@ -1,9 +1,11 @@
 $(function(){
+	var timestamp = (new Date()).getTime();
 	var correctArrayo = [];
 	//获取题目
 	$.ajax({
 		type:"get",
-		url:"/ask/answer/get_index",
+		"cache": "false",
+		url:"/ask/answer/get_index?timestamp=" + timestamp,
 		data: "openId=" + window.localStorage.getItem("openId"),
 		async:true,
 		success:function(json){
@@ -112,11 +114,13 @@ function calculated(correctArray) {
 
 
 function submitScore(answerFraction) {
+	var timestamp = (new Date()).getTime();
 	var data = "openId=" + window.localStorage.getItem("openId") + "&answerFraction=" + answerFraction;
 	$.ajax({
-		"url": "/ask/answer/get_result",
+		"url": "/ask/answer/get_result?timestamp=" + timestamp,
 		"data": data,
 		"type": "POST",
+		"cache": "false",
 		"dataType": "json",
 		"success": function (result) {
 			if (result.success) {

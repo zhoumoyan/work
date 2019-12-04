@@ -7,6 +7,7 @@ import java.io.Serializable;
 @SuppressWarnings({"unused"})
 @Component
 public  class Constant implements Serializable {
+	
     private static final long serialVersionUID = 8549142630108385432L;
 
 	// 响应结果

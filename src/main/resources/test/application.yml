@@ -12,11 +12,18 @@ logging:
   config: classpath:configure/log4j2.xml
 # 集成阿里巴巴的druid数据库连接池
 spring:
+  mvc:
+    static-path-pattern: /user/avatar/**
+  resources:
+    static-locations: c:\\tmp\
+  servlet:
+    multipart:
+      location: c:\\tmp\
   datasource:
     druid:
       db-type: com.alibaba.druid.pool.DruidDataSource
       driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-      url: jdbc:sqlserver://192.168.0.92:1433;databaseName=ZKWJWY
+      url: jdbc:sqlserver://localhost:1433;databaseName=ZKWJWY
       username: sa
       password: "000000"
       # 初始化大小，最小，最大

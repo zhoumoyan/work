@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="site.zhongkai.ask.mapper.IQueryMapper">
+
+
+    <resultMap id="getAnswerNum" type="site.zhongkai.ask.vo.CountAnswerNum">
+        <result column="userId" property="userId" />
+        <result column="nickName" property="nickName" />
+        <result column="openId" property="openId" />
+        <result column="num" property="num" />
+    </resultMap>
+    <resultMap id="getVoucherNum" type="site.zhongkai.ask.vo.CountVoucherNum">
+        <result column="userId" property="userId" />
+        <result column="nickName" property="nickName" />
+        <result column="openId" property="openId" />
+        <result column="num" property="num" />
+    </resultMap>
+    <resultMap id="getNum" type="site.zhongkai.ask.vo.CountNum">
+        <result column="state" property="state" />
+        <result column="num" property="num" />
+    </resultMap>
+
+    <select id="getVoucherNum"  parameterType="string" resultMap="getVoucherNum">
+        SELECT t.open_id AS openId,count(*) AS num
+        from t_wx_user u
+        join t_user_voucher t
+        on u.open_id=t.open_id
+        where 1=1
+        <if test="userId != null and userId != ''">
+            AND u.id=#{userId}
+        </if>
+        <if test="nickName!= null and nickName != ''">
+            AND u.nick_name=#{nickName}
+        </if>
+        group by t.open_id
+    </select>
+
+
+    <select id="getAnswersNum"  parameterType="string"  resultMap="getAnswerNum">
+        SELECT a.open_id AS openId,count(*) As num
+        from t_wx_user u join t_answer_log a
+        on u.open_id=a.open_id
+        where 1=1
+        <if test="userId != null and userId != ''">
+            AND u.id=#{userId}
+        </if>
+        <if test="nickName!= null and nickName != ''">
+            AND u.nick_name=#{nickName}
+        </if>
+        GROUP BY a.open_id
+    </select>
+
+    <select id="getNum"  parameterType="string" resultMap="getNum">
+       select state,count(*) As num
+       from t_user_voucher
+       where 1=1
+        <if test="openId != null and openId != ''">
+            AND open_id=#{openId}
+        </if>
+       GROUP  by state
+       ORDER BY num desc
+    </select>
+
+</mapper>

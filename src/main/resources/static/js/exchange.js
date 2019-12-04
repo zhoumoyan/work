@@ -19,7 +19,6 @@ $(function () {
         $('#answerMark').show();
         $("#answerbgMask").show();
     }*/
-
     function closeaMark() {
         $('#answerMark').hide();
         $("#answerbgMask").hide();
@@ -58,10 +57,12 @@ $(document).ready(function () {
 });
 
 function showVoucherList() {
+    var timestamp = (new Date()).getTime();
     $("#voucher_list").empty();
     $.ajax({
-        "url": "/ask/wx_user/get_voucher",
+        "url": "/ask/wx_user/get_voucher?timestamp=" + timestamp,
         "type": "POST",
+        "cache": "false",
         "data": "openId=" + window.localStorage.getItem("openId"),
         "dataType": "json",
         "success": function (result) {
@@ -74,7 +75,8 @@ function showVoucherList() {
                     '<p class="integralOne">#{consumeExplain}<span><input id="consume_score' + i + '" type="hidden" value="#{consumeScore}"></span></p> ' +
                     '</li>' +
                     '<li>' +
-                    /*'<p class="ticketTilte1">编号：<span id="voucher_id' + i + '">#{id}</span></p>' +*/
+                    '<p class="ticketTilte1"><span></span></p>' +
+                    '<p id="hideNo'+i+'" class="ticketTilte1">编号：<span id="voucher_id' + i + '">#{id}</span></p>' +
                     '<p class="ticketTilte1">#{voucherExplain}</p>' +
                     '</li>' +
                     '<li class="effectiveDate">' +
@@ -92,6 +94,7 @@ function showVoucherList() {
                 html = html.replace("#{validTimeFormat}", list[i].validTimeFormat);
                 html = html.replace("#{state}", state);
                 $("#voucher_list").append(html);
+                $("#hideNo"+i).hide();
             }
             $("#valid_score1").html(result.data.userGrade);
             $("#valid_score2").html(result.data.userGrade);
@@ -111,27 +114,32 @@ function showSelectVoucher(i) {
 }
 
 function confirmExchange(i) {
+    parse
     if (parseInt($("#valid_score2").html()) < parseInt($("#consume_score" + i).val())) {
         $("#exresult").text('可用积分不足，兑换失败').addClass("exSureFalse");
         openaMark();
         return;
     }
+    var timestamp = (new Date()).getTime();
     var data = "openId=" + window.localStorage.getItem("openId") + "&voucherId=" + $("#voucher_id" + i).html();
     $.ajax({
-        "url": "/ask/wx_user/confirm_exchange",
+        "url": "/ask/wx_user/confirm_exchange?timestamp=" + timestamp,
         "type": "POST",
         "data": data,
+        "cache": "false",
         "dataType": "json",
         "success": function (result) {
             if (result.success) {
                 $("#exresult").text('兑换成功').removeClass("exSureFalse");
                 $("#valid_score1").html($("#valid_score1").html() - $("#consume_score" + i).val());
                 $("#valid_score2").html($("#valid_score2").html() - $("#consume_score" + i).val());
-                if (parseInt($("#valid_score2").html()) < parseInt($("#consume_score" + i).val())) {
-                    window.location.href = '/ask/portal/tickets';
-                } else {
-                    window.location.reload();
-                }
+                $("#exresult").on("click", function () {
+                    if (parseInt($("#valid_score2").html()) < parseInt($("#consume_score" + i).val())) {
+                        window.location.href = '/ask/portal/tickets?timestamp=' + timestamp;
+                    } else {
+                        window.location.reload();
+                    }
+                });
             } else {
                 $("#exresult").text(result.message).addClass("exSureFalse");
                 $("#determineBtn").val(1);

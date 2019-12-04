@@ -13,9 +13,11 @@ $(document).ready(function () {
 });
 
 function confirmCharge() {
+    var timestamp = (new Date()).getTime();
     $.ajax({
-        "url": "/ask/wx_user/confirm_charge",
+        "url": "/ask/wx_user/confirm_charge?timestamp=" + timestamp,
         "type": "POST",
+        "cache": "false",
         "data": "openId=" + window.localStorage.getItem("openId"),
         "dataType": "json",
         "success": function (result) {
@@ -35,9 +37,11 @@ function confirmCharge() {
 
 function getUserVoucher() {
     $("#user_voucher").empty();
+    var timestamp = (new Date()).getTime();
     $.ajax({
-        "url": "/ask/wx_user/get_voucher",
+        "url": "/ask/wx_user/get_voucher?timestamp=" + timestamp,
         "type": "POST",
+        "cache": "false",
         "data": "operateType=iVoucher&openId=" + window.localStorage.getItem("openId"),
         "dataType": "json",
         "success": function (result) {

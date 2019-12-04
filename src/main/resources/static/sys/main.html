@@ -15,12 +15,12 @@
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:">
-                    <img src="../img/default_avatar.png" class="layui-nav-img" alt="">
+                    <img id="avatar" src="../img/default_avatar.png" class="layui-nav-img" alt="">
                     <span id="username"></span>
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">安全设置</a></dd>
+                    <dd><a href="javascript:menuInfo('basicInformation.html');">基本资料</a></dd>
+                    <dd><a href="javascript:menuInfo('safeSetting.html');">安全设置</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item"><a href="javascript:closeWin()">退出</a></li>
@@ -46,6 +46,13 @@
                         <dd><a href="javascript:menuInfo('indexUserGrade.html');">积分管理</a></dd>
                     </dl>
                 </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:">查询统计</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:menuInfo('queryUserVoucher.html');">卡劵使用统计</a></dd>
+                        <dd><a href="javascript:menuInfo('queryUserAnswers.html');">答题次数统计</a></dd>
+                    </dl>
+                </li>
             </ul>
         </div>
     </div>
@@ -66,9 +73,11 @@
 <script>
     $(function () {
         //加载获取登陆信息--将json字符串转换为 json对象
-        /*var user = JSON.parse(sessionStorage.localLogin);
-        $("#username").html(JSON.parse(sessionStorage.localLogin).username);*/
+        var avatar = JSON.parse(sessionStorage.localLogin).avatar;
         $("#username").html($.cookie('username'));
+        if(avatar!=null){
+            $("#avatar").attr("src","/ask"+avatar);
+        }
     });
 
     function closeWin() {

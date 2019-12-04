@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import site.zhongkai.ask.config.Constant;
 import site.zhongkai.ask.config.Response;
 import site.zhongkai.ask.entity.Manager;
@@ -16,11 +17,13 @@ import site.zhongkai.ask.service.ISysVoucherService;
 import site.zhongkai.ask.service.IUserVoucherService;
 import site.zhongkai.ask.service.IWxUserService;
 import site.zhongkai.ask.utils.*;
+import site.zhongkai.ask.vo.CountAnswerNum;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -45,11 +48,11 @@ public class ManageController {
     @GetMapping("/logout")
     public void logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         response.setHeader("Access-Control-Allow-Origin", "*");
+        log.info("[" + request.getRemoteAddr() + "]-管理员[" + session.getAttribute("username") + "]退出登录");
         if (session == null) {
             response.sendRedirect("/ask/login.html");
             return;
         }
-        log.info("[" + request.getRemoteAddr() + "]-管理员[" + session.getAttribute("username") + "]退出登录");
         session.removeAttribute("userid");
         session.removeAttribute("username");
         session.removeAttribute("avatar");
@@ -86,6 +89,17 @@ public class ManageController {
         return new ResponseLayui(0, "success", pu.getTotalCount(), pu.getList());
     }
 
+    @PostMapping("/get_voucher_used_type")
+    @ResponseBody
+    public String getVoucherUsedType(@RequestParam(required = false, value ="username") String username,@RequestParam(required = false, value ="userid")String uid) {
+        Manager manager=managerService.selectOne(new EntityWrapper<Manager>().eq("id",uid));
+        if(manager==null||username.equals(manager.getLoginname())){
+            return "0";//用户信息失效，重新登陆
+        }
+        List<CountAnswerNum> nums=userVoucherService.countValue();
+
+        return JSON.toJSONString(nums);
+    }
     @PostMapping("/add_user")
     @ResponseBody
     public String addManager(Manager manager, HttpServletResponse response) {
@@ -240,6 +254,100 @@ public class ManageController {
             log.error("收到来自[" + request.getRemoteAddr() + "]的非法访问manage/use_voucher接口");
             return JSON.toJSONString(Response.getErrorResult(40004));
         }
+    }
+
+    // 获取微信用户信息
+    @PostMapping("/showInfo")
+    @ResponseBody
+    public String getUserInfo(@RequestParam("userId") String userId, HttpServletRequest request, HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        Manager manager=managerService.selectOne(new EntityWrapper<Manager>().eq("id",userId));
+
+        if(manager==null){
+            return JSON.toJSONString(Response.getErrorResult(40008));
+        }
+        manager.setId(null);
+        manager.setPassword(null);
+        manager.setSalt(null);
+        manager.setToken(null);
+        manager.setState(null);
+        return JSON.toJSONString(manager);
+    }
+    /**
+     * 上传的头像的最大大小
+     */
+    private static final long UPLOAD_MAX_SIZE = 3 * 1024 * 1024;
+    /**
+     * 允许上传的头像文件的类型列表
+     */
+    private static final List<String> UPLOAD_CONTENT_TYPES = new ArrayList<>();
+
+    static {
+        UPLOAD_CONTENT_TYPES.add("image/jpeg");
+        UPLOAD_CONTENT_TYPES.add("image/bmp");
+        UPLOAD_CONTENT_TYPES.add("image/png");
+        UPLOAD_CONTENT_TYPES.add("image/gif");
+    }
+    // 获取微信用户信息
+    @PostMapping("/changeAvatar")
+    @ResponseBody
+    public ResponseResult updateAvatar( @RequestParam(value = "userId",required=false)String userId,@RequestParam("avatar") MultipartFile avatar, HttpServletRequest request, HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        HttpSession   session   =   request.getSession();
+
+        // 检查文件大小
+        long size = avatar.getSize();
+        //System.out.println("size:"+size);
+        if (avatar.isEmpty()) {
+            return Response.getErrorResult(50001);
+        }
+        if (size > UPLOAD_MAX_SIZE) {
+            return Response.getErrorResult(50002);
+        }
+        // 检查文件类型
+        String contentType = avatar.getContentType();
+        if (!UPLOAD_CONTENT_TYPES.contains(contentType)) {
+            return Response.getErrorResult(50003);
+        }
+        // 基于session获取上传文件夹的路径：session.getServletContext().getRealPath("upload")
+        String parentPath = session.getServletContext().getRealPath("upload");
+        //System.out.println("parentPath:"+parentPath);
+        // 检查上传文件夹是否存在，如果不存在，则创建
+        File parent = new File(parentPath);
+        if (!parent.exists()) {
+            parent.mkdirs();
+        }
+
+        // 通过参数avatar获取原始文件名：avatar.getOriginalFilename()
+        String originalFilename = avatar.getOriginalFilename();
+        // 获取文件的扩展名
+        int beginIndex = originalFilename.lastIndexOf(".");
+        String suffix = originalFilename.substring(beginIndex);
+        // 生成目标文件名
+        String filename = System.currentTimeMillis() + suffix;
+
+        // 执行保存头像文件
+        File dest = new File(parent, filename);
+        try {
+            avatar.transferTo(dest);
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+            return Response.getErrorResult(50004);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Response.getErrorResult(50005);
+        }
+        // 执行将头像路径存储到数据库中："/upload/" + 目标文件名
+        // http://localhost:8096/upload/1.jpg
+        String avatarPath = "/upload/" + filename;
+        userId=(String)session.getAttribute("userid");
+       boolean result=managerService.changeAvatar(userId, avatarPath);
+
+        if (result!=true)
+            return Response.getErrorResult(50000);
+        session.setAttribute("avatar",avatarPath);
+        return new ResponseResult(true,Constant.STATE_SUCCESS,Constant.OPERATE_SUCCESS,avatarPath);
+
     }
 
 }

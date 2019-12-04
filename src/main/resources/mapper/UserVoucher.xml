@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="site.zhongkai.ask.mapper.IUserVoucherMapper">
+    <resultMap id="countNum" type="site.zhongkai.ask.vo.CountAnswerNum">
+        <result column="state" property="state" />
+        <result column="num" property="num" />
+    </resultMap>
     <select id="getUserVouchers" parameterType="map" resultType="site.zhongkai.ask.entity.UserVoucher">
         SELECT
         id,
@@ -20,5 +24,13 @@
         <if test="openId != null and openId != ''">
             AND t.open_id = #{openId}
         </if>
+    </select>
+
+
+    <select id="getNum"  resultMap="countNum">
+        select
+          state,count(*) as num from
+            t_user_voucher
+          GROUP BY state;
     </select>
 </mapper>

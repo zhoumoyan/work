@@ -51,11 +51,12 @@
 				 window.location.href = '/ask/portal/subject_page'
 			}*/
     	 	$(function() {
+				var timestamp = (new Date()).getTime();
 				$("#goHome").on("click",function(){
 					window.history.back(-1)
 				})
 				$("#index_tipsT").on("click",function(){
-					window.location.href = '/ask/portal/exchange'
+					window.location.href = '/ask/portal/exchange?timestamp=' + timestamp
 				})
 			})
     </script>

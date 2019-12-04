@@ -12,4 +12,6 @@ public interface IManagerService extends IService<Manager> {
     PageUtils getManagers(Map<String, Object> params);
 
     ResponseResult setVoucherState(String voucherId, Date useTime);
+
+    boolean changeAvatar(String uid, String avatar);
 }

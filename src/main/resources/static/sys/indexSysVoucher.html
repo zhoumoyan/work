@@ -32,9 +32,9 @@
         <script type="text/html" id="toolbarDemo">
             <!--查询条件-->
             <div class="layui-input-inline">
-                <label for="voucher_id"></label><input type="text" id="voucher_id" name="voucher_id" autocomplete="off"
-                                                 placeholder="请输入编号"
-                                                 class="layui-input">
+                <label for="voucher_id"></label>
+                <input type="text" id="voucher_id" name="voucher_id" autocomplete="off"
+                       placeholder="请输入编号" class="layui-input">
             </div>
             <button class="layui-btn layui-btn-normal layui-btn-sm" title="查询" onclick="initTable()">
                 <i class="layui-icon layui-icon-search" style="font-size: 30px; color: white;"></i>
@@ -42,6 +42,10 @@
             <button class="layui-btn layui-btn-normal layui-btn-sm" title="添加" style="margin-left: 1px"
                     type="button" id="newAdd" onclick="addPage()">
                 <i class="layui-icon layui-icon-add-1" style="font-size: 30px; color: white;"></i>
+            </button>
+            <button class="layui-btn layui-btn-normal layui-btn-sm" title="统计" style="margin-left: 1px"
+                    type="button" id="count" onclick="countVoucher()">
+                <i class="layui-icon layui-icon-list" style="font-size: 30px; color: white;"></i>
             </button>
         </script>
 
@@ -86,7 +90,17 @@
             content: 'addSysVoucher.html' //目标网页
         });
     }
-
+    function countVoucher() {
+        layer.open({
+            type: 2, //表示打开一个网页
+            title: '',
+            shadeClose: false, //点击窗体其他位置关闭
+            shade: 0.3, //遮罩 透明度0.3
+            maxmin: false, //开启最大化最小化按钮
+            area: ['55%', '63%'],
+            content: 'countVoucher.html' //目标网页
+        });
+    }
     //编辑
     function editPage(id) {
         data = {
@@ -98,7 +112,7 @@
             shadeClose: false, //点击窗体其他位置关闭
             shade: 0.3, //遮罩 透明度0.3
             maxmin: false, //开启最大化最小化按钮
-            area: ['58%', '70%'],
+            area: ['58%', '60%'],
             content: 'updateSysVoucher.html' //目标网页
         });
     }
